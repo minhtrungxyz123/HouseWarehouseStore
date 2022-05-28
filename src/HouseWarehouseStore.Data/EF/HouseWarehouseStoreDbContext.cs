@@ -18,6 +18,40 @@ namespace HouseWarehouseStore.Data.EF
 
             //Configure using Fluent API
             modelBuilder.ApplyConfiguration(new AboutConfiguration());
+            modelBuilder.ApplyConfiguration(new AdminConfiguration());
+            modelBuilder.ApplyConfiguration(new AggregatedCounterConfiguration());
+            modelBuilder.ApplyConfiguration(new AlbumConfiguration());
+            modelBuilder.ApplyConfiguration(new ArticleCategoryConfiguration());
+            modelBuilder.ApplyConfiguration(new ArticleConfiguration());
+            modelBuilder.ApplyConfiguration(new BannerConfiguration());
+            modelBuilder.ApplyConfiguration(new CartConfiguration());
+            modelBuilder.ApplyConfiguration(new CollectionConfiguration());
+            modelBuilder.ApplyConfiguration(new ColorConfiguration());
+            modelBuilder.ApplyConfiguration(new ConfigSiteConfiguration());
+            modelBuilder.ApplyConfiguration(new ContactConfiguration());
+            modelBuilder.ApplyConfiguration(new CounterConfiguration());
+            modelBuilder.ApplyConfiguration(new HashConfiguration());
+            modelBuilder.ApplyConfiguration(new JobConfiguration());
+            modelBuilder.ApplyConfiguration(new JobParameterConfiguration());
+            modelBuilder.ApplyConfiguration(new JobQueueConfiguration());
+            modelBuilder.ApplyConfiguration(new ListConfiguration());
+            modelBuilder.ApplyConfiguration(new MemberConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderConfiguration());
+            modelBuilder.ApplyConfiguration(new OrderDetailConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductCategoryConguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductLikeConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductSizeColorConfiguration());
+            modelBuilder.ApplyConfiguration(new ReviewProductConfiguration());
+            modelBuilder.ApplyConfiguration(new SchemaConfiguration());
+            modelBuilder.ApplyConfiguration(new ServerConfiguration());
+            modelBuilder.ApplyConfiguration(new SetConfiguration());
+            modelBuilder.ApplyConfiguration(new SizeConfiguration());
+            modelBuilder.ApplyConfiguration(new StateConfiguration());
+            modelBuilder.ApplyConfiguration(new TagConfiguration());
+            modelBuilder.ApplyConfiguration(new UserVoucherConfiguration());
+            modelBuilder.ApplyConfiguration(new VideoConfiguration());
+            modelBuilder.ApplyConfiguration(new VoucherConfiguration());
         }
 
         private readonly IMediator _mediator;
