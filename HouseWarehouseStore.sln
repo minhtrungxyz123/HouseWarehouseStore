@@ -5,23 +5,27 @@ VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Api", "Api", "{554A0513-EB98-489E-9B9C-3ACBC972A637}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseWarehouse.Store.Api", "src\HouseWarehouse.Store.Api\HouseWarehouse.Store.Api.csproj", "{76A90D23-AE6A-4829-95BE-CFBD9D2678F9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseWarehouse.Store.Api", "src\HouseWarehouse.Store.Api\HouseWarehouse.Store.Api.csproj", "{76A90D23-AE6A-4829-95BE-CFBD9D2678F9}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Service", "Service", "{0A91573A-940E-48E1-808C-3577B7A54A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseWarehouseStore.Service", "src\HouseWarehouseStore.Service\HouseWarehouseStore.Service.csproj", "{DE118C60-130B-45BC-BEB0-7DE3100C703A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseWarehouseStore.Service", "src\HouseWarehouseStore.Service\HouseWarehouseStore.Service.csproj", "{DE118C60-130B-45BC-BEB0-7DE3100C703A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{1DA062BD-38D2-4D34-8951-92577132A485}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseWarehouseStore.Common", "src\HouseWarehouseStore.Common\HouseWarehouseStore.Common.csproj", "{CA5D2A77-618F-4ACB-A3DB-E68B81E3DFA1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseWarehouseStore.Common", "src\HouseWarehouseStore.Common\HouseWarehouseStore.Common.csproj", "{CA5D2A77-618F-4ACB-A3DB-E68B81E3DFA1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{C2FA4395-627D-44CD-978A-0C3E9C248942}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseWarehouseStore.Data", "src\HouseWarehouseStore.Data\HouseWarehouseStore.Data.csproj", "{66266455-620C-4A16-80F3-17506CD57F1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseWarehouseStore.Data", "src\HouseWarehouseStore.Data\HouseWarehouseStore.Data.csproj", "{66266455-620C-4A16-80F3-17506CD57F1C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{215849DA-CE62-42FC-8470-4C583808A072}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseWarehouseStore.Models", "src\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj", "{7D84A972-F3A1-46C4-A3FF-80A9649D1D92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseWarehouseStore.Models", "src\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj", "{7D84A972-F3A1-46C4-A3FF-80A9649D1D92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master.Service", "src\Master.Service\Master.Service.csproj", "{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Master.Api", "src\Master.Api\Master.Api.csproj", "{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,14 @@ Global
 		{7D84A972-F3A1-46C4-A3FF-80A9649D1D92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D84A972-F3A1-46C4-A3FF-80A9649D1D92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7D84A972-F3A1-46C4-A3FF-80A9649D1D92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +71,8 @@ Global
 		{CA5D2A77-618F-4ACB-A3DB-E68B81E3DFA1} = {1DA062BD-38D2-4D34-8951-92577132A485}
 		{66266455-620C-4A16-80F3-17506CD57F1C} = {C2FA4395-627D-44CD-978A-0C3E9C248942}
 		{7D84A972-F3A1-46C4-A3FF-80A9649D1D92} = {215849DA-CE62-42FC-8470-4C583808A072}
+		{3E4D6EA9-857C-471A-AC6A-ACBC6379AFE5} = {0A91573A-940E-48E1-808C-3577B7A54A9C}
+		{E015E7B5-E0FB-4B2F-A7BA-3B916BE6E178} = {554A0513-EB98-489E-9B9C-3ACBC972A637}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {83E587D4-9E9B-4C15-863A-1D281B45AA39}
