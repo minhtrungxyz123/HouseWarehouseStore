@@ -17,6 +17,7 @@ builder.Services.AddDbContext<HouseWarehouseStoreDbContext>(options => options.U
 
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 #endregion Add Service
 
