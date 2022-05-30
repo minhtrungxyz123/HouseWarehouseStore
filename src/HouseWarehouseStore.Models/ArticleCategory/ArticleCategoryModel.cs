@@ -2,7 +2,7 @@
 {
     public class ArticleCategoryModel
     {
-        public int ArticleCategoryId { get; set; }
+        public int? ArticleCategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Url { get; set; }
         public int CategorySort { get; set; }

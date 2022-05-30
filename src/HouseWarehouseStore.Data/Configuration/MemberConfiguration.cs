@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Member> entity)
         {
-            entity.ToTable(" Member");
+            entity.ToTable("Member");
 
             entity.Property(e => e.Address).HasMaxLength(200);
 

@@ -8,7 +8,7 @@ namespace Master.Service
     {
         Task<IEnumerable<Admin>> GetAll();
 
-        Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchModel request);
+        Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchModel ctx);
 
         Task<Admin> GetById(int? id);
 

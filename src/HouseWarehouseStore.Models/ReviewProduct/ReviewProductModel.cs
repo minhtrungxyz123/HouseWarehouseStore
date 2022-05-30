@@ -2,7 +2,7 @@
 {
     public class ReviewProductModel
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int ProductId { get; set; }
         public int NumberStart { get; set; }
         public string UserId { get; set; }

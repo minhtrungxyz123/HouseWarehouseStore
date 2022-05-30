@@ -2,6 +2,6 @@
 {
     public class SchemaModel
     {
-        public int Version { get; set; }
+        public int? Version { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 {
     public class BannerModel
     {
-        public int BannerId { get; set; }
+        public int? BannerId { get; set; }
         public string BannerName { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }

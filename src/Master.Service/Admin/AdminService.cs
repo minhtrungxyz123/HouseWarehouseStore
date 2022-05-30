@@ -51,18 +51,18 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchModel request)
+        public async Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchModel ctx)
         {
             var query = _context.Admins.AsQueryable();
-            if (!string.IsNullOrEmpty(request.Keyword))
+            if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Username.Contains(request.Keyword));
+                query = query.Where(x => x.Username.Contains(ctx.Keyword));
             }
 
             int totalRow = await query.CountAsync();
 
-            var data = await query.Skip((request.PageIndex - 1) * request.PageSize)
-                .Take(request.PageSize)
+            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+                .Take(ctx.PageSize)
                 .Select(x => new Admin()
                 {
                     Username = x.Username,
@@ -75,8 +75,8 @@ namespace Master.Service
             var pagedResult = new Pagination<Admin>()
             {
                 TotalRecords = totalRow,
-                PageIndex = request.PageIndex,
-                PageSize = request.PageSize,
+                PageIndex = ctx.PageIndex,
+                PageSize = ctx.PageSize,
                 Items = data
             };
             return new ApiSuccessResult<Pagination<Admin>>(pagedResult);

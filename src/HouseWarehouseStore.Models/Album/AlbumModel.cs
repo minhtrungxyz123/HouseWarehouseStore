@@ -2,7 +2,7 @@
 {
     public class AlbumModel
     {
-        public int AlbumId { get; set; }
+        public int? AlbumId { get; set; }
         public string Name { get; set; }
         public string ListImage { get; set; }
         public string Title { get; set; }

@@ -13,11 +13,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<HouseWarehouseStoreDbContext>(options => options.UseSqlServer(
                             builder.Configuration.GetConnectionString("HouseWarehouseStoreDatabase")));
 
-#region addService
+#region Add Service
 
 builder.Services.AddScoped<IAdminService, AdminService>();
+builder.Services.AddScoped<IMemberService, MemberService>();
 
-#endregion addService
+#endregion Add Service
+
+builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
+{
+    builder.AllowAnyOrigin()
+    .WithOrigins("https://localhost:5100")
+           .AllowAnyMethod()
+           .AllowAnyHeader()
+           .AllowCredentials()
+           .SetIsOriginAllowed(host => true)
+           .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
+}));
 
 var app = builder.Build();
 
@@ -27,6 +39,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 

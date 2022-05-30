@@ -1,8 +1,8 @@
-﻿namespace HouseWarehouseStore.Models.Member
+﻿namespace HouseWarehouseStore.Models
 {
     public class MemberModel
     {
-        public int MemberId { get; set; }
+        public int? MemberId { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
         public string Fullname { get; set; }
