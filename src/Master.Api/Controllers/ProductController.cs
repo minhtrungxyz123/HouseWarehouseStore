@@ -37,7 +37,7 @@ namespace Master.Api.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] ProductSearchModel ctx)
+        public async Task<IActionResult> GetAllPaging([FromQuery] ProductSearchContext ctx)
         {
             var products = await _productService.Get(ctx);
             return Ok(products);

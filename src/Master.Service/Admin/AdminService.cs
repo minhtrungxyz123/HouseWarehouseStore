@@ -51,7 +51,7 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchModel ctx)
+        public async Task<ApiResult<Pagination<Admin>>> GetAllPaging(CollectionSearchContext ctx)
         {
             var query = _context.Admins.AsQueryable();
             if (!string.IsNullOrEmpty(ctx.Keyword))

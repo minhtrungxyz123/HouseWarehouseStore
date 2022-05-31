@@ -62,7 +62,7 @@ namespace Master.Service
             return getAll;
         }
 
-        public async Task<ApiResult<Pagination<Member>>> GetAllPaging(MemberSearchModel ctx)
+        public async Task<ApiResult<Pagination<Member>>> GetAllPaging(MemberSearchContext ctx)
         {
             var query = _context.Members.AsQueryable();
             if (!string.IsNullOrEmpty(ctx.Keyword))

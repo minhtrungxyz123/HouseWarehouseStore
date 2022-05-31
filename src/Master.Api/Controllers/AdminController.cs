@@ -38,7 +38,7 @@ namespace Master.Api.Controllers
         }
 
         [HttpGet("get")]
-        public async Task<IActionResult> GetAllPaging([FromQuery] AdminSearchModel ctx)
+        public async Task<IActionResult> GetAllPaging([FromQuery] CollectionSearchContext ctx)
         {
             var products = await _adminService.GetAllPaging(ctx);
             return Ok(products);

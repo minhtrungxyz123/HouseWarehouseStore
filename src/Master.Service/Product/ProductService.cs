@@ -78,7 +78,7 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Product>>> Get(ProductSearchModel ctx)
+        public async Task<ApiResult<Pagination<Product>>> Get(ProductSearchContext ctx)
         {
             var query = _context.Products.AsQueryable();
             if (!string.IsNullOrEmpty(ctx.Keyword))

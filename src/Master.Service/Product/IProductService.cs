@@ -8,7 +8,7 @@ namespace Master.Service
     {
         Task<IEnumerable<Product>> GetAll();
 
-        Task<ApiResult<Pagination<Product>>> Get(ProductSearchModel ctx);
+        Task<ApiResult<Pagination<Product>>> Get(ProductSearchContext ctx);
 
         Task<Product> GetById(int? id);
 
