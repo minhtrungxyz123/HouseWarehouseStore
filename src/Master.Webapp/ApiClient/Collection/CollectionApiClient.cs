@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Master.Webapp.ApiClient
 {
-    public class ProductApiClient : IProductApiClient
+    public class CollectionApiClient : ICollectionApiClient
     {
         #region Fields
 
@@ -13,7 +13,7 @@ namespace Master.Webapp.ApiClient
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ProductApiClient(IHttpClientFactory httpClientFactory,
+        public CollectionApiClient(IHttpClientFactory httpClientFactory,
             IHttpContextAccessor httpContextAccessor,
             IConfiguration configuration)
         {
@@ -26,49 +26,49 @@ namespace Master.Webapp.ApiClient
 
         #region List
 
-        public async Task<ApiResult<Pagination<ProductModel>>> Get(ProductSearchModel request)
+        public async Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.GetAsync($"/product/get?keyword={request.Keyword}&pageIndex=" +
+            var response = await client.GetAsync($"/collection/get?keyword={request.Keyword}&pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}");
             var body = await response.Content.ReadAsStringAsync();
-            var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ProductModel>>>(body);
+            var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<CollectionModel>>>(body);
             return model;
         }
 
-        public async Task<ApiResult<ProductModel>> GetById(int id)
+        public async Task<ApiResult<CollectionModel>> GetById(int id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.GetAsync($"/product/get-by-id?id={id}");
+            var response = await client.GetAsync($"/collection/get-by-id?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<ProductModel>>(body);
+                return JsonConvert.DeserializeObject<ApiSuccessResult<CollectionModel>>(body);
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<ProductModel>>(body);
+            return JsonConvert.DeserializeObject<ApiErrorResult<CollectionModel>>(body);
         }
 
         #endregion List
 
         #region Method
 
-        public async Task<bool> Create(ProductModel request)
+        public async Task<bool> Create(CollectionModel request)
         {
             var json = JsonConvert.SerializeObject(request);
             var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.PostAsync("/product/create", httpContent);
+            var response = await client.PostAsync("/collection/create", httpContent);
 
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> Edit(int? id, ProductModel request)
+        public async Task<bool> Edit(int? id, CollectionModel request)
         {
             if (id is null)
             {
@@ -85,7 +85,7 @@ namespace Master.Webapp.ApiClient
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.PutAsync($"/product/update/" + id + "", httpContent);
+            var response = await client.PutAsync($"/collection/update/" + id + "", httpContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -94,7 +94,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.DeleteAsync($"/product/delete?id={id}");
+            var response = await client.DeleteAsync($"/collection/delete?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(body);

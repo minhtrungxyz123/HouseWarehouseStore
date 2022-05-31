@@ -11,6 +11,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 #region Add DI
 
 builder.Services.AddScoped<IAdminApiClient, AdminApiClient>();
+builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
+builder.Services.AddScoped<ICollectionApiClient, CollectionApiClient>();
 
 #endregion
 
