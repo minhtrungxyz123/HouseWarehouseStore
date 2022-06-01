@@ -43,7 +43,9 @@ namespace Master.Webapp.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return ViewComponent("CreateCollection");
+            var model = new CollectionModel();
+            model.CreateDate = DateTime.UtcNow.ToLocalTime();
+            return View(model);
         }
 
         [HttpPost]

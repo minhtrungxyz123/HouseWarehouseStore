@@ -1,17 +1,37 @@
 ﻿@model Pagination<HouseWarehouseStore.Models.CollectionModel>
 @{
-    ViewData["Title"] = "Danh sách sản phẩm";
+    ViewData["Title"] = "Danh sách bộ sưu tập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Sản phẩm</h1>
+    <h1 class="h3 mb-2 text-gray-800">Bộ sưu tập</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách sản phẩm</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách bộ sưu tập</h6>
+        </div>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Collection"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/Collection/Index'" class="btn btn-dark">Tải lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="card-body">
             <div class="row">
@@ -117,7 +137,15 @@
                                     @Html.DisplayFor(modelItem => item.Home)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
+                                    @if (item.Active)
+                                    {
+                                        <span class="btn btn-danger">Hoạt động</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-danger">Chưa Active</span>
+
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TitleMeta)
@@ -138,8 +166,8 @@
                                     @Html.DisplayFor(modelItem => item.CreateBy)
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
-                                    <button class="btn" style="background: yellow;" ><i class="fa-solid fa-eye"></i> Chi tiết</button>
+                                    <button class="btn btn-primary" asp-action="Edit" asp-route-id="@item.CollectionId"><i class="fa-solid fa-pen"></i> Sửa</button>
+                                    <button class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.CollectionId"><i class="fa-solid fa-eye"></i> Chi tiết</button>
                                     <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
                                 </td>
                             </tr>
@@ -153,7 +181,7 @@
 </div>
 
 @section Scripts{
-<script>
+    <script>
 
-</script>
+    </script>
 }
