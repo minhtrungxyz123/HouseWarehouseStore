@@ -11,7 +11,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Files.Service\Files.Service.csproj" />
+    <ProjectReference Include="..\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\wwwroot\uploads\" />
   </ItemGroup>
 
 </Project>

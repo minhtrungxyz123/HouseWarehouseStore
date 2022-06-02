@@ -4,6 +4,6 @@
     {
         Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.Files> entities);
 
-        Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(int? id);
+        Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(string? id);
     }
 }

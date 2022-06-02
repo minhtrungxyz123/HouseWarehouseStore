@@ -10,7 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Files");
 
-            entity.Property(e => e.Id).HasColumnName("Id");
+            entity.Property(e => e.Id)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
 
             entity.Property(e => e.FileName).IsRequired().HasMaxLength(255);
 
@@ -21,6 +24,8 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.Property(e => e.Extension).HasMaxLength(50);
 
             entity.Property(e => e.MimeType).HasMaxLength(255);
+
+            entity.Property(e => e.CollectionId).HasColumnName("CollectionId");
         }
     }
 }

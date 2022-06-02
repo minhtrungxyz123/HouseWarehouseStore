@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Data.EF;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Data.EF;
 using Microsoft.EntityFrameworkCore;
 
 namespace Files.Service
@@ -18,34 +19,34 @@ namespace Files.Service
 
         #region Method
 
-        public virtual async Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.Files> entities)
+        public async Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.Files> entities)
         {
-            if (entities != null)
+
+            var list = new List<HouseWarehouseStore.Data.Entities.Files>();
+            foreach (var item in entities)
             {
-                var list = new List<HouseWarehouseStore.Data.Entities.Files>();
-                foreach (var item in entities)
+                var files = new HouseWarehouseStore.Data.Entities.Files()
                 {
-                    var files = new HouseWarehouseStore.Data.Entities.Files()
-                    {
-                        FileName = item.FileName,
-                        Extension = item.Extension,
-                        MimeType = item.MimeType,
-                        Path = item.Path,
-                        Size = item.Size,
-                    };
-
-                    list.Add(files);
-                }
-
-                await _context.Files.AddRangeAsync(list);
+                    FileName = item.FileName,
+                    Extension = item.Extension,
+                    MimeType = item.MimeType,
+                    Path = item.Path,
+                    Size = item.Size,
+                };
+                
+                files.Id = Guid.NewGuid().ToString();
+                list.Add(files);
             }
+
+            await _context.Files.AddRangeAsync(list);
+
 
             var result = await _context.SaveChangesAsync();
 
             return result;
         }
 
-        public async Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(int? id)
+        public async Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(string? id)
         {
             if (id is null)
             {
