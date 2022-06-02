@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.Common;
 
-namespace Warehouse.Data.Dapper
+namespace HouseWarehouseStore.Data.Dapper
 {
     public interface IDapper : IDisposable
     {

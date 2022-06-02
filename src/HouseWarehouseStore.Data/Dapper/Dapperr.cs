@@ -3,7 +3,6 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using System.Data;
 using System.Data.Common;
-using Warehouse.Data.Dapper;
 
 namespace HouseWarehouseStore.Data.Dapper
 {

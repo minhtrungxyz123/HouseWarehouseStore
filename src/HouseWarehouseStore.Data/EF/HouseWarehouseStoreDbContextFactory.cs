@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Warehouse.Data.EF
+namespace HouseWarehouseStore.Data.EF
 {
     public class HouseWarehouseStoreDbContextFactory : IDesignTimeDbContextFactory<HouseWarehouseStoreDbContext>
     {

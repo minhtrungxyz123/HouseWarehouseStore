@@ -52,6 +52,7 @@ namespace HouseWarehouseStore.Data.EF
             modelBuilder.ApplyConfiguration(new UserVoucherConfiguration());
             modelBuilder.ApplyConfiguration(new VideoConfiguration());
             modelBuilder.ApplyConfiguration(new VoucherConfiguration());
+            modelBuilder.ApplyConfiguration(new FilesConfiguration());
         }
 
         private readonly IMediator _mediator;
@@ -103,5 +104,7 @@ namespace HouseWarehouseStore.Data.EF
         public virtual DbSet<UserVoucher> UserVouchers { get; set; }
         public virtual DbSet<Video> Videos { get; set; }
         public virtual DbSet<Voucher> Vouchers { get; set; }
+
+        public virtual DbSet<Files> Files { get; set; }
     }
 }
