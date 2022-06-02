@@ -62,7 +62,8 @@ namespace Master.Api.Controllers
         #region Method
 
         [HttpPost("create")]
-        public async Task<IActionResult> Post([FromBody] CollectionModel model)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Post([FromForm] CollectionModel model)
         {
             var result = await _collectionService.Create(model);
 

@@ -1,0 +1,22 @@
+﻿@model HouseWarehouseStore.Models.SizeModel
+
+<div>
+    <h4>Thêm mới size</h4>
+    <hr />
+    <form asp-controller="Size" asp-action="Create">
+        <div class="form-body">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="SizeProduct" class="control-label"></label>
+                    <input asp-for="SizeProduct" class="form-control" min="0" />
+                    <span asp-validation-for="SizeProduct" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-footer form-actions">
+                <button type="submit" class="btn btn-success btn-sm">
+                    Lưu
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,129 @@
+﻿@model Pagination<HouseWarehouseStore.Models.ContactModel>
+@{
+    ViewData["Title"] = "Danh sách liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liên hệ</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách liên hệ</h6>
+        </div>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Contact"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/Contact/Index'" class="btn btn-dark">Tải lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    @if (ViewBag.SuccessMsg != null)
+                    {
+                        <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuccessMsg
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="white-space: nowrap;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Họ và tên
+                            </th>
+                            <th>
+                                Địa chỉ
+                            </th>
+                            <th>
+                                Số điện thoại
+                            </th>
+                            <th>
+                                Email
+                            </th>
+                            <th>
+                                Nội dung
+                            </th>
+                            <th>
+                                Ngày tạo
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Fullname)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Address)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Mobile)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Subject)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
+                                </td>
+                                <td>
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ContactId"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.ContactId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
+                                    <button onclick="Delete('@item.ContactId')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        setTimeout(function() {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+
+        function Delete(id) {
+            if (confirm("Bạn có chắc chắn xóa không?")) {
+                $.post("/Contact/DeleteConfirmed", { id: id }, function(data) {
+                    if (data) {
+                        if (confirm("Xóa thành công"))
+                            window.location.assign('/Contact/Index')
+                    } else {
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                    }
+                });
+            }
+        }
+    </script>
+}
+

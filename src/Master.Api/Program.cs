@@ -19,6 +19,8 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICollectionService, CollectionService>();
+builder.Services.AddScoped<ISizeService, SizeService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 #endregion Add Service
 
@@ -43,6 +45,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseCors("AllowAll");
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

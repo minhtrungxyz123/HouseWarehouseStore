@@ -13,6 +13,8 @@ builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddScoped<IAdminApiClient, AdminApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 builder.Services.AddScoped<ICollectionApiClient, CollectionApiClient>();
+builder.Services.AddScoped<ISizeApiClient, SizeApiClient>();
+builder.Services.AddScoped<IContactApiClient, ContactApiClient>();
 
 #endregion
 

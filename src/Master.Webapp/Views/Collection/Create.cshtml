@@ -21,22 +21,22 @@
             <div class="col-md-8">
                 <form asp-action="Create" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <div class="form-group w-50">
+                    <div class="form-group bg-white">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
                     </div>
-                    <div class="form-group w-25">
+                    <div class="form-group bg-white">
                         <label asp-for="Description" class="control-label"></label>
                         <input asp-for="Description" class="form-control" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <div class="form-group d-none">
+                    <div class="form-group bg-white">
                         <label asp-for="Content" class="control-label"></label>
                         <input asp-for="Content" value="not input" class="form-control" />
                         <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
-                    <div class="form-group d-none">
+                    <div class="form-group bg-white">
                         <label asp-for="Image" class="control-label"></label>
                         <input asp-for="Image" class="form-control" />
                         <span asp-validation-for="Image" class="text-danger"></span>
@@ -47,22 +47,22 @@
                         <input type="hidden" asp-for="Body" class="form-control" />
                         <span asp-validation-for="Body" class="text-danger"></span>
                     </div>
-                    <div class="form-group w-25">
+                    <div class="form-group bg-white">
                         <label asp-for="Quantity" class="control-label"></label>
                         <input asp-for="Quantity" class="form-control" />
                         <span asp-validation-for="Quantity" class="text-danger"></span>
                     </div>
-                    <div class="form-group w-25">
+                    <div class="form-group bg-white">
                         <label asp-for="Factory" class="control-label"></label>
                         <input asp-for="Factory" class="form-control" />
                         <span asp-validation-for="Factory" class="text-danger"></span>
                     </div>
-                    <div class="form-group w-25">
+                    <div class="form-group bg-white">
                         <label asp-for="Price" class="control-label"></label>
                         <input asp-for="Price" class="form-control" />
                         <span asp-validation-for="Price" class="text-danger"></span>
                     </div>
-                    <div class="form-group w-25">
+                    <div class="form-group bg-white">
                         <label asp-for="Sort" class="control-label"></label>
                         <input asp-for="Sort" class="form-control" />
                         <span asp-validation-for="Sort" class="text-danger"></span>
@@ -82,7 +82,7 @@
                             <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
                         </label>
                     </div>
-                    <div class="form-group w-50">
+                    <div class="form-group bg-white">
                         <label asp-for="TitleMeta" class="control-label"></label>
                         <input asp-for="TitleMeta" class="form-control" />
                         <span asp-validation-for="TitleMeta" class="text-danger"></span>
@@ -104,7 +104,6 @@
 
 @section Scripts{
     <script>
-
         $('#Body').summernote({
             placeholder: 'Mời bạn soạn thảo',
             tabsize: 2,
@@ -125,8 +124,8 @@
 
         $('#Body').on('summernote.change', function(we, contents, $editable) {
             var markupStr = $('#Body').summernote('code');
+            console.log(markupStr)
             $("input#Body").val(markupStr);
         });
-
     </script>
 }

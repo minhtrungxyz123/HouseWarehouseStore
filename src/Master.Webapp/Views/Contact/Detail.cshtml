@@ -1,0 +1,94 @@
+﻿@model HouseWarehouseStore.Models.ContactModel
+
+@{
+    ViewData["Title"] = "Chi tiết liên hệ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Liên hệ</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết liên hệ</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Contact"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Detail">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="ContactId" />
+                    <div class="form-group w-50">
+                        <label asp-for="Fullname" class="control-label"></label>
+                        <input asp-for="Fullname" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Mobile" class="control-label"></label>
+                        <input asp-for="Mobile" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Subject" class="control-label"></label>
+                        <input asp-for="Subject" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Subject" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Body" class="control-label"></label>
+                        <div id="Body"></div>
+                        <input type="hidden" asp-for="Body" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Body" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#Body').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#Body').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#Body').summernote('code');
+            console.log(markupStr)
+            $("input#Body").val(markupStr);
+        });
+
+        $(document).ready(function() {
+            $('#Body').summernote('code', $("input#Body").val());
+        })
+    </script>
+}
+
+

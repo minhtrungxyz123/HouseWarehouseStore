@@ -2,7 +2,9 @@
 using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Http.Headers;
 
 namespace Master.Service
 {
@@ -11,10 +13,14 @@ namespace Master.Service
         #region Fields
 
         private readonly HouseWarehouseStoreDbContext _context;
+        private readonly IFileService _fileService;
+        private const string FOLDER_NAME = "file";
 
-        public CollectionService(HouseWarehouseStoreDbContext context)
+        public CollectionService(HouseWarehouseStoreDbContext context,
+            IFileService fileService)
         {
             _context = context;
+            _fileService = fileService;
         }
 
         #endregion Fields
@@ -195,6 +201,11 @@ namespace Master.Service
                 TitleMeta = model.TitleMeta,
             };
 
+            if (model.ImageFile != null)
+            {
+                item.Image = await this.SaveFile(model.ImageFile);
+            }
+
             await _context.Collections.AddAsync(item);
             var result = await _context.SaveChangesAsync();
 
@@ -256,6 +267,12 @@ namespace Master.Service
 
             var item = await _context.Collections.FindAsync(id);
 
+            var images = _context.Collections.Where(i => i.CollectionId == id);
+            foreach (var image in images)
+            {
+                await _fileService.DeleteFileAsync(image.Image);
+            }
+
             _context.Collections.Remove(item);
             var result = await _context.SaveChangesAsync();
 
@@ -274,5 +291,17 @@ namespace Master.Service
         }
 
         #endregion Method
+
+        #region Utilities
+
+        private async Task<string> SaveFile(IFormFile file)
+        {
+            var originalFileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+            var fileName = $"{Guid.NewGuid()}{Path.GetExtension(originalFileName)}";
+            await _fileService.SaveFileAsync(file.OpenReadStream(), fileName);
+            return "/" + FOLDER_NAME + "/" + fileName;
+        }
+
+        #endregion Utilities
     }
 }

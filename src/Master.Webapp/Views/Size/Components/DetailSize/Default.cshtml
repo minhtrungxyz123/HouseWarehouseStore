@@ -1,0 +1,18 @@
+﻿@model HouseWarehouseStore.Models.SizeModel
+
+<div>
+    <h4>Chi tiết Size</h4>
+    <hr />
+    <form asp-controller="Size" asp-action="Detail">
+        <div class="form-body">
+            <input type="hidden" asp-for="SizeId" />
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="SizeProduct" class="control-label"></label>
+                    <input asp-for="SizeProduct" class="form-control" min="0" readonly="@(true)" />
+                    <span asp-validation-for="SizeProduct" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

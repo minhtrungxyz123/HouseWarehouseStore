@@ -1,4 +1,6 @@
-﻿namespace HouseWarehouseStore.Models
+﻿using Microsoft.AspNetCore.Http;
+
+namespace HouseWarehouseStore.Models
 {
     public class CollectionModel
     {
@@ -20,5 +22,7 @@
         public string BarCode { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
+
+        public IFormFile ImageFile { get; set; }
     }
 }
