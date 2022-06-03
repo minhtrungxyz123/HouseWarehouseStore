@@ -48,7 +48,7 @@ namespace FileApi.Controllers
 
             var fileName = check.FileName;
             //Build the File Path.
-            string path = _hostingEnvironment.WebRootPath + check.Path + "/" + check.FileName;
+            string path = CommonHelper.MapPath(check.Path + "/" + check.FileName);
 
             //Read the File data into Byte Array.
             byte[] bytes = await System.IO.File.ReadAllBytesAsync(path);
@@ -72,7 +72,7 @@ namespace FileApi.Controllers
             var listEntity = new List<HouseWarehouseStore.Data.Entities.Files>();
 
             string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
-            var path = _hostingEnvironment.WebRootPath + @"/wwwroot/uploads/" + createFolderDate + "";
+            var path = CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
             CreateFolderExtension.CreateFolder(path);
             if (path == null)
                 path = "image";
@@ -80,38 +80,38 @@ namespace FileApi.Controllers
             string sql = "";
             foreach (var formFile in filesadd)
             {
-                if (!FormFileExtensions.IsImage(formFile) && !FormFileExtensions.IsExcel(formFile) && !FormFileExtensions.IsWord(formFile) && !FormFileExtensions.IsZipRar(formFile))
+                //if (!FormFileExtensions.IsImage(formFile) && !FormFileExtensions.IsExcel(formFile) && !FormFileExtensions.IsWord(formFile) && !FormFileExtensions.IsZipRar(formFile))
+                //{
+                //    if (sql.Length == 0)
+                //        sql = $"File width name {formFile.FileName} is not type word, excel, zip or image, rar";
+                //    else
+                //        sql = sql + $" .File width name {formFile.FileName} is not type word, excel, zip or image, rar";
+                //}
+                //else
+                //{
+                if (formFile.Length > 0 && formFile.Length <= 250000000)
                 {
-                    if (sql.Length == 0)
-                        sql = $"File width name {formFile.FileName} is not type word, excel, zip or image, rar";
-                    else
-                        sql = sql + $" .File width name {formFile.FileName} is not type word, excel, zip or image, rar";
+                    var filePath = CommonHelper.MapPath(path);
+                    filePaths.Add(filePath);
+                    var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
+                    var fileNameWithPath = string.Concat(filePath, "\\", randomname);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                        var tem = new HouseWarehouseStore.Data.Entities.Files();
+                        tem.FileName = randomname;
+                        tem.Path = @"/wwwroot/uploads/" + createFolderDate + "";
+                        tem.Extension = GetExtension(randomname);
+                        tem.MimeType = formFile.ContentType;
+                        tem.Size = formFile.Length;
+                        listEntity.Add(tem);
+                    }
                 }
                 else
                 {
-                    if (formFile.Length > 0 && formFile.Length <= 250000000)
-                    {
-                        var filePath = Path.Combine(_hostingEnvironment.WebRootPath, "" + path + "");
-                        filePaths.Add(filePath);
-                        var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
-                        var fileNameWithPath = string.Concat(filePath, "\\", randomname);
-                        using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
-                        {
-                            await formFile.CopyToAsync(stream);
-                            var tem = new HouseWarehouseStore.Data.Entities.Files();
-                            tem.FileName = randomname;
-                            tem.Path = @"/wwwroot/uploads/" + createFolderDate + "";
-                            tem.Extension = GetExtension(randomname);
-                            tem.MimeType = formFile.ContentType;
-                            tem.Size = formFile.Length;
-                            listEntity.Add(tem);
-                        }
-                    }
-                    else
-                    {
-                        sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
-                    }
+                    sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
                 }
+                //}
             }
             var listRes = new List<HouseWarehouseStore.Data.Entities.Files>();
             if (listEntity.Count() > 0)

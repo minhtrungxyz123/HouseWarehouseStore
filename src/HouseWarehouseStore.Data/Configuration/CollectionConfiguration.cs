@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Collection> entity)
         {
-            entity.ToTable("Collection");
+            entity.ToTable("Collections");
 
             entity.Property(e => e.CollectionId).HasColumnName("CollectionID");
 

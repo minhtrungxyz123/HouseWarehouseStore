@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouseWarehouseStore.Models
 {
     public class CollectionModel
     {
+        [Key]
         public int? CollectionId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
@@ -22,7 +25,5 @@ namespace HouseWarehouseStore.Models
         public string BarCode { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
-
-        public IFormFile ImageFile { get; set; }
     }
 }

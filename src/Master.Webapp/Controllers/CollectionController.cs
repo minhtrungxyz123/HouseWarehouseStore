@@ -53,11 +53,17 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View(request);
-
+            request.Image = "1";
+            request.CreateDate = DateTime.UtcNow.ToLocalTime();
             var result = await _collectionApiClient.Create(request);
 
             if (result)
             {
+                var filemodels = new FilesModel();
+                filemodels.CollectionId = request.CollectionId;
+                filemodels.filesadd = request.filesadd;
+                await _collectionApiClient.CreateImage(filemodels);
+
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }

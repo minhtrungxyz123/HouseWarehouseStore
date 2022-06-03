@@ -22,6 +22,11 @@
                 <form asp-action="Create" enctype="multipart/form-data" method="post">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group bg-white">
+                        <label asp-for="BarCode" class="control-label"></label>
+                        <input asp-for="BarCode" class="form-control" />
+                        <span asp-validation-for="BarCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
@@ -33,13 +38,13 @@
                     </div>
                     <div class="form-group bg-white">
                         <label asp-for="Content" class="control-label"></label>
-                        <input asp-for="Content" value="not input" class="form-control" />
+                        <input asp-for="Content" class="form-control" />
                         <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
                     <div class="form-group bg-white">
-                        <label asp-for="Image" class="control-label"></label>
-                        <input asp-for="Image" class="form-control" />
-                        <span asp-validation-for="Image" class="text-danger"></span>
+                        <label asp-for="CreateBy" class="control-label"></label>
+                        <input asp-for="CreateBy" class="form-control" />
+                        <span asp-validation-for="CreateBy" class="text-danger"></span>
                     </div>
                     <div class="form-group bg-white">
                         <label asp-for="Body" class="control-label"></label>
@@ -92,6 +97,11 @@
                         <label class="form-check-label">
                             <input class="form-check-input" value="true" asp-for="StatusProduct" /> @Html.DisplayNameFor(model => model.StatusProduct)
                         </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="filesadd" class="control-label"></label>
+                        <input asp-for="filesadd" type="file" class="form-control" />
+                        <span asp-validation-for="filesadd" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Tạo mới" class="btn btn-primary" />

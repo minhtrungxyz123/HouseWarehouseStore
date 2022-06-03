@@ -7,6 +7,8 @@ namespace Master.Webapp.ApiClient
     {
         public Task<bool> Create(CollectionModel request);
 
+        public Task<bool> CreateImage(FilesModel request);
+
         public Task<bool> Edit(int? id, CollectionModel request);
 
         Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request);

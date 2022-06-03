@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Admin> entity)
         {
-            entity.ToTable("Admin");
+            entity.ToTable("Admins");
 
             entity.Property(e => e.Password).IsRequired();
 

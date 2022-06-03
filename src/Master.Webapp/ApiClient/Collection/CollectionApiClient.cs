@@ -63,6 +63,7 @@ namespace Master.Webapp.ApiClient
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
             var response = await client.PostAsync("/collection/create", httpContent);
 
             return response.IsSuccessStatusCode;
@@ -100,6 +101,28 @@ namespace Master.Webapp.ApiClient
                 return JsonConvert.DeserializeObject<bool>(body);
 
             return JsonConvert.DeserializeObject<bool>(body);
+        }
+
+        public async Task<bool> CreateImage(FilesModel request)
+        {
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.filesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
+            }
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.PostAsync("/files/create-image", requestContent);
+
+            return response.IsSuccessStatusCode;
         }
 
         #endregion Method
