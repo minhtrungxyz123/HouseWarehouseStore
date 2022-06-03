@@ -10,15 +10,15 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Collection>>> GetAllPaging(CollectionSearchContext ctx);
 
-        Task<Collection> GetById(int? id);
+        Task<Collection> GetById(string? id);
 
         Task<RepositoryResponse> Create(CollectionModel model);
 
-        Task<RepositoryResponse> Update(int? id, CollectionModel model);
+        Task<RepositoryResponse> Update(string? id, CollectionModel model);
 
-        Task<int> Delete(int? id);
+        Task<int> Delete(string? id);
 
-        Task<ApiResult<Collection>> GetByIdAsyn(int? id);
+        Task<ApiResult<Collection>> GetByIdAsyn(string? id);
 
         IList<Collection> GetActive(bool showHidden = true);
 

@@ -9,12 +9,12 @@ namespace Master.Webapp.ApiClient
 
         public Task<bool> CreateImage(FilesModel request);
 
-        public Task<bool> Edit(int? id, CollectionModel request);
+        public Task<bool> Edit(string? id, CollectionModel request);
 
         Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request);
 
-        Task<ApiResult<CollectionModel>> GetById(int id);
+        Task<ApiResult<CollectionModel>> GetById(string id);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(string id);
     }
 }

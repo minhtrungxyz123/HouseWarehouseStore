@@ -3,6 +3,6 @@
     public class RepositoryResponse
     {
         public int Result { get; set; }
-        public int? Id { get; set; }
+        public string? Id { get; set; }
     }
 }

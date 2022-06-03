@@ -23,7 +23,7 @@ namespace Master.Service
 
         #region List
 
-        public async Task<ApiResult<Collection>> GetByIdAsyn(int? id)
+        public async Task<ApiResult<Collection>> GetByIdAsyn(string? id)
         {
             if (id is null)
             {
@@ -117,7 +117,7 @@ namespace Master.Service
             return new ApiSuccessResult<Pagination<Collection>>(pagedResult);
         }
 
-        public async Task<Collection?> GetById(int? id)
+        public async Task<Collection?> GetById(string? id)
         {
             if (id is null)
             {
@@ -207,7 +207,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<RepositoryResponse> Update(int? id, CollectionModel model)
+        public async Task<RepositoryResponse> Update(string? id, CollectionModel model)
         {
             if (id is null)
             {
@@ -249,7 +249,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<int> Delete(int? id)
+        public async Task<int> Delete(string? id)
         {
             if (id is null)
             {

@@ -199,7 +199,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.ProductId
+                Id = item.ProductId.ToString(),
             };
         }
 
@@ -248,7 +248,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id
+                Id = id.ToString(),
             };
         }
 

@@ -133,7 +133,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.AdminId
+                Id = item.AdminId.ToString(),
             };
         }
 
@@ -162,7 +162,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id
+                Id = id.ToString(),
             };
         }
 

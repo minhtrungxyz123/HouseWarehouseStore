@@ -10,7 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Collections");
 
-            entity.Property(e => e.CollectionId).HasColumnName("CollectionID");
+            entity.Property(e => e.CollectionId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasDefaultValueSql("('')");
 
             entity.Property(e => e.BarCode).HasMaxLength(50);
 
