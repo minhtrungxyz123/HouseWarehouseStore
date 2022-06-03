@@ -58,13 +58,23 @@ namespace Master.Webapp.ApiClient
 
         public async Task<bool> Create(CollectionModel request)
         {
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.filesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
+            }
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.PostAsync("/collection/create", httpContent);
+            var response = await client.PostAsync("/collection/create", requestContent);
 
             return response.IsSuccessStatusCode;
         }
