@@ -106,6 +106,7 @@ namespace Master.Service
             {
                 SizeProduct = model.SizeProduct,
             };
+            model.SizeId = Guid.NewGuid().ToString();
 
             await _context.Sizes.AddAsync(item);
             var result = await _context.SaveChangesAsync();

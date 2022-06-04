@@ -126,6 +126,7 @@ namespace Master.Service
                 Password = model.Password,
                 Role = model.Role
             };
+            model.AdminId = Guid.NewGuid().ToString();
 
             await _context.Admins.AddAsync(item);
             var result = await _context.SaveChangesAsync();

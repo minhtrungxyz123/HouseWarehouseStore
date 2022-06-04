@@ -184,6 +184,7 @@ namespace Master.Service
                 QuyCach = model.QuyCach,
                 SaleOff = model.SaleOff
             };
+            model.CollectionId = Guid.NewGuid().ToString();
 
             await _context.Products.AddAsync(item);
             var result = await _context.SaveChangesAsync();

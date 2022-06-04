@@ -58,9 +58,6 @@
                                 Hình ảnh
                             </th>
                             <th>
-                                Nội dung
-                            </th>
-                            <th>
                                 Số lượng
                             </th>
                             <th>
@@ -116,9 +113,6 @@
                                     @Html.DisplayFor(modelItem => item.Image)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Body)
-                                </td>
-                                <td>
                                     @Html.DisplayFor(modelItem => item.Quantity)
                                 </td>
                                 <td>
@@ -139,7 +133,7 @@
                                 <td>
                                     @if (item.Active)
                                     {
-                                        <span class="btn btn-danger">Hoạt động</span>
+                                        <span class="btn-primary">Hoạt động</span>
                                     }
                                     else
                                     {
@@ -182,6 +176,8 @@
 
 @section Scripts{
     <script>
-
+        setTimeout(function() {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
     </script>
 }

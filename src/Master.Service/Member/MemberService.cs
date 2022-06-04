@@ -155,6 +155,7 @@ namespace Master.Service
                 HomePage = model.HomePage,
                 LockAccount = model.LockAccount
             };
+            model.MemberId = Guid.NewGuid().ToString();
 
             await _context.Members.AddAsync(item);
             var result = await _context.SaveChangesAsync();

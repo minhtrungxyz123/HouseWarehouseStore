@@ -129,6 +129,7 @@ namespace Master.Service
                 Mobile = model.Mobile,
                 Subject = model.Subject,
             };
+            model.ContactId = Guid.NewGuid().ToString();
 
             await _context.Contacts.AddAsync(item);
             var result = await _context.SaveChangesAsync();
