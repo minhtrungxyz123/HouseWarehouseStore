@@ -22,7 +22,7 @@ namespace Master.Service
 
         #region List
 
-        public async Task<ApiResult<Member>> GetByIdAsyn(int? id)
+        public async Task<ApiResult<Member>> GetByIdAsyn(string? id)
         {
             if (id is null)
             {
@@ -48,7 +48,6 @@ namespace Master.Service
                 HomePage = item.HomePage,
                 LockAccount = item.LockAccount,
                 Mobile = item.Mobile,
-                ProductLikes = item.ProductLikes,
                 Token = item.Token
             };
             return new ApiSuccessResult<Member>(model);
@@ -89,7 +88,6 @@ namespace Master.Service
                     Address = x.Address,
                     ConfirmEmail = x.ConfirmEmail,
                     Token = x.Token,
-                    ProductLikes = x.ProductLikes,
                     LockAccount = x.LockAccount,
                     CreateDate = x.CreateDate,
                     HomePage = x.HomePage,
@@ -105,7 +103,7 @@ namespace Master.Service
             return new ApiSuccessResult<Pagination<Member>>(pagedResult);
         }
 
-        public async Task<Member?> GetById(int? id)
+        public async Task<Member?> GetById(string? id)
         {
             if (id is null)
             {
@@ -168,7 +166,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<RepositoryResponse> Update(int? id, MemberModel model)
+        public async Task<RepositoryResponse> Update(string? id, MemberModel model)
         {
             if (id is null)
             {
@@ -205,7 +203,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<int> Delete(int? id)
+        public async Task<int> Delete(string? id)
         {
             if (id is null)
             {

@@ -10,14 +10,14 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Contact>>> GetAllPaging(ContactSearchContext ctx);
 
-        Task<Contact> GetById(int? id);
+        Task<Contact> GetById(string? id);
 
         Task<RepositoryResponse> Create(ContactModel model);
 
-        Task<RepositoryResponse> Update(int? id, ContactModel model);
+        Task<RepositoryResponse> Update(string? id, ContactModel model);
 
-        Task<int> Delete(int? id);
+        Task<int> Delete(string? id);
 
-        Task<ApiResult<Contact>> GetByIdAsyn(int? id);
+        Task<ApiResult<Contact>> GetByIdAsyn(string? id);
     }
 }

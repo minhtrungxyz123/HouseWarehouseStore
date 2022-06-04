@@ -1,8 +1,11 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class AggregatedCounter
     {
-        public string Key { get; set; }
+        public string Key { get; set; } = null!;
         public long Value { get; set; }
         public DateTime? ExpireAt { get; set; }
     }

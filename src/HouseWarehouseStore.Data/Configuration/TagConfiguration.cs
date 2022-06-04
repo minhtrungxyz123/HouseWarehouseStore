@@ -10,11 +10,12 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Tag");
 
-            entity.Property(e => e.TagId).HasColumnName("TagID");
+            entity.Property(e => e.TagId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("TagID");
 
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(e => e.Name).HasMaxLength(100);
         }
     }
 }

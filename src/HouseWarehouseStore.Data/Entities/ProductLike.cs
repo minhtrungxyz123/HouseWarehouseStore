@@ -1,13 +1,13 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class ProductLike
     {
-        public int ProductLikeId { get; set; }
-        public int ProductId { get; set; }
-        public int MemberId { get; set; }
-        public int? ProductsProductId { get; set; }
-
-        public virtual Member Member { get; set; }
-        public virtual Product ProductsProduct { get; set; }
+        public string ProductLikeId { get; set; } = null!;
+        public string ProductId { get; set; } = null!;
+        public string MemberId { get; set; } = null!;
+        public string? ProductsProductId { get; set; }
     }
 }

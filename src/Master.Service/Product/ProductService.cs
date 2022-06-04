@@ -21,7 +21,7 @@ namespace Master.Service
 
         #region List
 
-        public async Task<ApiResult<Product>> GetByIdAsyn(int? id)
+        public async Task<ApiResult<Product>> GetByIdAsyn(string? id)
         {
             if (id is null)
             {
@@ -42,8 +42,6 @@ namespace Master.Service
                 BarCode = item.BarCode,
                 Content = item.Content,
                 Body = item.Body,
-                Carts = item.Carts,
-                Collection = item.Collection,
                 CreateBy = item.CreateBy,
                 CreateDate = item.CreateDate,
                 Description = item.Description,
@@ -53,19 +51,13 @@ namespace Master.Service
                 Home = item.Home,
                 Hot = item.Hot,
                 Image = item.Image,
-                OrderDetails = item.OrderDetails,
                 Price = item.Price,
-                ProductCategorie = item.ProductCategorie,
                 ProductCategorieId = item.ProductCategorieId,
-                ProductLikes = item.ProductLikes,
-                ProductSizeColors = item.ProductSizeColors,
                 Quantity = item.Quantity,
                 QuyCach = item.QuyCach,
-                ReviewProducts = item.ReviewProducts,
                 SaleOff = item.SaleOff,
                 Sort = item.Sort,
                 StatusProduct = item.StatusProduct,
-                Tags = item.Tags,
                 TitleMeta = item.TitleMeta,
             };
             return new ApiSuccessResult<Product>(model);
@@ -129,7 +121,7 @@ namespace Master.Service
             return new ApiSuccessResult<Pagination<Product>>(pagedResult);
         }
 
-        public async Task<Product?> GetById(int? id)
+        public async Task<Product?> GetById(string? id)
         {
             if (id is null)
             {
@@ -203,7 +195,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<RepositoryResponse> Update(int? id, ProductModel model)
+        public async Task<RepositoryResponse> Update(string? id, ProductModel model)
         {
             if (id is null)
             {
@@ -252,7 +244,7 @@ namespace Master.Service
             };
         }
 
-        public async Task<int> Delete(int? id)
+        public async Task<int> Delete(string? id)
         {
             if (id is null)
             {

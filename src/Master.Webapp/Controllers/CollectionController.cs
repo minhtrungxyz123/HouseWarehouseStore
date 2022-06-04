@@ -55,6 +55,7 @@ namespace Master.Webapp.Controllers
                 return View(request);
             request.Image = "1";
             request.CreateDate = DateTime.UtcNow.ToLocalTime();
+            request.CollectionId = Guid.NewGuid().ToString();
             var result = await _collectionApiClient.Create(request);
 
             if (result)
@@ -62,7 +63,7 @@ namespace Master.Webapp.Controllers
                 var filemodels = new FilesModel();
                 filemodels.CollectionId = request.CollectionId;
                 filemodels.filesadd = request.filesadd;
-                await _collectionApiClient.CreateImage(filemodels);
+                await _collectionApiClient.CreateImage(filemodels, request.CollectionId);
 
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");

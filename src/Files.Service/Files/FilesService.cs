@@ -19,19 +19,20 @@ namespace Files.Service
 
         #region Method
 
-        public async Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.Files> entities)
+        public async Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string collectionId)
         {
 
-            var list = new List<HouseWarehouseStore.Data.Entities.Files>();
+            var list = new List<HouseWarehouseStore.Data.Entities.File>();
             foreach (var item in entities)
             {
-                var files = new HouseWarehouseStore.Data.Entities.Files()
+                var files = new HouseWarehouseStore.Data.Entities.File()
                 {
                     FileName = item.FileName,
                     Extension = item.Extension,
                     MimeType = item.MimeType,
                     Path = item.Path,
                     Size = item.Size,
+                    CollectionId = collectionId,
                 };
                 
                 files.Id = Guid.NewGuid().ToString();
@@ -46,7 +47,7 @@ namespace Files.Service
             return result;
         }
 
-        public async Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(string? id)
+        public async Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string? id)
         {
             if (id is null)
             {

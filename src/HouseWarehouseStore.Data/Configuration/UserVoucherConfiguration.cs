@@ -10,11 +10,12 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("UserVoucher");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("id");
 
-            entity.Property(e => e.Code)
-                .IsRequired()
-                .HasMaxLength(6);
+            entity.Property(e => e.Code).HasMaxLength(6);
 
             entity.Property(e => e.MaDonHang).HasMaxLength(50);
 

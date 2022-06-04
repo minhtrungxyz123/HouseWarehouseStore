@@ -13,7 +13,7 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.Property(e => e.CollectionId)
                     .HasMaxLength(36)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('')");
+                    .HasColumnName("CollectionID");
 
             entity.Property(e => e.BarCode).HasMaxLength(50);
 

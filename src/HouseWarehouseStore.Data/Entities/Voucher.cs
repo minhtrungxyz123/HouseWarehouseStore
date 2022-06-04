@@ -1,10 +1,13 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class Voucher
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public string Code { get; set; }
+        public string Id { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string Code { get; set; } = null!;
         public bool Type { get; set; }
         public bool Condition { get; set; }
         public decimal PriceUp { get; set; }

@@ -10,20 +10,21 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Order");
 
+            entity.Property(e => e.Id)
+                   .HasMaxLength(36)
+                   .IsUnicode(false);
+
             entity.Property(e => e.Address)
-                    .IsRequired()
-                    .HasMaxLength(200)
-                    .HasDefaultValueSql("(N'')");
+                .HasMaxLength(200)
+                .HasDefaultValueSql("(N'')");
 
             entity.Property(e => e.Body).HasMaxLength(200);
 
             entity.Property(e => e.Email)
-                .IsRequired()
                 .HasMaxLength(50)
                 .HasDefaultValueSql("(N'')");
 
             entity.Property(e => e.Fullname)
-                .IsRequired()
                 .HasMaxLength(50)
                 .HasDefaultValueSql("(N'')");
 
@@ -32,9 +33,12 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.Property(e => e.MaDonHang).HasMaxLength(50);
 
             entity.Property(e => e.Mobile)
-                .IsRequired()
                 .HasMaxLength(11)
                 .HasDefaultValueSql("(N'')");
+
+            entity.Property(e => e.OrderMemberId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
         }
     }
 }

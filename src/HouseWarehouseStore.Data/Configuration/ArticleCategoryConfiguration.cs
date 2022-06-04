@@ -10,9 +10,15 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("ArticleCategory");
 
-            entity.Property(e => e.CategoryName)
-                    .IsRequired()
-                    .HasMaxLength(50);
+            entity.Property(e => e.ArticleCategoryId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
+            entity.Property(e => e.CategoryName).HasMaxLength(50);
+
+            entity.Property(e => e.ParentId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
 
             entity.Property(e => e.Slug).HasMaxLength(100);
 

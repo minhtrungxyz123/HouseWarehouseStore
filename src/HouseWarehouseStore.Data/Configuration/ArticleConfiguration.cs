@@ -12,25 +12,26 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.HasIndex(e => e.ArticleCategoryId, "IX_Articles_ArticleCategoryId");
 
-            entity.Property(e => e.Description)
-                .IsRequired()
-                .HasMaxLength(500);
+            entity.Property(e => e.Id)
+                .HasMaxLength(36)
+                .IsUnicode(false);
+
+            entity.Property(e => e.ArticleCategoryId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
+
+            entity.Property(e => e.Description).HasMaxLength(500);
 
             entity.Property(e => e.DescriptionMetaTitle).HasMaxLength(500);
 
             entity.Property(e => e.KeyWord).HasMaxLength(500);
 
-            entity.Property(e => e.Subject)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(e => e.Subject).HasMaxLength(100);
 
             entity.Property(e => e.TitleMeta).HasMaxLength(100);
 
             entity.Property(e => e.Url).HasMaxLength(300);
 
-            entity.HasOne(d => d.ArticleCategory)
-                .WithMany(p => p.Articles)
-                .HasForeignKey(d => d.ArticleCategoryId);
         }
     }
 }

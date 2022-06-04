@@ -15,14 +15,14 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Size>>> GetAllPaging(SizeSearchContext ctx);
 
-        Task<Size> GetById(int? id);
+        Task<Size> GetById(string? id);
 
         Task<RepositoryResponse> Create(SizeModel model);
 
-        Task<RepositoryResponse> Update(int? id, SizeModel model);
+        Task<RepositoryResponse> Update(string? id, SizeModel model);
 
-        Task<int> Delete(int? id);
+        Task<int> Delete(string? id);
 
-        Task<ApiResult<Size>> GetByIdAsyn(int? id);
+        Task<ApiResult<Size>> GetByIdAsyn(string? id);
     }
 }

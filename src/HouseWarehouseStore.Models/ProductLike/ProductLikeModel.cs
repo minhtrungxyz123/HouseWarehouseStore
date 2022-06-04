@@ -2,9 +2,9 @@
 {
     public class ProductLikeModel
     {
-        public int? ProductLikeId { get; set; }
-        public int ProductId { get; set; }
-        public int MemberId { get; set; }
-        public int? ProductsProductId { get; set; }
+        public string? ProductLikeId { get; set; }
+        public string ProductId { get; set; }
+        public string MemberId { get; set; }
+        public string? ProductsProductId { get; set; }
     }
 }

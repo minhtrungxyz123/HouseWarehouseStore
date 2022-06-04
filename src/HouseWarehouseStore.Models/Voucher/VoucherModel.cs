@@ -2,7 +2,7 @@
 {
     public class VoucherModel
     {
-        public int? Id { get; set; }
+        public string? Id { get; set; }
         public string Name { get; set; }
         public string Code { get; set; }
         public bool Type { get; set; }

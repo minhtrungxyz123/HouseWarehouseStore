@@ -14,19 +14,24 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.HasIndex(e => e.ProductsProductId, "IX_ProductLikes_ProductsProductID");
 
-            entity.Property(e => e.ProductLikeId).HasColumnName("ProductLikeID");
+            entity.Property(e => e.ProductLikeId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("ProductLikeID");
 
-            entity.Property(e => e.ProductId).HasColumnName("ProductID");
+            entity.Property(e => e.MemberId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
 
-            entity.Property(e => e.ProductsProductId).HasColumnName("ProductsProductID");
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("ProductID");
 
-            entity.HasOne(d => d.Member)
-                .WithMany(p => p.ProductLikes)
-                .HasForeignKey(d => d.MemberId);
-
-            entity.HasOne(d => d.ProductsProduct)
-                .WithMany(p => p.ProductLikes)
-                .HasForeignKey(d => d.ProductsProductId);
+            entity.Property(e => e.ProductsProductId)
+                .HasMaxLength(36)
+                .IsUnicode(false)
+                .HasColumnName("ProductsProductID");
         }
     }
 }

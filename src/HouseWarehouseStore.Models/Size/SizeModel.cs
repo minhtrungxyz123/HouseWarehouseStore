@@ -2,7 +2,7 @@
 {
     public class SizeModel
     {
-        public int? SizeId { get; set; }
+        public string? SizeId { get; set; }
         public string SizeProduct { get; set; }
     }
 }

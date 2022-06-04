@@ -11,7 +11,7 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.ToTable("AggregatedCounter");
 
             entity.HasKey(e => e.Key)
-                     .HasName("PK_HangFire_CounterAggregated");
+                   .HasName("PK_HangFire_CounterAggregated");
 
             entity.ToTable("AggregatedCounter", "HangFire");
 

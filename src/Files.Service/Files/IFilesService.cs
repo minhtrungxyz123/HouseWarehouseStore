@@ -2,8 +2,8 @@
 {
     public interface IFilesService
     {
-        Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.Files> entities);
+        Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string collectionId);
 
-        Task<HouseWarehouseStore.Data.Entities.Files> GetByIdAsync(string? id);
+        Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string? id);
     }
 }

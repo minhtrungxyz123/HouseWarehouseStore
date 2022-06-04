@@ -1,50 +1,33 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class Product
     {
-        public Product()
-        {
-            Carts = new HashSet<Cart>();
-            OrderDetails = new HashSet<OrderDetail>();
-            ProductLikes = new HashSet<ProductLike>();
-            ProductSizeColors = new HashSet<ProductSizeColor>();
-            ReviewProducts = new HashSet<ReviewProduct>();
-            Tags = new HashSet<Tag>();
-        }
-
-        public int ProductId { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public string Image { get; set; }
-        public string Body { get; set; }
-        public int ProductCategorieId { get; set; }
+        public string ProductId { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string Description { get; set; } = null!;
+        public string Image { get; set; } = null!;
+        public string? Body { get; set; }
+        public string ProductCategorieId { get; set; } = null!;
         public int Quantity { get; set; }
-        public string Factory { get; set; }
+        public string? Factory { get; set; }
         public decimal Price { get; set; }
         public decimal SaleOff { get; set; }
-        public string QuyCach { get; set; }
+        public string? QuyCach { get; set; }
         public int Sort { get; set; }
         public bool Hot { get; set; }
         public bool Home { get; set; }
         public bool Active { get; set; }
-        public string TitleMeta { get; set; }
-        public string DescriptionMeta { get; set; }
-        public string GiftInfo { get; set; }
-        public string Content { get; set; }
+        public string? TitleMeta { get; set; }
+        public string? DescriptionMeta { get; set; }
+        public string? GiftInfo { get; set; }
+        public string? Content { get; set; }
         public bool StatusProduct { get; set; }
-        public int CollectionId { get; set; }
-        public string BarCode { get; set; }
+        public string CollectionId { get; set; } = null!;
+        public string? BarCode { get; set; }
         public DateTime CreateDate { get; set; }
-        public string CreateBy { get; set; }
-
-        public virtual Collection Collection { get; set; }
-        public virtual ProductCategory ProductCategorie { get; set; }
-        public virtual ICollection<Cart> Carts { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-        public virtual ICollection<ProductLike> ProductLikes { get; set; }
-        public virtual ICollection<ProductSizeColor> ProductSizeColors { get; set; }
-        public virtual ICollection<ReviewProduct> ReviewProducts { get; set; }
-
-        public virtual ICollection<Tag> Tags { get; set; }
+        public string? CreateBy { get; set; }
     }
 }

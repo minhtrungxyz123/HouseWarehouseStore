@@ -65,7 +65,7 @@ namespace Master.Webapp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(string id)
         {
             var result = await _sizeApiClient.GetById(id);
             if (result.IsSuccessed)
@@ -99,7 +99,7 @@ namespace Master.Webapp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -115,7 +115,7 @@ namespace Master.Webapp.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Detail(int id)
+        public async Task<IActionResult> Detail(string id)
         {
             var result = await _sizeApiClient.GetById(id);
             if (result.IsSuccessed)

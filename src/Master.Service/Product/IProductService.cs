@@ -10,15 +10,15 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Product>>> Get(ProductSearchContext ctx);
 
-        Task<Product> GetById(int? id);
+        Task<Product> GetById(string? id);
 
         Task<RepositoryResponse> Create(ProductModel model);
 
-        Task<RepositoryResponse> Update(int? id, ProductModel model);
+        Task<RepositoryResponse> Update(string? id, ProductModel model);
 
-        Task<int> Delete(int? id);
+        Task<int> Delete(string? id);
 
-        Task<ApiResult<Product>> GetByIdAsyn(int? id);
+        Task<ApiResult<Product>> GetByIdAsyn(string? id);
 
         IList<Product> GetMvcListItems(bool showHidden = true);
     }

@@ -19,9 +19,7 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
 
-            entity.Property(e => e.Key)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(e => e.Key).HasMaxLength(100);
         }
     }
 }

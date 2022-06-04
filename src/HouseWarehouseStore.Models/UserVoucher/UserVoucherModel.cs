@@ -2,7 +2,7 @@
 {
     public class UserVoucherModel
     {
-        public int? Id { get; set; }
+        public string? Id { get; set; }
         public string MaDonHang { get; set; }
         public decimal SumHd { get; set; }
         public string Code { get; set; }

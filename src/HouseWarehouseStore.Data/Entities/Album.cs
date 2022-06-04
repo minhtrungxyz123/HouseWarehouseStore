@@ -1,13 +1,16 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class Album
     {
-        public int AlbumId { get; set; }
-        public string Name { get; set; }
-        public string ListImage { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Body { get; set; }
+        public string AlbumId { get; set; } = null!;
+        public string Name { get; set; } = null!;
+        public string ListImage { get; set; } = null!;
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? Body { get; set; }
         public int Sort { get; set; }
         public bool Home { get; set; }
         public bool Active { get; set; }

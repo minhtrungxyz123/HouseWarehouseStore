@@ -63,13 +63,13 @@ namespace FileApi.Controllers
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId)
         {
             if (filesadd == null || filesadd.Count == 0)
 
                 return BadRequest(new ApiBadRequestResponse("No image selected"));
 
-            var listEntity = new List<HouseWarehouseStore.Data.Entities.Files>();
+            var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
 
             string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
             var path = CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
@@ -98,7 +98,7 @@ namespace FileApi.Controllers
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
-                        var tem = new HouseWarehouseStore.Data.Entities.Files();
+                        var tem = new HouseWarehouseStore.Data.Entities.File();
                         tem.FileName = randomname;
                         tem.Path = @"/wwwroot/uploads/" + createFolderDate + "";
                         tem.Extension = GetExtension(randomname);
@@ -113,15 +113,16 @@ namespace FileApi.Controllers
                 }
                 //}
             }
-            var listRes = new List<HouseWarehouseStore.Data.Entities.Files>();
+            var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
             if (listEntity.Count() > 0)
             {
-                await _fileService.InsertAsync(listEntity);
+                await _fileService.InsertAsync(listEntity, collectionId);
                 foreach (var item in listEntity)
                 {
-                    var tem = new HouseWarehouseStore.Data.Entities.Files();
+                    var tem = new HouseWarehouseStore.Data.Entities.File();
                     tem.FileName = item.FileName;
                     tem.Path = item.Path;
+                    tem.CollectionId = collectionId;
                     listRes.Add(tem);
                 }
             }

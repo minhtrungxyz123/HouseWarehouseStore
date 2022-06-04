@@ -2,7 +2,7 @@
 {
     public class AboutModel
     {
-        public int? AboutId { get; set; }
+        public string? AboutId { get; set; }
         public string Subject { get; set; }
         public string Image { get; set; }
         public string CoverImage { get; set; }

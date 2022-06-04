@@ -11,7 +11,7 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.ToTable("Schema");
 
             entity.HasKey(e => e.Version)
-                    .HasName("PK_HangFire_Schema");
+                     .HasName("PK_HangFire_Schema");
 
             entity.ToTable("Schema", "HangFire");
 

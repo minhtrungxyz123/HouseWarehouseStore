@@ -2,12 +2,12 @@
 {
     public class ArticleCategoryModel
     {
-        public int? ArticleCategoryId { get; set; }
+        public string? ArticleCategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Url { get; set; }
         public int CategorySort { get; set; }
         public bool CategoryActive { get; set; }
-        public int? ParentId { get; set; }
+        public string? ParentId { get; set; }
         public bool ShowHome { get; set; }
         public bool ShowMenu { get; set; }
         public string Slug { get; set; }

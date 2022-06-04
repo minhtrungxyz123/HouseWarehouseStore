@@ -10,7 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Size");
 
-            entity.Property(e => e.SizeId).HasColumnName("SizeID");
+            entity.Property(e => e.SizeId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("SizeID");
 
             entity.Property(e => e.SizeProduct).HasMaxLength(50);
         }

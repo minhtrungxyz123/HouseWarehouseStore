@@ -12,11 +12,15 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.HasIndex(e => e.ProductId, "IX_ReviewProducts_ProductId");
 
-            entity.Property(e => e.UserId).HasColumnName("userID");
+            entity.Property(e => e.Id)
+                .HasMaxLength(36)
+                .IsUnicode(false);
 
-            entity.HasOne(d => d.Product)
-                .WithMany(p => p.ReviewProducts)
-                .HasForeignKey(d => d.ProductId);
+            entity.Property(e => e.ProductId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
+
+            entity.Property(e => e.UserId).HasColumnName("userID");
         }
     }
 }

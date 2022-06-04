@@ -70,6 +70,7 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
@@ -130,7 +131,7 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
-        public async Task<bool> CreateImage(FilesModel request)
+        public async Task<bool> CreateImage(FilesModel request, string collectionId)
         {
             var requestContent = new MultipartFormDataContent();
 
@@ -144,10 +145,11 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/create-image", requestContent);
+            var response = await client.PostAsync("/files/create-image?collectionId="+collectionId+"", requestContent);
 
             return response.IsSuccessStatusCode;
         }

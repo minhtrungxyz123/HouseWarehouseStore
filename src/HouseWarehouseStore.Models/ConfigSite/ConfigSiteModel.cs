@@ -2,7 +2,7 @@
 {
     public class ConfigSiteModel
     {
-        public int? ConfigSiteId { get; set; }
+        public string? ConfigSiteId { get; set; }
         public string Facebook { get; set; }
         public string GooglePlus { get; set; }
         public string Youtube { get; set; }

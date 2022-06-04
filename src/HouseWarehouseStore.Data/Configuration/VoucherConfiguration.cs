@@ -10,15 +10,15 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Voucher");
 
+            entity.Property(e => e.Id)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
             entity.Property(e => e.Active)
-                    .IsRequired()
-                    .HasDefaultValueSql("(CONVERT([bit],(0)))");
-
-            entity.Property(e => e.Code)
                 .IsRequired()
-                .HasMaxLength(6);
+                .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-            entity.Property(e => e.Name).IsRequired();
+            entity.Property(e => e.Code).HasMaxLength(6);
 
             entity.Property(e => e.PriceDown).HasColumnType("decimal(18, 0)");
 

@@ -11,7 +11,7 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.ToTable("List");
 
             entity.HasKey(e => new { e.Key, e.Id })
-                    .HasName("PK_HangFire_List");
+                   .HasName("PK_HangFire_List");
 
             entity.ToTable("List", "HangFire");
 
@@ -19,8 +19,6 @@ namespace HouseWarehouseStore.Data.Configuration
                 .HasFilter("([ExpireAt] IS NOT NULL)");
 
             entity.Property(e => e.Key).HasMaxLength(100);
-
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
         }

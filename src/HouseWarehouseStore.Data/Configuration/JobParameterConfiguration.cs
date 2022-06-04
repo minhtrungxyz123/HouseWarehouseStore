@@ -16,11 +16,6 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.ToTable("JobParameter", "HangFire");
 
             entity.Property(e => e.Name).HasMaxLength(40);
-
-            entity.HasOne(d => d.Job)
-                .WithMany(p => p.JobParameters)
-                .HasForeignKey(d => d.JobId)
-                .HasConstraintName("FK_HangFire_JobParameter_Job");
         }
     }
 }

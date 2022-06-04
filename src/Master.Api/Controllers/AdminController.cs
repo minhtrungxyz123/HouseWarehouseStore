@@ -25,7 +25,7 @@ namespace Master.Api.Controllers
 
         [Route("get-by-id")]
         [HttpGet]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(string id)
         {
             var user = await _adminService.GetByIdAsyn(id);
             return Ok(user);
@@ -45,7 +45,7 @@ namespace Master.Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult> Get(int id)
+        public async Task<ActionResult> Get(string id)
         {
             var item = await _adminService.GetById(id);
 
@@ -85,7 +85,7 @@ namespace Master.Api.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Put([FromBody] AdminModel model, int id)
+        public async Task<IActionResult> Put([FromBody] AdminModel model, string id)
         {
             var item = await _adminService.GetById(id);
             if (item == null)
@@ -105,7 +105,7 @@ namespace Master.Api.Controllers
 
         [Route("delete")]
         [HttpDelete]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             var result = await _adminService.Delete(id);
             return Ok(result);

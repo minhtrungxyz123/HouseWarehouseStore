@@ -10,6 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Admins");
 
+            entity.Property(e => e.AdminId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
             entity.Property(e => e.Password).IsRequired();
 
             entity.Property(e => e.Role).IsRequired();

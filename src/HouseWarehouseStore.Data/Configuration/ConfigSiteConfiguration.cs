@@ -10,7 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("ConfigSite");
 
-            entity.Property(e => e.ConfigSiteId).HasColumnName("ConfigSiteID");
+            entity.Property(e => e.ConfigSiteId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("ConfigSiteID");
 
             entity.Property(e => e.CoverImage).HasMaxLength(500);
 

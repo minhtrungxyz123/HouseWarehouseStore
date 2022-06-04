@@ -7,12 +7,12 @@ namespace Master.Webapp.ApiClient
     {
         public Task<bool> Create(ContactModel request);
 
-        public Task<bool> Edit(int? id, ContactModel request);
+        public Task<bool> Edit(string? id, ContactModel request);
 
         Task<ApiResult<Pagination<ContactModel>>> Get(ContactSearchModel request);
 
-        Task<ApiResult<ContactModel>> GetById(int id);
+        Task<ApiResult<ContactModel>> GetById(string id);
 
-        Task<bool> Delete(int id);
+        Task<bool> Delete(string id);
     }
 }

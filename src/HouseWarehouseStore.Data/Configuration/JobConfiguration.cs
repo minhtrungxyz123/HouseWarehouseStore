@@ -18,13 +18,11 @@ namespace HouseWarehouseStore.Data.Configuration
             entity.HasIndex(e => e.StateName, "IX_HangFire_Job_StateName")
                 .HasFilter("([StateName] IS NOT NULL)");
 
-            entity.Property(e => e.Arguments).IsRequired();
+            entity.Property(e => e.Id).ValueGeneratedNever();
 
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
             entity.Property(e => e.ExpireAt).HasColumnType("datetime");
-
-            entity.Property(e => e.InvocationData).IsRequired();
 
             entity.Property(e => e.StateName).HasMaxLength(20);
         }

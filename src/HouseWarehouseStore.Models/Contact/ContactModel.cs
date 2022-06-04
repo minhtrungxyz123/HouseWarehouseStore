@@ -2,7 +2,7 @@
 {
     public class ContactModel
     {
-        public int? ContactId { get; set; }
+        public string? ContactId { get; set; }
         public string Fullname { get; set; }
         public string Address { get; set; }
         public long Mobile { get; set; }

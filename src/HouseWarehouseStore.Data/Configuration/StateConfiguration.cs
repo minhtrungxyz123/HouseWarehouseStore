@@ -15,20 +15,11 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.ToTable("State", "HangFire");
 
-            entity.Property(e => e.Id).ValueGeneratedOnAdd();
-
             entity.Property(e => e.CreatedAt).HasColumnType("datetime");
 
-            entity.Property(e => e.Name)
-                .IsRequired()
-                .HasMaxLength(20);
+            entity.Property(e => e.Name).HasMaxLength(20);
 
             entity.Property(e => e.Reason).HasMaxLength(100);
-
-            entity.HasOne(d => d.Job)
-                .WithMany(p => p.States)
-                .HasForeignKey(d => d.JobId)
-                .HasConstraintName("FK_HangFire_State_Job");
         }
     }
 }

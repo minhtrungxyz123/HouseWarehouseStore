@@ -7,7 +7,7 @@ namespace Master.Webapp.ApiClient
     {
         public Task<bool> Create(CollectionModel request);
 
-        public Task<bool> CreateImage(FilesModel request);
+        public Task<bool> CreateImage(FilesModel request, string collectionId);
 
         public Task<bool> Edit(string? id, CollectionModel request);
 

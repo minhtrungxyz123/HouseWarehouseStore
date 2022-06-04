@@ -40,7 +40,7 @@ namespace Master.Webapp.ApiClient
             return model;
         }
 
-        public async Task<ApiResult<AdminModel>> GetById(int id)
+        public async Task<ApiResult<AdminModel>> GetById(string id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
@@ -68,7 +68,7 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> Edit(int? id, AdminModel request)
+        public async Task<bool> Edit(string? id, AdminModel request)
         {
             if (id is null)
             {
@@ -90,7 +90,7 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> Delete(int id)
+        public async Task<bool> Delete(string id)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);

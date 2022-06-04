@@ -10,19 +10,19 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Member");
 
+            entity.Property(e => e.MemberId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false);
+
             entity.Property(e => e.Address).HasMaxLength(200);
 
             entity.Property(e => e.ConfirmEmail)
                 .IsRequired()
                 .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-            entity.Property(e => e.Email)
-                .IsRequired()
-                .HasMaxLength(50);
+            entity.Property(e => e.Email).HasMaxLength(50);
 
-            entity.Property(e => e.Fullname)
-                .IsRequired()
-                .HasMaxLength(50);
+            entity.Property(e => e.Fullname).HasMaxLength(50);
 
             entity.Property(e => e.HomePage).HasMaxLength(200);
 
@@ -30,11 +30,7 @@ namespace HouseWarehouseStore.Data.Configuration
                 .IsRequired()
                 .HasDefaultValueSql("(CONVERT([bit],(0)))");
 
-            entity.Property(e => e.Password).IsRequired();
-
-            entity.Property(e => e.Role)
-                .IsRequired()
-                .HasDefaultValueSql("(N'')");
+            entity.Property(e => e.Role).HasDefaultValueSql("(N'')");
 
             entity.Property(e => e.Token).HasColumnName("token");
         }

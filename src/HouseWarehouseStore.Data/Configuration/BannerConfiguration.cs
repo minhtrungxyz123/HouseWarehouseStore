@@ -10,13 +10,18 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Banner");
 
-            entity.Property(e => e.BannerId).HasColumnName("BannerID");
+            entity.Property(e => e.BannerId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("BannerID");
 
-            entity.Property(e => e.BannerName)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(e => e.BannerName).HasMaxLength(100);
 
             entity.Property(e => e.CoverImage).HasMaxLength(500);
+
+            entity.Property(e => e.GroupId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
 
             entity.Property(e => e.Title).HasMaxLength(100);
 

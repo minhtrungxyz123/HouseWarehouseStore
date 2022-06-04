@@ -51,7 +51,6 @@ namespace Master.Service
                 Hot = item.Hot,
                 Image = item.Image,
                 Price = item.Price,
-                Products = item.Products,
                 Quantity = item.Quantity,
                 Sort = item.Sort,
                 StatusProduct = item.StatusProduct,
@@ -178,6 +177,7 @@ namespace Master.Service
 
             Collection item = new Collection()
             {
+                CollectionId = model.CollectionId,
                 Name = model.Name,
                 Active = model.Active,
                 BarCode = model.BarCode,

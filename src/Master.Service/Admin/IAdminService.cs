@@ -10,15 +10,15 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchContext ctx);
 
-        Task<Admin> GetById(int? id);
+        Task<Admin> GetById(string? id);
 
         Task<RepositoryResponse> Create(AdminModel model);
 
-        Task<RepositoryResponse> Update(int? id, AdminModel model);
+        Task<RepositoryResponse> Update(string? id, AdminModel model);
 
-        Task<int> Delete(int? id);
+        Task<int> Delete(string? id);
 
-        Task<ApiResult<Admin>> GetByIdAsyn(int? id);
+        Task<ApiResult<Admin>> GetByIdAsyn(string? id);
 
         IList<Admin> GetMvcListItems(bool showHidden = true);
     }

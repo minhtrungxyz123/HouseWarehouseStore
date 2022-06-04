@@ -8,17 +8,18 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<About> entity)
         {
-            entity.ToTable("About");
+            entity.ToTable("Abouts");
 
-            entity.Property(e => e.AboutId).HasColumnName("AboutID");
+            entity.Property(e => e.AboutId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("AboutID");
 
             entity.Property(e => e.CoverImage).HasMaxLength(500);
 
             entity.Property(e => e.Image).HasMaxLength(500);
 
-            entity.Property(e => e.Subject)
-                .IsRequired()
-                .HasMaxLength(100);
+            entity.Property(e => e.Subject).HasMaxLength(100);
         }
     }
 }

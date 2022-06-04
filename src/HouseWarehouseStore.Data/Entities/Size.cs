@@ -1,15 +1,11 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System;
+using System.Collections.Generic;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public partial class Size
     {
-        public Size()
-        {
-            ProductSizeColors = new HashSet<ProductSizeColor>();
-        }
-
-        public int SizeId { get; set; }
-        public string SizeProduct { get; set; }
-
-        public virtual ICollection<ProductSizeColor> ProductSizeColors { get; set; }
+        public string SizeId { get; set; } = null!;
+        public string? SizeProduct { get; set; }
     }
 }

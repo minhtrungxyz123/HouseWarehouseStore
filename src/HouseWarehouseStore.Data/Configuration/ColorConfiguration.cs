@@ -10,7 +10,10 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Color");
 
-            entity.Property(e => e.ColorId).HasColumnName("ColorID");
+            entity.Property(e => e.ColorId)
+                    .HasMaxLength(36)
+                    .IsUnicode(false)
+                    .HasColumnName("ColorID");
         }
     }
 }

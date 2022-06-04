@@ -2,12 +2,12 @@
 {
     public class ProductModel
     {
-        public int? ProductId { get; set; }
+        public string? ProductId { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
         public string Image { get; set; }
         public string Body { get; set; }
-        public int ProductCategorieId { get; set; }
+        public string ProductCategorieId { get; set; }
         public int Quantity { get; set; }
         public string Factory { get; set; }
         public decimal Price { get; set; }
@@ -22,7 +22,7 @@
         public string GiftInfo { get; set; }
         public string Content { get; set; }
         public bool StatusProduct { get; set; }
-        public int CollectionId { get; set; }
+        public string CollectionId { get; set; }
         public string BarCode { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
