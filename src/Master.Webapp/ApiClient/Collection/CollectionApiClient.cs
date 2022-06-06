@@ -26,6 +26,18 @@ namespace Master.Webapp.ApiClient
 
         #region List
 
+        public async Task<ApiResult<FilesModel>> GetByIdImage(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.GetAsync($"/files/download-file?subidFile={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<FilesModel>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<FilesModel>>(body);
+        }
+
         public async Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request)
         {
             var json = JsonConvert.SerializeObject(request);

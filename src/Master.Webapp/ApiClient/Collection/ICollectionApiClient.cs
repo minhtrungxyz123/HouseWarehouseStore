@@ -16,5 +16,7 @@ namespace Master.Webapp.ApiClient
         Task<ApiResult<CollectionModel>> GetById(string id);
 
         Task<bool> Delete(string id);
+
+        public Task<ApiResult<FilesModel>> GetByIdImage(string id);
     }
 }

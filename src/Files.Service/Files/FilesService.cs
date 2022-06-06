@@ -38,7 +38,7 @@ namespace Files.Service
                     Size = item.Size,
                     CollectionId = collectionId,
                 };
-                
+
                 files.Id = Guid.NewGuid().ToString();
                 list.Add(files);
             }
@@ -75,7 +75,7 @@ namespace Files.Service
                 list.Add(files);
             }
 
-             _context.Files.UpdateRange(list);
+            _context.Files.UpdateRange(list);
 
 
             var result = await _context.SaveChangesAsync();
@@ -109,12 +109,12 @@ namespace Files.Service
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var item = await _context.Files
-                            .OrderByDescending(p => p.FileName)
-                            .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.Id == id);
+            var query =
+                from x in _context.Files
+                where x.CollectionId == id
+                select x;
 
-            return item;
+            return await query.FirstOrDefaultAsync();
         }
 
         #endregion

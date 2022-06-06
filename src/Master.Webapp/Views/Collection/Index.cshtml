@@ -160,8 +160,8 @@
                                     @Html.DisplayFor(modelItem => item.CreateBy)
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary" asp-action="Edit" asp-route-id="@item.CollectionId"><i class="fa-solid fa-pen"></i> Sửa</button>
-                                    <button class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.CollectionId"><i class="fa-solid fa-eye"></i> Chi tiết</button>
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.CollectionId"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.CollectionId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
                                     <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
                                 </td>
                             </tr>

@@ -77,6 +77,9 @@ namespace Master.Webapp.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var result = await _collectionApiClient.GetById(id);
+            var getByIdFiles = await _collectionApiClient.GetByIdImage(id);
+            var files = getByIdFiles.ResultObj;
+
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
@@ -90,7 +93,6 @@ namespace Master.Webapp.Controllers
                     Sort = model.Sort,
                     Quantity = model.Quantity,
                     Price = model.Price,
-                    Image = model.Image,
                     BarCode = model.BarCode,
                     Body = model.Body,
                     Content = model.Content,
@@ -100,8 +102,9 @@ namespace Master.Webapp.Controllers
                     Factory = model.Factory,
                     Home = model.Home,
                     Hot = model.Hot,
+                    //Image = files.CollectionId,
                 };
-                return ViewComponent("EditCollection", updateRequest);
+                return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
         }
