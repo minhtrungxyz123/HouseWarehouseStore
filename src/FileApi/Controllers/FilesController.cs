@@ -61,6 +61,15 @@ namespace FileApi.Controllers
 
         #region Upload File
 
+        [Route("delete")]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _fileService.Delete(id);
+            return Ok(result);
+        }
+
+
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId)
@@ -208,6 +217,28 @@ namespace FileApi.Controllers
                 result = true,
                 res = listRes,
             });
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteImage(string filesadd)
+        {
+            var result = false;
+            if (filesadd != null)
+            {
+                var check = await _fileService.GetByIdAsync(filesadd);
+
+                string filepath = CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+                Console.WriteLine(filepath);
+                if (System.IO.File.Exists(filepath))
+                {
+                    System.IO.File.Delete(filepath);
+                    return Ok(new { result = true, content = "Xóa thành công !" });
+                }
+            }
+            return Ok(new { result, content = "Xóa thất bại !" });
+
+
         }
 
         #endregion Upload File
