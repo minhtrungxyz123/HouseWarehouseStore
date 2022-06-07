@@ -1,6 +1,8 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 
 namespace Master.Webapp.Controllers
 {
@@ -77,8 +79,6 @@ namespace Master.Webapp.Controllers
         public async Task<IActionResult> Edit(string id)
         {
             var result = await _collectionApiClient.GetById(id);
-            var getByIdFiles = await _collectionApiClient.GetByIdImage(id);
-            var files = getByIdFiles.ResultObj;
 
             if (result.IsSuccessed)
             {
@@ -102,7 +102,7 @@ namespace Master.Webapp.Controllers
                     Factory = model.Factory,
                     Home = model.Home,
                     Hot = model.Hot,
-                    //Image = files.CollectionId,
+                    FilesModels = await _collectionApiClient.GetFilesCollection(SystemConstants.CollectionSettings.NumberOfCollection),
                 };
                 return View(updateRequest);
             }
@@ -114,10 +114,14 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-
+            request.Image = "1";
             var result = await _collectionApiClient.Edit(request.CollectionId, request);
             if (result)
             {
+                var filemodels = new FilesModel();
+                filemodels.CollectionId = request.CollectionId;
+                filemodels.filesadd = request.filesadd;
+                await _collectionApiClient.UpdateImage(filemodels, request.CollectionId);
                 TempData["result"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }

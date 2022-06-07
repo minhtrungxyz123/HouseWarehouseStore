@@ -1,4 +1,6 @@
-﻿namespace Files.Service
+﻿using HouseWarehouseStore.Models;
+
+namespace Files.Service
 {
     public interface IFilesService
     {
@@ -9,5 +11,7 @@
         Task<long> UpdateAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string collectionId);
 
         Task<int> Delete(string id);
+
+        Task<List<FilesModel>> GetFilesCollection(int take);
     }
 }

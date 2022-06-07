@@ -100,7 +100,7 @@ namespace FileApi.Controllers
                         await formFile.CopyToAsync(stream);
                         var tem = new HouseWarehouseStore.Data.Entities.File();
                         tem.FileName = randomname;
-                        tem.Path = @"/wwwroot/uploads/" + createFolderDate + "";
+                        tem.Path = @"/uploads/" + createFolderDate + "";
                         tem.Extension = GetExtension(randomname);
                         tem.MimeType = formFile.ContentType;
                         tem.Size = formFile.Length;
@@ -134,7 +134,94 @@ namespace FileApi.Controllers
             });
         }
 
+        [Route("update-image")]
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string collectionId)
+        {
+            if (filesadd == null || filesadd.Count == 0)
+
+                return BadRequest(new ApiBadRequestResponse("No image selected"));
+
+            var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
+
+            string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
+            var path = CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            CreateFolderExtension.CreateFolder(path);
+            if (path == null)
+                path = "image";
+            var filePaths = new List<string>();
+            string sql = "";
+            foreach (var formFile in filesadd)
+            {
+                //if (!FormFileExtensions.IsImage(formFile) && !FormFileExtensions.IsExcel(formFile) && !FormFileExtensions.IsWord(formFile) && !FormFileExtensions.IsZipRar(formFile))
+                //{
+                //    if (sql.Length == 0)
+                //        sql = $"File width name {formFile.FileName} is not type word, excel, zip or image, rar";
+                //    else
+                //        sql = sql + $" .File width name {formFile.FileName} is not type word, excel, zip or image, rar";
+                //}
+                //else
+                //{
+                if (formFile.Length > 0 && formFile.Length <= 250000000)
+                {
+                    var filePath = CommonHelper.MapPath(path);
+                    filePaths.Add(filePath);
+                    var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
+                    var fileNameWithPath = string.Concat(filePath, "\\", randomname);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                        var tem = new HouseWarehouseStore.Data.Entities.File();
+                        tem.FileName = randomname;
+                        tem.Path = @"/uploads/" + createFolderDate + "";
+                        tem.Extension = GetExtension(randomname);
+                        tem.MimeType = formFile.ContentType;
+                        tem.Size = formFile.Length;
+                        listEntity.Add(tem);
+                    }
+                }
+                else
+                {
+                    sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
+                }
+                //}
+            }
+            var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
+            if (listEntity.Count() > 0)
+            {
+                await _fileService.UpdateAsync(listEntity, collectionId);
+                foreach (var item in listEntity)
+                {
+                    var tem = new HouseWarehouseStore.Data.Entities.File();
+                    tem.FileName = item.FileName;
+                    tem.Path = item.Path;
+                    tem.CollectionId = collectionId;
+                    tem.MimeType = item.MimeType;
+                    tem.Size = item.Size;
+                    tem.Id = item.Id;
+                    listRes.Add(tem);
+                }
+            }
+            return Ok(new
+            {
+                error = sql,
+                result = true,
+                res = listRes,
+            });
+        }
+
         #endregion Upload File
+
+        #region List
+
+        [HttpGet("collection/{take}")]
+        public async Task<IActionResult> GetLatestProducts(int take)
+        {
+            var files = await _fileService.GetFilesCollection(take);
+            return Ok(files);
+        }
+
+        #endregion List
 
         #region Utilities
 

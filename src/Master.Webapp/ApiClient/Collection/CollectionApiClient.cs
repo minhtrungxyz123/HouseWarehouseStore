@@ -26,16 +26,25 @@ namespace Master.Webapp.ApiClient
 
         #region List
 
-        public async Task<ApiResult<FilesModel>> GetByIdImage(string id)
+        public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.GetAsync($"/files/download-file?subidFile={id}");
+
+            var response = await client.GetAsync(url);
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
-                return JsonConvert.DeserializeObject<ApiSuccessResult<FilesModel>>(body);
+            {
+                var data = (List<T>)JsonConvert.DeserializeObject(body, typeof(List<T>));
+                return data;
+            }
+            throw new Exception(body);
+        }
 
-            return JsonConvert.DeserializeObject<ApiErrorResult<FilesModel>>(body);
+        public async Task<List<FilesModel>> GetFilesCollection(int take)
+        {
+            var data = await GetListAsync<FilesModel>($"/files/collection/{take}");
+            return data;
         }
 
         public async Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request)
@@ -116,17 +125,41 @@ namespace Master.Webapp.ApiClient
                 throw new ArgumentNullException(nameof(id));
             }
 
-            if (request is null)
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.filesadd != null)
             {
-                throw new ArgumentNullException(nameof(request));
+                byte[] data;
+                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
 
-            var json = JsonConvert.SerializeObject(request);
-            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Body) ? "" : request.Body), "Body");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Quantity.ToString()) ? "" : request.Quantity.ToString()), "Quantity");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Factory) ? "" : request.Factory), "Factory");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Price.ToString()) ? "" : request.Price.ToString()), "Price");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Sort.ToString()) ? "" : request.Sort.ToString()), "Sort");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Hot.ToString()) ? "" : request.Hot.ToString()), "Hot");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Home.ToString()) ? "" : request.Home.ToString()), "Home");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Active.ToString()) ? "" : request.Active.ToString()), "Active");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.TitleMeta) ? "" : request.TitleMeta), "TitleMeta");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Content) ? "" : request.Content), "Content");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StatusProduct.ToString()) ? "" : request.StatusProduct.ToString()), "StatusProduct");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.BarCode) ? "" : request.BarCode), "BarCode");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateDate.ToString()) ? "" : request.CreateDate.ToString()), "CreateDate");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateBy) ? "" : request.CreateBy), "CreateBy");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.PutAsync($"/collection/update/" + id + "", httpContent);
+            var response = await client.PutAsync($"/collection/update/" + id + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -161,7 +194,30 @@ namespace Master.Webapp.ApiClient
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/create-image?collectionId="+collectionId+"", requestContent);
+            var response = await client.PostAsync("/files/create-image?collectionId=" + collectionId + "", requestContent);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> UpdateImage(FilesModel request, string collectionId)
+        {
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.filesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
+            }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.PostAsync("/files/update-image?collectionId=" + collectionId + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }

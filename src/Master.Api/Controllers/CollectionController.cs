@@ -78,7 +78,8 @@ namespace Master.Api.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Put([FromBody] CollectionModel model, string id)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Put([FromForm] CollectionModel model, string id)
         {
             var item = await _collectionService.GetById(id);
             if (item == null)

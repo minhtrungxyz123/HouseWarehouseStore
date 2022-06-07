@@ -1,9 +1,29 @@
+using LazZiya.ExpressLocalization;
 using Master.Webapp.ApiClient;
+using Master.Webapp.Models;
+using Microsoft.AspNetCore.Localization;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+var cultures = new[]
+{
+    new CultureInfo("en"),
+    new CultureInfo("vi"),
+};
+builder.Services.AddControllersWithViews()
+    .AddExpressLocalization<ExpressLocalizationResource, ViewLocalizationResource>(ops =>
+    {
+        ops.UseAllCultureProviders = false;
+        ops.ResourcesPath = "LocalizationResources";
+        ops.RequestLocalizationOptions = o =>
+        {
+            o.SupportedCultures = cultures;
+            o.SupportedUICultures = cultures;
+            o.DefaultRequestCulture = new RequestCulture("vi");
+        };
+    });
 
 builder.Services.AddHttpClient();
 builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -16,7 +36,7 @@ builder.Services.AddScoped<ICollectionApiClient, CollectionApiClient>();
 builder.Services.AddScoped<ISizeApiClient, SizeApiClient>();
 builder.Services.AddScoped<IContactApiClient, ContactApiClient>();
 
-#endregion
+#endregion Add DI
 
 var app = builder.Build();
 

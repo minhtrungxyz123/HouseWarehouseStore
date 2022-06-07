@@ -9,6 +9,8 @@ namespace Master.Webapp.ApiClient
 
         public Task<bool> CreateImage(FilesModel request, string collectionId);
 
+        public Task<bool> UpdateImage(FilesModel request, string collectionId);
+
         public Task<bool> Edit(string? id, CollectionModel request);
 
         Task<ApiResult<Pagination<CollectionModel>>> Get(CollectionSearchModel request);
@@ -17,6 +19,6 @@ namespace Master.Webapp.ApiClient
 
         Task<bool> Delete(string id);
 
-        public Task<ApiResult<FilesModel>> GetByIdImage(string id);
+        Task<List<FilesModel>> GetFilesCollection(int take);
     }
 }
