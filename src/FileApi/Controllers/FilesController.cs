@@ -221,12 +221,13 @@ namespace FileApi.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> DeleteImage(string filesadd)
+        [Route("delete-files")]
+        public async Task<IActionResult> DeleteImage(string collectionId)
         {
             var result = false;
-            if (filesadd != null)
+            if (collectionId != null)
             {
-                var check = await _fileService.GetByIdAsync(filesadd);
+                var check = await _fileService.GetByIdAsync(collectionId);
 
                 string filepath = CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
                 Console.WriteLine(filepath);
