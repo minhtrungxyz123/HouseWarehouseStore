@@ -222,6 +222,18 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> DeleteFiles(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.DeleteAsync($"/files/delete-files?collectionId={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            return JsonConvert.DeserializeObject<bool>(body);
+        }
+
         #endregion Method
     }
 }

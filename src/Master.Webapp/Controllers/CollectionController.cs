@@ -121,7 +121,11 @@ namespace Master.Webapp.Controllers
                 var filemodels = new FilesModel();
                 filemodels.CollectionId = request.CollectionId;
                 filemodels.filesadd = request.filesadd;
+                //delete files
+                _collectionApiClient.DeleteFiles(request.CollectionId);
+                //update files
                 await _collectionApiClient.UpdateImage(filemodels, request.CollectionId);
+
                 TempData["result"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }

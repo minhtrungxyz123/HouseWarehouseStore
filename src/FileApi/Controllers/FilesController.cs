@@ -220,7 +220,7 @@ namespace FileApi.Controllers
         }
 
 
-        [HttpPost]
+        [HttpDelete]
         [Route("delete-files")]
         public async Task<IActionResult> DeleteImage(string collectionId)
         {
