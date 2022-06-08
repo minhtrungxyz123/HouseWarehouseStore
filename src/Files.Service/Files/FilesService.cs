@@ -87,7 +87,7 @@ namespace Files.Service
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var item = await _context.Files.FindAsync(id);
+            var item = await _context.Files.FirstOrDefaultAsync(x => x.CollectionId.Equals(id));
 
             _context.Files.Remove(item);
             var result = await _context.SaveChangesAsync();

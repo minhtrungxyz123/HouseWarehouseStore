@@ -162,7 +162,7 @@
                                 <td>
                                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.CollectionId"><i class="fa-solid fa-pen"></i> Sửa</a>
                                     <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.CollectionId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
-                                    <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                    <a class="btn btn-danger" onclick="Delete('@item.CollectionId')"><i class="fa-solid fa-trash-can"></i> Xóa</a>
                                 </td>
                             </tr>
                         }
@@ -176,8 +176,23 @@
 
 @section Scripts{
     <script>
+
         setTimeout(function() {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
+
+        function Delete(id) {
+            if (confirm("Bạn có chắc chắn xóa không?")) {
+                $.post("/Collection/DeleteConfirmed", { id: id }, function(data) {
+                    if (data) {
+                        if (confirm("Xóa thành công"))
+                            window.location.assign('/Collection/Index')
+                    } else {
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                    }
+                });
+            }
+        }
+
     </script>
 }

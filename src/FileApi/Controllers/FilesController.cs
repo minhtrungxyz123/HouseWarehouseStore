@@ -230,14 +230,10 @@ namespace FileApi.Controllers
                 var check = await _fileService.GetByIdAsync(collectionId);
 
                 string filepath = CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
-                Console.WriteLine(filepath);
-                if (System.IO.File.Exists(filepath))
-                {
-                    System.IO.File.Delete(filepath);
-                    return Ok(new { result = true, content = "Xóa thành công !" });
-                }
+                var deleteRes = DeleteImageByPath(filepath);
+                return Ok(deleteRes);
             }
-            return Ok(new { result, content = "Xóa thất bại !" });
+            return Ok(false);
 
 
         }
@@ -264,7 +260,20 @@ namespace FileApi.Controllers
             var Cut = name.Split(".");
             return Cut[Cut.Length - 1];
         }
+        private bool DeleteImageByPath(string path)
+        {
+            if (string.IsNullOrEmpty(path))
+            {
+                throw new ArgumentException($"'{nameof(path)}' cannot be null or empty.", nameof(path));
+            }
 
+            if (System.IO.File.Exists(path))
+            {
+                System.IO.File.Delete(path);
+            }
+            return System.IO.File.Exists(path)==false;
+
+        }
         #endregion Utilities
     }
 }

@@ -2,7 +2,6 @@
 using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Mvc;
-using System.Globalization;
 
 namespace Master.Webapp.Controllers
 {
@@ -122,7 +121,7 @@ namespace Master.Webapp.Controllers
                 filemodels.CollectionId = request.CollectionId;
                 filemodels.filesadd = request.filesadd;
                 //delete files
-                _collectionApiClient.DeleteFiles(request.CollectionId);
+                await _collectionApiClient.DeleteFiles(request.CollectionId);
                 //update files
                 await _collectionApiClient.UpdateImage(filemodels, request.CollectionId);
 
@@ -140,6 +139,9 @@ namespace Master.Webapp.Controllers
             if (!ModelState.IsValid)
                 return View();
             var result = await _collectionApiClient.Delete(id);
+
+            await _collectionApiClient.DeleteFiles(id);
+            await _collectionApiClient.DeleteDataFiles(id);
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
@@ -171,14 +173,14 @@ namespace Master.Webapp.Controllers
                     Factory = model.Factory,
                     Home = model.Home,
                     Hot = model.Hot,
-                    Image = model.Image,
                     Price = model.Price,
                     Quantity = model.Quantity,
                     Sort = model.Sort,
                     StatusProduct = model.StatusProduct,
                     TitleMeta = model.TitleMeta,
+                    FilesModels = await _collectionApiClient.GetFilesCollection(SystemConstants.CollectionSettings.NumberOfCollection),
                 };
-                return ViewComponent("DetailCollection", updateRequest);
+                return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
         }

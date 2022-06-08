@@ -19,6 +19,8 @@ namespace Master.Webapp.ApiClient
 
         Task<bool> Delete(string id);
 
+        Task<bool> DeleteDataFiles(string id);
+
         Task<List<FilesModel>> GetFilesCollection(int take);
 
         Task<bool> DeleteFiles(string id);
