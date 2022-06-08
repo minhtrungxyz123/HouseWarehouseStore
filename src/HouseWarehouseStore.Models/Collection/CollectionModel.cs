@@ -65,6 +65,6 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
         public IFormFile? filesadd { get; set; }
-        public List<FilesModel>? FilesModels { get; set; }
+        public List<FilesModel> FilesModels { get; set; }
     }
 }

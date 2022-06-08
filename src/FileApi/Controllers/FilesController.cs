@@ -2,6 +2,9 @@
 using Files.Service;
 using HouseWarehouseStore.Common;
 using Microsoft.AspNetCore.Mvc;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
 using System.ComponentModel.DataAnnotations;
 
 namespace FileApi.Controllers
@@ -72,7 +75,7 @@ namespace FileApi.Controllers
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height=100)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -115,6 +118,7 @@ namespace FileApi.Controllers
                         tem.Size = formFile.Length;
                         listEntity.Add(tem);
                     }
+                    CommonHelper.Resize(fileNameWithPath, width, height);
                 }
                 else
                 {
@@ -145,7 +149,7 @@ namespace FileApi.Controllers
 
         [Route("update-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string collectionId)
+        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height = 100)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -188,6 +192,7 @@ namespace FileApi.Controllers
                         tem.Size = formFile.Length;
                         listEntity.Add(tem);
                     }
+                    CommonHelper.Resize(fileNameWithPath, width, height);
                 }
                 else
                 {
@@ -271,7 +276,7 @@ namespace FileApi.Controllers
             {
                 System.IO.File.Delete(path);
             }
-            return System.IO.File.Exists(path)==false;
+            return System.IO.File.Exists(path) == false;
 
         }
         #endregion Utilities

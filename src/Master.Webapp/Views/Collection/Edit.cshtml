@@ -26,12 +26,12 @@
                     <input type="hidden" asp-for="CollectionId" />
                     <input type="hidden" asp-for="CreateDate" />
                     <input type="hidden" asp-for="FilesModels" />
+
                     @foreach (var item in Model.FilesModels)
                     {
                         var url = $"/{_loc["collectionUrl"]}/{item.CollectionId}";
                         <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
                     }
-
                     <div class="form-group bg-white">
                         <label asp-for="BarCode" class="control-label"></label>
                         <input asp-for="BarCode" class="form-control" />

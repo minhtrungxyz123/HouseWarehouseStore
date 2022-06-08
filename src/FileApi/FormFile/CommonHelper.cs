@@ -1,4 +1,8 @@
-﻿namespace FileApi.FormFile
+﻿using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+
+namespace FileApi.FormFile
 {
     public class CommonHelper
     {
@@ -32,6 +36,18 @@
         public static string GetApplicationRoot()
         {
             return Directory.GetCurrentDirectory();
+        }
+
+        public static void Resize(string h, int w, int he)
+        {
+            using (var image = Image.Load(h))
+            {
+                if (image.Width > w)
+                {
+                    image.Mutate(x => x.Resize(w, he));
+                    image.Save(h);
+                }
+            }
         }
     }
 }
