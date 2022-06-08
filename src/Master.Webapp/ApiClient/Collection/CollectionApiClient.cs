@@ -246,6 +246,18 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
+        public async Task<AdminModel> GetByUserId(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/keycloak/id?id={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<AdminModel>(body);
+
+            return JsonConvert.DeserializeObject<AdminModel>(body);
+        }
+
         #endregion Method
     }
 }

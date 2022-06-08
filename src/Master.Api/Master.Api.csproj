@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HouseWare.Base\HouseWare.Base.csproj" />
     <ProjectReference Include="..\Master.Service\Master.Service.csproj" />
   </ItemGroup>
 

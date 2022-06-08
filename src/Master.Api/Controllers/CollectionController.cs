@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Common;
+﻿using HouseWare.Base;
+using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Master.Service;
 using Microsoft.AspNetCore.Http;

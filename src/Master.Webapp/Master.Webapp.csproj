@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HouseWare.Base\HouseWare.Base.csproj" />
     <ProjectReference Include="..\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj" />
   </ItemGroup>
 

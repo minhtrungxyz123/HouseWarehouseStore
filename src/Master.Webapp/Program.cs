@@ -1,3 +1,4 @@
+using HouseWare.Base;
 using LazZiya.ExpressLocalization;
 using Master.Webapp.ApiClient;
 using Master.Webapp.Models;
@@ -35,6 +36,7 @@ builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 builder.Services.AddScoped<ICollectionApiClient, CollectionApiClient>();
 builder.Services.AddScoped<ISizeApiClient, SizeApiClient>();
 builder.Services.AddScoped<IContactApiClient, ContactApiClient>();
+builder.Services.AddScoped<ISendDiscordHelper, SendDiscordHelper>();
 
 #endregion Add DI
 

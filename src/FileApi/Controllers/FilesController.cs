@@ -51,7 +51,7 @@ namespace FileApi.Controllers
 
             var fileName = check.FileName;
             //Build the File Path.
-            string path = CommonHelper.MapPath(check.Path + "/" + check.FileName);
+            string path = FormFile.CommonHelper.MapPath(check.Path + "/" + check.FileName);
 
             //Read the File data into Byte Array.
             byte[] bytes = await System.IO.File.ReadAllBytesAsync(path);
@@ -84,7 +84,7 @@ namespace FileApi.Controllers
             var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
 
             string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
-            var path = CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            var path = FormFile.CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
             CreateFolderExtension.CreateFolder(path);
             if (path == null)
                 path = "image";
@@ -103,7 +103,7 @@ namespace FileApi.Controllers
                 //{
                 if (formFile.Length > 0 && formFile.Length <= 250000000)
                 {
-                    var filePath = CommonHelper.MapPath(path);
+                    var filePath = FormFile.CommonHelper.MapPath(path);
                     filePaths.Add(filePath);
                     var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
                     var fileNameWithPath = string.Concat(filePath, "\\", randomname);
@@ -118,7 +118,7 @@ namespace FileApi.Controllers
                         tem.Size = formFile.Length;
                         listEntity.Add(tem);
                     }
-                    CommonHelper.Resize(fileNameWithPath, width, height);
+                    FormFile.CommonHelper.Resize(fileNameWithPath, width, height);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace FileApi.Controllers
             var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
 
             string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
-            var path = CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            var path = FormFile.CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
             CreateFolderExtension.CreateFolder(path);
             if (path == null)
                 path = "image";
@@ -177,7 +177,7 @@ namespace FileApi.Controllers
                 //{
                 if (formFile.Length > 0 && formFile.Length <= 250000000)
                 {
-                    var filePath = CommonHelper.MapPath(path);
+                    var filePath = FormFile.CommonHelper.MapPath(path);
                     filePaths.Add(filePath);
                     var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
                     var fileNameWithPath = string.Concat(filePath, "\\", randomname);
@@ -192,7 +192,7 @@ namespace FileApi.Controllers
                         tem.Size = formFile.Length;
                         listEntity.Add(tem);
                     }
-                    CommonHelper.Resize(fileNameWithPath, width, height);
+                    FormFile.CommonHelper.Resize(fileNameWithPath, width, height);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace FileApi.Controllers
             {
                 var check = await _fileService.GetByIdAsync(collectionId);
 
-                string filepath = CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+                string filepath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
                 var deleteRes = DeleteImageByPath(filepath);
                 return Ok(deleteRes);
             }

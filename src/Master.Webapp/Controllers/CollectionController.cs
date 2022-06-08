@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Common;
+﻿using HouseWare.Base;
+using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,13 @@ namespace Master.Webapp.Controllers
         #region Fields
 
         private readonly ICollectionApiClient _collectionApiClient;
+        private readonly ISendDiscordHelper _sendDiscordHelper;
 
-        public CollectionController(ICollectionApiClient collectionApiClient)
+        public CollectionController(ICollectionApiClient collectionApiClient,
+            ISendDiscordHelper sendDiscordHelper)
         {
             _collectionApiClient = collectionApiClient;
+            _sendDiscordHelper = sendDiscordHelper;
         }
 
         #endregion Fields
@@ -57,10 +61,16 @@ namespace Master.Webapp.Controllers
             request.Image = "1";
             request.CreateDate = DateTime.UtcNow.ToLocalTime();
             request.CollectionId = Guid.NewGuid().ToString();
+
+            var claims = HttpContext.User.Claims;
+            var userId = claims.FirstOrDefault(c => c.Type == "CollectionID").Value;
+            request.CreateBy = userId;
+
             var result = await _collectionApiClient.Create(request);
 
             if (result)
             {
+                await _sendDiscordHelper.SendMessage(_collectionApiClient.GetByUserId(request.CreateBy).Result.Username + " đã thêm mới CR HTC có mã là: " + request.Name);
                 var filemodels = new FilesModel();
                 filemodels.CollectionId = request.CollectionId;
                 filemodels.filesadd = request.filesadd;
