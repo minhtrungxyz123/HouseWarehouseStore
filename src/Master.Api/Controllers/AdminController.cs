@@ -65,6 +65,25 @@ namespace Master.Api.Controllers
             return Ok(user);
         }
 
+        [Route("check-active")]
+        [HttpGet]
+        public async Task<IActionResult> GetCheckActive(string name ,bool showHidden = true)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
+            }
+
+            var checkActive = _adminService.GetCheckActive(name, showHidden);
+
+            if (checkActive == null)
+            {
+                return NotFound(new ApiNotFoundResponse($"Admin with name: {name} is not found"));
+            }
+
+            return Ok(checkActive);
+        }
+
         #endregion List
 
         #region Method

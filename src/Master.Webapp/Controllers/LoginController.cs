@@ -1,5 +1,6 @@
 ﻿using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Data.Repositories;
+using Master.Webapp.ApiClient;
 using Master.Webapp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,11 +15,14 @@ namespace Master.Webapp.Controllers
     {
         #region Fields
 
+        private readonly IAdminApiClient _adminApiClient;
         private readonly IRepositoryEF<Admin> _adminRepository;
 
-        public LoginController(IRepositoryEF<Admin> adminrepository)
+        public LoginController(IRepositoryEF<Admin> adminrepository,
+            IAdminApiClient adminApiClient)
         {
             _adminRepository = adminrepository;
+            _adminApiClient = adminApiClient;
         }
 
         #endregion Fields
@@ -36,35 +40,44 @@ namespace Master.Webapp.Controllers
             returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
-                if (ValidateAdmin(user.AccountName, user.Password))
+                var checkActive = await _adminApiClient.GetCheckActive(user.AccountName);
+                if (checkActive != null && checkActive.Active)
                 {
-                    var users = _adminRepository.Get(a => a.Username == user.AccountName).SingleOrDefault();
-                    if (users != null)
+                    if (ValidateAdmin(user.AccountName, user.Password))
                     {
-                        var userClaims = new List<Claim>()
+                        var users = _adminRepository.Get(a => a.Username == user.AccountName).SingleOrDefault();
+                        if (users != null)
+                        {
+                            var userClaims = new List<Claim>()
                         {
                                 new Claim("Username", users.Username),
                                 new Claim("Id", users.Id),
                         };
-                        var userIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
-                        var authProperties = new AuthenticationProperties
-                        {
-                            AllowRefresh = true,
-                            IsPersistent = true
-                        };
-                        await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userIdentity), authProperties);
-                        if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
-                           && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
-                        {
-                            return Redirect(returnUrl);
+                            var userIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);
+                            var authProperties = new AuthenticationProperties
+                            {
+                                AllowRefresh = true,
+                                IsPersistent = true
+                            };
+                            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(userIdentity), authProperties);
+                            if (Url.IsLocalUrl(returnUrl) && returnUrl.Length > 1 && returnUrl.StartsWith("/")
+                               && !returnUrl.StartsWith("//") && !returnUrl.StartsWith("/\\"))
+                            {
+                                return Redirect(returnUrl);
+                            }
+                            return RedirectToAction("Index", "Home");
                         }
-                        return RedirectToAction("Index", "Home");
+                        else
+                        {
+                            ModelState.AddModelError(string.Empty, " Username does not exist ");
+                            return View(user);
+                        }
                     }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, " Username does not exist ");
-                        return View(user);
-                    }
+                }
+                else if(checkActive != null && !checkActive.Active)
+                {
+                    ModelState.AddModelError(string.Empty, "Tafi khoan chua ative.");
+                    return View(user);
                 }
                 else
                 {

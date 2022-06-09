@@ -26,6 +26,19 @@ namespace Master.Webapp.ApiClient
 
         #region List
 
+        public async Task<AdminModel> GetCheckActive(string id, bool showHidden = true)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/admin/check-active?name={id}&showHidden={showHidden}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<AdminModel>(body);
+
+            return JsonConvert.DeserializeObject<AdminModel>(body);
+        }
+
+
         public async Task<ApiResult<Pagination<AdminModel>>> Get(AdminSearchModel request)
         {
             var json = JsonConvert.SerializeObject(request);

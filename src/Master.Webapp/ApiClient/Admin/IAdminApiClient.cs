@@ -13,6 +13,8 @@ namespace Master.Webapp.ApiClient
 
         Task<ApiResult<AdminModel>> GetById(string id);
 
+        Task<AdminModel> GetCheckActive(string id, bool showHidden = true);
+
         Task<bool> Delete(string id);
     }
 }
