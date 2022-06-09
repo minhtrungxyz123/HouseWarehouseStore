@@ -1,0 +1,46 @@
+﻿@model HouseWarehouseStore.Models.AdminModel
+
+<div>
+    <h4>Chi tiết tài khoản</h4>
+    <hr />
+    <form asp-controller="Admin" asp-action="Detail">
+        <div class="form-body">
+            <input type="hidden" asp-for="Id" />
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="Username" class="control-label"></label>
+                    <input asp-for="Username" class="form-control" min="0" readonly="@(true)" />
+                    <span asp-validation-for="Username" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group form-check d-none">
+                <label class="form-check-label">
+                    <input class="form-check-input" value="true" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                    <label asp-for="Role" class="control-label"></label>
+                    <select asp-for="Role">
+                                    <option value="Admin">Quản trị</option>
+                                    <option value="User">Nhân viên</option>
+                                </select>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+            </div>
+
+            <div class="form-group form-group-sm">
+                    Trang thai
+                    <div class="col-md-9">
+                        @Html.DisplayFor(m => m.Active)
+                    </div>
+            </div>
+
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="Active" class="control-label"></label>
+                    <input asp-for="Active" class="form-control" min="0" readonly="@(true)" />
+                    <span asp-validation-for="Active" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

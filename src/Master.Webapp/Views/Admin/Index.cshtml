@@ -1,12 +1,12 @@
 ﻿@model Pagination<HouseWarehouseStore.Models.AdminModel>
 
 @{
-    ViewData["Title"] = "Danh sách tài khoảng";
+    ViewData["Title"] = "Danh sách tài khoản";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Danh sách tài khoảng</h1>
+    <h1 class="mt-4">Danh sách tài khoản</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
         <li class="breadcrumb-item active">Danh sách tài khoản</li>
@@ -74,9 +74,9 @@
                                     @Html.DisplayFor(modelItem => item.Role)
                                 </td>
                                 <td>
-                                    <button class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
-                                    <button class="btn" style="background: yellow;" ><i class="fa-solid fa-eye"></i> Chi tiết</button>
-                                    <button class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                    <button onclick="Edit('@item.Id')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
+                                    <button onclick="Detail('@item.Id')" class="btn" style="background: yellow;" ><i class="fa-solid fa-eye"></i> Chi tiết</button>
+                                    <button onclick="Delete('@item.Id')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
                                 </td>
                             </tr>
                         }
@@ -87,3 +87,65 @@
         </div>
     </div>
 </div>
+                             
+<div id="contactDetails"></div>
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+
+        function Create() {
+            $.get("/Admin/Create", function (data) {
+                $("#contactDetails").html(data);
+                $("#contactDetails").dialog("open");
+                $(".k-overlay").removeClass("d-none");
+            });
+        }
+
+        function Edit(id) {
+                $.get("/Admin/Edit", { id: id }, function (data) {
+                    $("#contactDetails").html(data);
+                    $("#contactDetails").dialog("open");
+                });
+        }
+
+        function Detail(id) {
+                $.get("/Admin/Detail", { id: id }, function (data) {
+                    $("#contactDetails").html(data);
+                    $("#contactDetails").dialog("open");
+                });
+        }
+
+        function Delete(id) {         
+            if (confirm("Bạn có chắc chắn xóa không?")) {                  
+                $.post("/Admin/DeleteConfirmed", { id: id }, function (data) {              
+                    if (data) {                
+                        if (confirm("Xóa thành công"))                         
+                        window.location.assign('/Admin/Index')                     
+                    } else {                            
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");                      
+                    }                      
+                });                       
+            }                    
+        }
+
+        $(function() {
+            $("#contactDetails").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 500,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+        });
+
+</script>
+}

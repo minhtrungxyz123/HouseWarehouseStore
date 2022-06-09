@@ -153,9 +153,9 @@ namespace Master.Service
                 CreateDate = model.CreateDate,
                 Email = model.Email,
                 HomePage = model.HomePage,
-                LockAccount = model.LockAccount
+                LockAccount = model.LockAccount,
+                MemberId = Guid.NewGuid().ToString(),
             };
-            model.MemberId = Guid.NewGuid().ToString();
 
             await _context.Members.AddAsync(item);
             var result = await _context.SaveChangesAsync();

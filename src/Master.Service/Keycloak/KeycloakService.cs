@@ -29,7 +29,7 @@ namespace Master.Service
             var item = await _context.Admins
                             .OrderByDescending(p => p.Username)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.AdminId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             return item;
         }

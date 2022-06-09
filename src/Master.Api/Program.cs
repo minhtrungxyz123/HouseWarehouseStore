@@ -20,6 +20,7 @@ builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICollectionService, CollectionService>();
 builder.Services.AddScoped<ISizeService, SizeService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 
 #endregion Add Service

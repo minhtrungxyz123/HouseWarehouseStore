@@ -182,9 +182,9 @@ namespace Master.Service
                 ProductCategorieId = model.ProductCategorieId,
                 Quantity = model.Quantity,
                 QuyCach = model.QuyCach,
-                SaleOff = model.SaleOff
+                SaleOff = model.SaleOff,
+                ProductId = Guid.NewGuid().ToString(),
             };
-            model.CollectionId = Guid.NewGuid().ToString();
 
             await _context.Products.AddAsync(item);
             var result = await _context.SaveChangesAsync();

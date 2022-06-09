@@ -10,7 +10,7 @@ namespace HouseWarehouseStore.Data.Configuration
         {
             entity.ToTable("Admins");
 
-            entity.Property(e => e.AdminId)
+            entity.Property(e => e.Id)
                     .HasMaxLength(36)
                     .IsUnicode(false);
 

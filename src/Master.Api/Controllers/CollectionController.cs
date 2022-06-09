@@ -1,8 +1,6 @@
-﻿using HouseWare.Base;
-using HouseWarehouseStore.Common;
+﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Master.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Master.Api.Controllers
@@ -142,6 +140,6 @@ namespace Master.Api.Controllers
             return Ok(user);
         }
 
-        #endregion
+        #endregion Utilities
     }
 }

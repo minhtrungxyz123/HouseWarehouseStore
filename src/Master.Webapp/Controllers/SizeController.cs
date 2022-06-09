@@ -1,9 +1,11 @@
 ﻿using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Master.Webapp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class SizeController : Controller
     {
         #region Fields

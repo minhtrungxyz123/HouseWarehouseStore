@@ -1,8 +1,15 @@
 using HouseWare.Base;
+using HouseWarehouseStore.Data.EF;
+using HouseWarehouseStore.Data.Repositories;
 using LazZiya.ExpressLocalization;
 using Master.Webapp.ApiClient;
+using Master.Webapp.CustomHandler;
 using Master.Webapp.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
+using Microsoft.EntityFrameworkCore;
 using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,6 +47,43 @@ builder.Services.AddScoped<ISendDiscordHelper, SendDiscordHelper>();
 
 #endregion Add DI
 
+//DbContext
+builder.Services.AddDbContext<HouseWarehouseStoreDbContext>(options => options.UseSqlServer(
+                            builder.Configuration.GetConnectionString("HouseWarehouseStoreDatabase")));
+
+//Repository
+builder.Services.AddScoped(typeof(IRepositoryEF<>), typeof(RepositoryEF<>));
+
+//Authorization
+builder.Services.AddScoped<IAuthorizationHandler, RolesAuthorizationHandler>();
+builder.Services.AddAuthorization(options =>
+{
+});
+
+//AddCookie
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+ .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, config =>
+ {
+     config.LoginPath = "/Login/Index";
+     config.AccessDeniedPath = "/Login/FalseLogin";
+     config.ExpireTimeSpan = TimeSpan.FromHours(1);
+     config.Cookie.HttpOnly = true;
+     config.Cookie.IsEssential = true;
+ });
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = ".AdventureWorks.Session";
+    options.IdleTimeout = TimeSpan.FromHours(8);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+builder.Services.Configure<PasswordHasherOptions>(option =>
+{
+    option.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3;
+    option.IterationCount = 12000;
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -56,7 +100,11 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

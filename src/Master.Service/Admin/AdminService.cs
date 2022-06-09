@@ -31,13 +31,13 @@ namespace Master.Service
             var item = await _context.Admins
                             .OrderByDescending(p => p.Username)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.AdminId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             var model = new Admin()
             {
                 Username = item.Username,
                 Active = item.Active,
-                AdminId = item.AdminId,
+                Id = item.Id,
                 Password = item.Password,
                 Role = item.Role
             };
@@ -67,7 +67,7 @@ namespace Master.Service
                 {
                     Username = x.Username,
                     Password = x.Password,
-                    AdminId = x.AdminId,
+                    Id = x.Id,
                     Role = x.Role,
                     Active = x.Active
                 }).ToListAsync();
@@ -92,7 +92,7 @@ namespace Master.Service
             var item = await _context.Admins
                             .OrderByDescending(p => p.Username)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.AdminId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             return item;
         }
@@ -124,9 +124,9 @@ namespace Master.Service
                 Username = model.Username,
                 Active = model.Active,
                 Password = model.Password,
-                Role = model.Role
+                Role = model.Role,
+                Id = Guid.NewGuid().ToString(),
             };
-            model.AdminId = Guid.NewGuid().ToString();
 
             await _context.Admins.AddAsync(item);
             var result = await _context.SaveChangesAsync();
@@ -134,7 +134,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.AdminId.ToString(),
+                Id = item.Id.ToString(),
             };
         }
 

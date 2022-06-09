@@ -128,8 +128,8 @@ namespace Master.Service
                 Email = model.Email,
                 Mobile = model.Mobile,
                 Subject = model.Subject,
+                ContactId = Guid.NewGuid().ToString(),
             };
-            model.ContactId = Guid.NewGuid().ToString();
 
             await _context.Contacts.AddAsync(item);
             var result = await _context.SaveChangesAsync();

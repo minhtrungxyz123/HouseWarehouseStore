@@ -4,7 +4,7 @@ namespace HouseWarehouseStore.Models
 {
     public class AdminModel
     {
-        public string? AdminId { get; set; }
+        public string? Id { get; set; }
 
         [Required(ErrorMessage = "Chưa nhập thông tin")]
         [Display(Name = "Tài khoản")]

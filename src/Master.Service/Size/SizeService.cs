@@ -105,60 +105,60 @@ namespace Master.Service
             Size item = new Size()
             {
                 SizeProduct = model.SizeProduct,
-            };
-            model.SizeId = Guid.NewGuid().ToString();
+                SizeId = Guid.NewGuid().ToString(),
+        };
 
-            await _context.Sizes.AddAsync(item);
-            var result = await _context.SaveChangesAsync();
+        await _context.Sizes.AddAsync(item);
+        var result = await _context.SaveChangesAsync();
 
             return new RepositoryResponse()
-            {
-                Result = result,
+        {
+            Result = result,
                 Id = item.SizeId.ToString(),
             };
-        }
-
-        public async Task<RepositoryResponse> Update(string? id, SizeModel model)
-        {
-            if (id is null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            if (model is null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            var item = await _context.Sizes.FindAsync(id);
-            item.SizeProduct = model.SizeProduct;
-
-            _context.Sizes.Update(item);
-
-            var result = await _context.SaveChangesAsync();
-
-            return new RepositoryResponse()
-            {
-                Result = result,
-                Id = id.ToString()
-            };
-        }
-
-        public async Task<int> Delete(string? id)
-        {
-            if (id is null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-
-            var item = await _context.Sizes.FindAsync(id);
-
-            _context.Sizes.Remove(item);
-            var result = await _context.SaveChangesAsync();
-
-            return result;
-        }
-
-        #endregion Method
     }
+
+    public async Task<RepositoryResponse> Update(string? id, SizeModel model)
+    {
+        if (id is null)
+        {
+            throw new ArgumentNullException(nameof(id));
+        }
+
+        if (model is null)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+
+        var item = await _context.Sizes.FindAsync(id);
+        item.SizeProduct = model.SizeProduct;
+
+        _context.Sizes.Update(item);
+
+        var result = await _context.SaveChangesAsync();
+
+        return new RepositoryResponse()
+        {
+            Result = result,
+            Id = id.ToString()
+        };
+    }
+
+    public async Task<int> Delete(string? id)
+    {
+        if (id is null)
+        {
+            throw new ArgumentNullException(nameof(id));
+        }
+
+        var item = await _context.Sizes.FindAsync(id);
+
+        _context.Sizes.Remove(item);
+        var result = await _context.SaveChangesAsync();
+
+        return result;
+    }
+
+    #endregion Method
+}
 }

@@ -1,9 +1,14 @@
 ﻿using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Master.Webapp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         #region Fields
@@ -40,6 +45,13 @@ namespace Master.Webapp.Controllers
 
         #region Method
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Index", "Login");
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -51,6 +63,9 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View(request);
+
+            var hashedPassword = new PasswordHasher<AdminModel>().HashPassword(new AdminModel(), request.Password);
+            request.Password = hashedPassword;
 
             var result = await _adminApiClient.Create(request);
 
@@ -74,7 +89,7 @@ namespace Master.Webapp.Controllers
                 var updateRequest = new AdminModel()
                 {
                     Active = model.Active,
-                    AdminId = id,
+                    Id = id,
                     Role=model.Role,
                     Username = model.Username
                 };
@@ -89,7 +104,10 @@ namespace Master.Webapp.Controllers
             if (!ModelState.IsValid)
                 return View();
 
-            var result = await _adminApiClient.Edit(request.AdminId, request);
+            var hashedPassword = new PasswordHasher<AdminModel>().HashPassword(new AdminModel(), request.Password);
+            request.Password = hashedPassword;
+
+            var result = await _adminApiClient.Edit(request.Id, request);
             if (result)
             {
                 TempData["result"] = "Sửa thành công";
@@ -127,7 +145,7 @@ namespace Master.Webapp.Controllers
                 {
                     Active = model.Active,
                     Username = model.Username,
-                    AdminId = id,
+                    Id = id,
                     Role=model.Role
                 };
                 return ViewComponent("DetailAdmin", updateRequest);
