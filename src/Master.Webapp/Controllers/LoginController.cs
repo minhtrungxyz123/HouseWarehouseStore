@@ -76,7 +76,7 @@ namespace Master.Webapp.Controllers
                 }
                 else if(checkActive != null && !checkActive.Active)
                 {
-                    ModelState.AddModelError(string.Empty, "Tafi khoan chua ative.");
+                    ModelState.AddModelError(string.Empty, "Tài khoản chưa được kích hoạt.");
                     return View(user);
                 }
                 else

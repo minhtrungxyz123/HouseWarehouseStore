@@ -108,7 +108,7 @@ namespace Master.Service
             return query.ToList();
         }
 
-        public IList<Admin> GetCheckActive(string name, bool showHidden = true)
+        public Task<Admin> GetCheckActive(string name, bool showHidden = true)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -120,7 +120,7 @@ namespace Master.Service
             {
                 query = from p in query where p.Active select p;
             }
-            return query.ToList();
+            return query.FirstOrDefaultAsync();
 
         }
 

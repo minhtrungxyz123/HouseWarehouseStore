@@ -20,7 +20,7 @@ namespace Master.Service
 
         Task<ApiResult<Admin>> GetByIdAsyn(string? id);
 
-        IList<Admin> GetCheckActive(string name, bool showHidden = true);
+        Task<Admin> GetCheckActive(string name, bool showHidden = true);
 
         IList<Admin> GetMvcListItems(bool showHidden = true);
     }

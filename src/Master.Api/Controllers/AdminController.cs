@@ -74,7 +74,7 @@ namespace Master.Api.Controllers
                 throw new ArgumentException($"'{nameof(name)}' cannot be null or whitespace.", nameof(name));
             }
 
-            var checkActive = _adminService.GetCheckActive(name, showHidden);
+            var checkActive = await _adminService.GetCheckActive(name, showHidden);
 
             if (checkActive == null)
             {
