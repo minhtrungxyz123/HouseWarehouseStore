@@ -75,7 +75,7 @@ namespace FileApi.Controllers
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height=100)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height = 100)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -257,6 +257,15 @@ namespace FileApi.Controllers
         #endregion List
 
         #region Utilities
+
+        [HttpGet("image/{name}")]
+        public async Task<IActionResult> GetFile(string name)
+        {
+            var check = await _fileService.GetByNameAsync(name);
+            var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+            var fs = System.IO.File.OpenRead(filePath);
+            return File(fs, "image/png");
+        }
 
         private static string GetExtension(string name)
         {

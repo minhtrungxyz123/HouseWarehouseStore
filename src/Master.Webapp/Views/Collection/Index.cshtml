@@ -1,4 +1,6 @@
 ﻿@model Pagination<HouseWarehouseStore.Models.CollectionModel>
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+
 @{
     ViewData["Title"] = "Danh sách bộ sưu tập";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -110,7 +112,18 @@
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Image)
+                                    @if (item.Image != null)
+                                    {
+                                        if (item.Image.Contains("https"))
+                                        {
+                                            <img src="@(Configuration["ApiFiles"]+"/files/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
+                                        }
+                                        else
+                                        {
+                                            <img src="@(Configuration["ApiFiles"]+"/files/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
+
+                                        }
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Quantity)

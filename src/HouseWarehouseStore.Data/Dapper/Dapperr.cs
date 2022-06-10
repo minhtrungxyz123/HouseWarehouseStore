@@ -49,5 +49,15 @@ namespace HouseWarehouseStore.Data.Dapper
             using var connection = new SqlConnection(_config.GetConnectionString(Connectionstring));
             return connection.Query<T>(sp, parms, commandType: commandType).ToList();
         }
+
+        public async Task<int> CheckName<T>(string name, string nameEntity)
+        {
+            using var connection = new SqlConnection(_config.GetConnectionString(Connectionstring));
+            var sp = "select Id from Admins " + nameEntity + " where Username = @username";
+            DynamicParameters parameter = new DynamicParameters();
+            parameter.Add("@username", name);
+            var res = await connection.QueryAsync<T>(sp, parameter, commandType: CommandType.Text);
+            return res.Count();
+        }
     }
 }

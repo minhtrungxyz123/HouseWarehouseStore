@@ -50,6 +50,7 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Nội dung")]
         public string Content { get; set; }
+
         public bool StatusProduct { get; set; }
 
         [Display(Name = "Mã vạch")]
@@ -61,10 +62,12 @@ namespace HouseWarehouseStore.Models
         public DateTime CreateDate { get; set; }
 
         [Display(Name = "Người tạo")]
-        public string?CreateBy { get; set; }
+        public string? CreateBy { get; set; }
 
         [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
         public IFormFile? filesadd { get; set; }
+
         public List<FilesModel>? FilesModels { get; set; }
+
     }
 }

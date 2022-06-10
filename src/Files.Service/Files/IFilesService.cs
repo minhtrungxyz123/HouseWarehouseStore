@@ -13,5 +13,7 @@ namespace Files.Service
         Task<int> Delete(string id);
 
         Task<List<FilesModel>> GetFilesCollection(int take);
+
+        Task<HouseWarehouseStore.Data.Entities.File> GetByNameAsync(string name);
     }
 }

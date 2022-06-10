@@ -2,9 +2,7 @@
 using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Http.Headers;
 
 namespace Master.Service
 {
@@ -66,54 +64,53 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Collection>>> GetAllPaging(CollectionSearchContext ctx)
+        public async Task<ApiResult<Pagination<CollectionModel>>> GetAllPaging(CollectionSearchContext ctx)
         {
-            var query = _context.Collections.AsQueryable();
+            var query = from pr in _context.Collections
+                        select new { pr };
+
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Name.Contains(ctx.Keyword)
-                || x.Description.Contains(ctx.Keyword)
-                || x.Body.Contains(ctx.Keyword)
-                || x.Factory.Contains(ctx.Keyword)
-                || x.TitleMeta.Contains(ctx.Keyword)
-                || x.Content.Contains(ctx.Keyword)
-                || x.BarCode.Contains(ctx.Keyword));
+                query = query.Where(x => x.pr.Name.Contains(ctx.Keyword)
+                || x.pr.TitleMeta.Contains(ctx.Keyword));
             }
 
-            int totalRow = await query.CountAsync();
+            var totalRecords = await query.CountAsync();
 
-            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(x => new Collection()
+                .Select(u => new CollectionModel()
                 {
-                    Name = x.Name,
-                    CollectionId = x.CollectionId,
-                    Active = x.Active,
-                    TitleMeta = x.TitleMeta,
-                    Content = x.Content,
-                    StatusProduct = x.StatusProduct,
-                    Sort = x.Sort,
-                    Quantity = x.Quantity,
-                    BarCode = x.BarCode,
-                    Price = x.Price,
-                    Body = x.Body,
-                    CreateBy = x.CreateBy,
-                    CreateDate = x.CreateDate,
-                    Description = x.Description,
-                    Factory = x.Factory,
-                    Home = x.Home,
-                    Hot = x.Hot,
-                    Image = x.Image,
-                }).ToListAsync();
+                    Name = u.pr.Name,
+                    CollectionId = u.pr.CollectionId,
+                    Active = u.pr.Active,
+                    TitleMeta = u.pr.TitleMeta,
+                    Content = u.pr.Content,
+                    StatusProduct = u.pr.StatusProduct,
+                    Sort = u.pr.Sort,
+                    Quantity = u.pr.Quantity,
+                    BarCode = u.pr.BarCode,
+                    Price = u.pr.Price,
+                    Body = u.pr.Body,
+                    CreateBy = u.pr.CreateBy,
+                    CreateDate = u.pr.CreateDate,
+                    Description = u.pr.Description,
+                    Factory = u.pr.Factory,
+                    Home = u.pr.Home,
+                    Hot = u.pr.Hot,
+                    Image = u.pr.Image,
+                })
+                .ToListAsync();
 
-            var pagedResult = new Pagination<Collection>()
+            var pagination = new Pagination<CollectionModel>
             {
-                TotalRecords = totalRow,
+                Items = items,
+                TotalRecords = totalRecords,
                 PageIndex = ctx.PageIndex,
                 PageSize = ctx.PageSize,
-                Items = data
             };
-            return new ApiSuccessResult<Pagination<Collection>>(pagedResult);
+
+            return new ApiSuccessResult<Pagination<CollectionModel>>(pagination);
         }
 
         public async Task<Collection?> GetById(string? id)
@@ -276,9 +273,5 @@ namespace Master.Service
         }
 
         #endregion Method
-
-        #region Utilities
-
-        #endregion Utilities
     }
 }

@@ -1,4 +1,5 @@
 ﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Data.Dapper;
 using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
@@ -11,10 +12,13 @@ namespace Master.Service
         #region Fields
 
         private readonly HouseWarehouseStoreDbContext _context;
+        private readonly IDapper _dapper;
 
-        public AdminService(HouseWarehouseStoreDbContext context)
+        public AdminService(HouseWarehouseStoreDbContext context,
+            IDapper dapper)
         {
             _context = context;
+            _dapper = dapper;
         }
 
         #endregion Fields
@@ -116,12 +120,11 @@ namespace Master.Service
             }
 
             var query = from p in _context.Admins.AsQueryable() where p.Username == name select p;
-            if(showHidden)
+            if (showHidden)
             {
                 query = from p in query where p.Active select p;
             }
             return query.FirstOrDefaultAsync();
-
         }
 
         #endregion List
@@ -196,6 +199,14 @@ namespace Master.Service
             var result = await _context.SaveChangesAsync();
 
             return result;
+        }
+
+        public async Task<bool> GetAdmin(Admin entity)
+        {
+            if (entity == null)
+                throw new ArgumentNullException(nameof(entity));
+            var res = await _dapper.CheckName<Admin>(entity.Username, nameof(Admin));
+            return res > 0;
         }
 
         #endregion Method

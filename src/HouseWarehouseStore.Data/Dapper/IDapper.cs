@@ -15,5 +15,7 @@ namespace HouseWarehouseStore.Data.Dapper
         Task<IEnumerable<T>> GetAllAync<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
 
         IEnumerable<T> GetAll<T>(string sp, DynamicParameters parms, CommandType commandType = CommandType.StoredProcedure);
+
+        Task<int> CheckName<T>(string name, string nameEntity);
     }
 }

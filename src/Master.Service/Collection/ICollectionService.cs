@@ -8,7 +8,7 @@ namespace Master.Service
     {
         Task<IEnumerable<Collection>> GetAll();
 
-        Task<ApiResult<Pagination<Collection>>> GetAllPaging(CollectionSearchContext ctx);
+        Task<ApiResult<Pagination<CollectionModel>>> GetAllPaging(CollectionSearchContext ctx);
 
         Task<Collection> GetById(string? id);
 

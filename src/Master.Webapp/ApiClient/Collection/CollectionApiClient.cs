@@ -25,6 +25,17 @@ namespace Master.Webapp.ApiClient
         #endregion Fields
 
         #region List
+        public async Task<List<CollectionModel>> GetAll()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/collection/get-all");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<List<CollectionModel>>(body);
+
+            return JsonConvert.DeserializeObject<List<CollectionModel>>(body);
+        }
 
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {

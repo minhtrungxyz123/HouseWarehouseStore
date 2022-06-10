@@ -23,5 +23,7 @@ namespace Master.Service
         Task<Admin> GetCheckActive(string name, bool showHidden = true);
 
         IList<Admin> GetMvcListItems(bool showHidden = true);
+
+        Task<bool> GetAdmin(Admin entity);
     }
 }

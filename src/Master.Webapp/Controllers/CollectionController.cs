@@ -35,6 +35,7 @@ namespace Master.Webapp.Controllers
                 PageSize = pageSize
             };
             var data = await _collectionApiClient.Get(request);
+
             ViewBag.Keyword = keyword;
             if (TempData["result"] != null)
             {
@@ -60,9 +61,10 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View(request);
-            request.Image = "1";
+
             request.CreateDate = DateTime.UtcNow.ToLocalTime();
             request.CollectionId = Guid.NewGuid().ToString();
+            request.Image = request.CollectionId;
 
             var claims = HttpContext.User.Claims;
             var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;

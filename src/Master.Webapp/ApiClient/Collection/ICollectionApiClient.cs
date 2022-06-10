@@ -26,5 +26,7 @@ namespace Master.Webapp.ApiClient
         Task<bool> DeleteFiles(string id);
 
         Task<AdminModel> GetByUserId(string id);
+
+        Task<List<CollectionModel>> GetAll();
     }
 }

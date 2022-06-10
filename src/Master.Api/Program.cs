@@ -1,3 +1,4 @@
+using HouseWarehouseStore.Data.Dapper;
 using HouseWarehouseStore.Data.EF;
 using Master.Service;
 using Microsoft.EntityFrameworkCore;
@@ -22,6 +23,8 @@ builder.Services.AddScoped<ICollectionService, CollectionService>();
 builder.Services.AddScoped<ISizeService, SizeService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IKeycloakService, KeycloakService>();
+builder.Services.AddScoped<IDapper, Dapperr>();
+builder.Services.AddScoped<IArticleCategoryService, ArticleCategoryService>();
 
 #endregion Add Service
 

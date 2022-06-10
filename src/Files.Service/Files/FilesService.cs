@@ -1,5 +1,4 @@
-﻿using HouseWarehouseStore.Common;
-using HouseWarehouseStore.Data.EF;
+﻿using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,7 +45,6 @@ namespace Files.Service
 
             await _context.Files.AddRangeAsync(list);
 
-
             var result = await _context.SaveChangesAsync();
 
             return result;
@@ -59,7 +57,7 @@ namespace Files.Service
                 throw new ArgumentNullException(nameof(collectionId));
             }
 
-            var itemFiles = await _context.Files.FirstOrDefaultAsync(x=>x.CollectionId.Equals(collectionId));
+            var itemFiles = await _context.Files.FirstOrDefaultAsync(x => x.CollectionId.Equals(collectionId));
             var list = new List<HouseWarehouseStore.Data.Entities.File>();
             foreach (var file in entities)
             {
@@ -135,6 +133,20 @@ namespace Files.Service
             return await query.FirstOrDefaultAsync();
         }
 
-        #endregion
+        public Task<HouseWarehouseStore.Data.Entities.File> GetByNameAsync(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            var query =
+                from x in _context.Files
+                where x.CollectionId == name
+                select x;
+
+            return query.FirstOrDefaultAsync();
+        }
+
+        #endregion List
     }
 }

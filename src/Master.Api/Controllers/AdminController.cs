@@ -1,4 +1,5 @@
 ﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
 using Master.Service;
 using Microsoft.AspNetCore.Http;
@@ -91,6 +92,19 @@ namespace Master.Api.Controllers
         [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] AdminModel model)
         {
+            var check = await _adminService.GetAdmin(new Admin()
+            {
+                Username = model.Username.Trim()
+            });
+            if (check)
+            {
+                return Ok(new ResultMessageResponse()
+                {
+                    success = false,
+                    message = "Tên đã đã tồn tại, xin vui lòng nhập tên khác khác !"
+                });
+            }
+
             var result = await _adminService.Create(model);
 
             if (result.Result > 0)
