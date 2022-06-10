@@ -18,6 +18,10 @@ namespace HouseWarehouseStore.Data.Configuration
                 .HasMaxLength(36)
                 .IsUnicode(false);
 
+            entity.Property(e => e.ArticleId)
+                .HasMaxLength(36)
+                .IsUnicode(false);
+
             entity.Property(e => e.Extension)
                 .HasMaxLength(50)
                 .IsUnicode(false);

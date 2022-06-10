@@ -9,5 +9,6 @@
         public string? Extension { get; set; }
         public string? MimeType { get; set; }
         public string? CollectionId { get; set; }
+        public string? ArticleId { get; set; }
     }
 }
