@@ -119,6 +119,25 @@
                 </div>
             </li>
 
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ArticleCategory"
+                    aria-expanded="true" aria-controls="ArticleCategory">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Bài viết</span>
+                </a>
+                <div id="ArticleCategory" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh mục loại bài viết:</h6>
+                        <a class="collapse-item" asp-controller="ArticleCategory" asp-action="Index">Loại bài viết</a>
+                        <a class="collapse-item" asp-controller="ArticleCategory" asp-action="Create">Thêm loại bài viết</a>
+                        <h6 class="collapse-header">Danh sách bài viết:</h6>
+                        <a class="collapse-item" asp-controller="Article" asp-action="Index">Danh sách bài viết</a>
+                        <a class="collapse-item" asp-controller="Article" asp-action="Create">Thêm danh sách bài viết</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 

@@ -155,7 +155,7 @@ namespace Master.Service
             var query = from p in _context.Collections.AsQueryable() select p;
             if (showHidden)
             {
-                query = from p in query where p.Active select p;
+                query = from p in query where p.Hot select p;
             }
             query = from p in query orderby p.Hot select p;
             return query.ToList();

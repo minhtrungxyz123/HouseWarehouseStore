@@ -28,7 +28,7 @@ namespace HouseWarehouseStore.Models
         public bool ShowMenu { get; set; }
 
         [StringLength(100), Display(Name = "Đường dẫn danh mục"), UIHint("TextBox")]
-        public string Slug { get; set; }
+        public string? Slug { get; set; }
 
         [Display(Name = "Danh mục Hot")]
         public bool Hot { get; set; }

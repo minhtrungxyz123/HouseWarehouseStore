@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Article> entity)
         {
-            entity.ToTable("Article");
+            entity.ToTable("Articles");
 
             entity.HasIndex(e => e.ArticleCategoryId, "IX_Articles_ArticleCategoryId");
 

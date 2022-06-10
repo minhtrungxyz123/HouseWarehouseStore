@@ -7,11 +7,11 @@
 
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Danh mục bài viết</h1>
+    <h1 class="h3 mb-2 text-gray-800">Loại bài viết</h1>
 
     <div class="card mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Sửa danh mục bài viết</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Sửa danh mục loại bài viết</h6>
         </div>
         <div class="card-header">
             <a class="btn btn-danger" asp-action="Index" asp-controller="ArticleCategory"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
@@ -22,6 +22,7 @@
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="ArticleCategoryId" />
+                    <input type="hidden" asp-for="Slug" />
                     <div class="form-group bg-white">
                         <label asp-for="CategoryName" class="control-label"></label>
                         <input asp-for="CategoryName" class="form-control" />
@@ -79,7 +80,7 @@
 
 @section Scripts{
     <script>
-        $('#Body').summernote({
+        $('#DescriptionMeta').summernote({
             placeholder: 'Mời bạn soạn thảo',
             tabsize: 2,
             height: 500,              // set editor height
@@ -97,14 +98,14 @@
             ]
         });
 
-        $('#Body').on('summernote.change', function(we, contents, $editable) {
-            var markupStr = $('#Body').summernote('code');
+        $('#DescriptionMeta').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#DescriptionMeta').summernote('code');
             console.log(markupStr)
-            $("input#Body").val(markupStr);
+            $("input#DescriptionMeta").val(markupStr);
         });
 
         $(document).ready(function() {
-            $('#Body').summernote('code', $("input#Body").val());
+            $('#DescriptionMeta').summernote('code', $("input#DescriptionMeta").val());
         })
     </script>
 }

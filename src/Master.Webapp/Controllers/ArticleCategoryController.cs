@@ -52,6 +52,7 @@ namespace Master.Webapp.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ArticleCategoryModel request)
         {
+            request.Slug = "1";
             if (!ModelState.IsValid)
                 return View(request);
 

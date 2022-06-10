@@ -25,6 +25,7 @@ builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IKeycloakService, KeycloakService>();
 builder.Services.AddScoped<IDapper, Dapperr>();
 builder.Services.AddScoped<IArticleCategoryService, ArticleCategoryService>();
+builder.Services.AddScoped<IArticleService, ArticleService>();
 
 #endregion Add Service
 
