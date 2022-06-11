@@ -18,5 +18,7 @@ namespace HouseWarehouseStore.Models
         public string? CollectionId { get; set; }
 
         public IFormFile? filesadd { get; set; }
+
+        public  string ArticlesId { get; set; }
     }
 }

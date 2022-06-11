@@ -54,7 +54,7 @@ namespace Master.Webapp.ApiClient
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.GetAsync($"/collection/get?keyword={request.Keyword}&pageIndex=" +
+            var response = await client.GetAsync($"/articles/get?keyword={request.Keyword}&pageIndex=" +
                 $"{request.PageIndex}&pageSize={request.PageSize}");
             var body = await response.Content.ReadAsStringAsync();
             var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ArticleModel>>>(body);

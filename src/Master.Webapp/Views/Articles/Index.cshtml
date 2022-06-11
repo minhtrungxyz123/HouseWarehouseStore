@@ -1,24 +1,24 @@
-﻿@model Pagination<HouseWarehouseStore.Models.CollectionModel>
+﻿@model Pagination<HouseWarehouseStore.Models.ArticleModel>
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 
 @{
-    ViewData["Title"] = "Danh sách bộ sưu tập";
+    ViewData["Title"] = "Danh sách bài viết";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Bộ sưu tập</h1>
+    <h1 class="h3 mb-2 text-gray-800">Bài viết</h1>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Danh sách bộ sưu tập</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách bài viết</h6>
         </div>
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" asp-action="Create" asp-controller="Collection"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Articles"><i class="fa-solid fa-plus"></i> Tạo mới</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
@@ -28,7 +28,7 @@
                             </div>
                             <div class="cold-md-3">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
-                                <button type="button" onclick="window.location.href='/Collection/Index'" class="btn btn-dark">Tải lại</button>
+                                <button type="button" onclick="window.location.href='/Articles/Index'" class="btn btn-dark">Tải lại</button>
                             </div>
                         </div>
                     </form>
@@ -51,52 +51,37 @@
                     <thead>
                         <tr>
                             <th>
-                                Tên bộ sưu tập
+                                Tiêu đề
                             </th>
                             <th>
-                                Mã bộ sưu tập
-                            </th>
-                            <th>
-                                Hình ảnh
-                            </th>
-                            <th>
-                                Số lượng
-                            </th>
-                            <th>
-                                Xuất xứ
-                            </th>
-                            <th>
-                                Giá
-                            </th>
-                            <th>
-                                Thứ tự hiển thị
-                            </th>
-                            <th>
-                                Bộ sưu tập mới nhất
-                            </th>
-                            <th>
-                                Hiển thị trang chủ
-                            </th>
-                            <th>
-                                Hoạt động
-                            </th>
-                            <th>
-                                Thẻ tiêu đề
+                                Trích dẫn ngắn
                             </th>
                             <th>
                                 Nội dung
                             </th>
                             <th>
-                                Trạng thái sản phẩm
+                                Hình ảnh đại diện
                             </th>
                             <th>
-                                Mã vạch
+                                Ngày đăng
                             </th>
                             <th>
-                                Ngày tạo
+                                Danh mục bài viết
                             </th>
                             <th>
-                                Người tạo
+                                Hoạt động
+                            </th>
+                            <th>
+                                Tin nổi bật
+                            </th>
+                            <th>
+                                Hiển thị trang chủ
+                            </th>
+                            <th>
+                                Thẻ tiêu đề
+                            </th>
+                            <th>
+                                Thẻ mô tả
                             </th>
                             <th>Chức năng</th>
                         </tr>
@@ -106,10 +91,13 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.Subject)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Body)
                                 </td>
                                 <td>
                                     @if (item.Image != null)
@@ -126,80 +114,57 @@
                                     }
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Quantity)
+                                    @Html.DisplayFor(modelItem => item.CreateDate)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Factory)
+                                    @Html.DisplayFor(modelItem => item.ArticleCategoryId)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Price)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Sort)
+                                    @if (item.Active)
+                                    {
+                                        <span class="btn btn-danger">Kích hoạt</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
+
+                                    }
                                 </td>
                                 <td>
                                     @if (item.Hot)
                                     {
-                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
+                                        <span class="btn btn-danger">Kích hoạt</span>
                                     }
                                     else
                                     {
-                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
+                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
 
                                     }
                                 </td>
                                 <td>
                                     @if (item.Home)
                                     {
-                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
+                                        <span class="btn btn-danger">Kích hoạt</span>
                                     }
                                     else
                                     {
-                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
+                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
 
                                     }
                                 </td>
                                 <td>
-                                    @if (item.Active)
-                                    {
-                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
-                                    }
-                                    else
-                                    {
-                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
-
-                                    }
+                                    @Html.DisplayFor(modelItem => item.Url)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TitleMeta)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Content)
+                                    @Html.DisplayFor(modelItem => item.DescriptionMetaTitle)
                                 </td>
                                 <td>
-                                    @if (item.StatusProduct)
-                                    {
-                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
-                                    }
-                                    else
-                                    {
-                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
-
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.BarCode)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreateDate)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.CreateBy)
-                                </td>
-                                <td>
-                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.CollectionId"><i class="fa-solid fa-pen"></i> Sửa</a>
-                                    <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.CollectionId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
-                                    <a class="btn btn-danger" onclick="Delete('@item.CollectionId')"><i class="fa-solid fa-trash-can"></i> Xóa</a>
+                                    <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.Id"><i class="fa-solid fa-eye"></i> Chi tiết</a>
+                                    <a class="btn btn-danger" onclick="Delete('@item.Id')"><i class="fa-solid fa-trash-can"></i> Xóa</a>
                                 </td>
                             </tr>
                         }
@@ -220,10 +185,10 @@
 
         function Delete(id) {
             if (confirm("Bạn có chắc chắn xóa không?")) {
-                $.post("/Collection/DeleteConfirmed", { id: id }, function(data) {
+                $.post("/Articles/DeleteConfirmed", { id: id }, function(data) {
                     if (data) {
                         if (confirm("Xóa thành công"))
-                            window.location.assign('/Collection/Index')
+                            window.location.assign('/Articles/Index')
                     } else {
                         alert("Quá trình thực hiện không thành công. Hãy thử lại");
                     }
@@ -233,3 +198,4 @@
 
     </script>
 }
+
