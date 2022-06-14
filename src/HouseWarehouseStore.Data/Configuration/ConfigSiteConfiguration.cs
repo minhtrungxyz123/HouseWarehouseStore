@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ConfigSite> entity)
         {
-            entity.ToTable("ConfigSite");
+            entity.ToTable("ConfigSites");
 
             entity.Property(e => e.ConfigSiteId)
                     .HasMaxLength(36)

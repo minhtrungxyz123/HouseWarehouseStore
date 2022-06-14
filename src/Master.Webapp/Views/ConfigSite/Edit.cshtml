@@ -1,0 +1,157 @@
+﻿@model HouseWarehouseStore.Models.CollectionModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+
+@{
+    ViewData["Title"] = "Cập nhật bộ sư tập";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Bộ sưu tập</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Sửa bộ sưu tập</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Collection"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Edit" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="CollectionId" />
+                    <input type="hidden" asp-for="CreateDate" />
+                    <input type="hidden" asp-for="FilesModels" />
+
+                    @foreach (var item in Model.FilesModels)
+                    {
+                        var url = $"/{_loc["collectionUrl"]}/{item.CollectionId}";
+                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
+                    }
+                    <div class="form-group bg-white">
+                        <label asp-for="BarCode" class="control-label"></label>
+                        <input asp-for="BarCode" class="form-control" />
+                        <span asp-validation-for="BarCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Description" class="control-label"></label>
+                        <input asp-for="Description" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Content" class="control-label"></label>
+                        <input asp-for="Content" class="form-control" />
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="CreateBy" class="control-label"></label>
+                        <input asp-for="CreateBy" class="form-control" />
+                        <span asp-validation-for="CreateBy" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Body" class="control-label"></label>
+                        <div id="Body"></div>
+                        <input type="hidden" asp-for="Body" class="form-control" />
+                        <span asp-validation-for="Body" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Quantity" class="control-label"></label>
+                        <input asp-for="Quantity" class="form-control" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Factory" class="control-label"></label>
+                        <input asp-for="Factory" class="form-control" />
+                        <span asp-validation-for="Factory" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Price" class="control-label"></label>
+                        <input asp-for="Price" class="form-control" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Sort" class="control-label"></label>
+                        <input asp-for="Sort" class="form-control" />
+                        <span asp-validation-for="Sort" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Hot" /> @Html.DisplayNameFor(model => model.Hot)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Home" /> @Html.DisplayNameFor(model => model.Home)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="TitleMeta" class="control-label"></label>
+                        <input asp-for="TitleMeta" class="form-control" />
+                        <span asp-validation-for="TitleMeta" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group form-check d-none">
+                        <label class="form-check-label">
+                            <input class="form-check-input" value="true" asp-for="StatusProduct" /> @Html.DisplayNameFor(model => model.StatusProduct)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="filesadd" class="control-label"></label>
+                        <input asp-for="filesadd" type="file" class="form-control" />
+                        <span asp-validation-for="filesadd" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Cập nhật" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+        $('#Body').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#Body').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#Body').summernote('code');
+            console.log(markupStr)
+            $("input#Body").val(markupStr);
+        });
+
+        $(document).ready(function() {
+            $('#Body').summernote('code', $("input#Body").val());
+        })
+    </script>
+}

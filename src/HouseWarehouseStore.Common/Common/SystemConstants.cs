@@ -10,5 +10,9 @@
         {
             public const int NumberOfArticle = 1;
         }
+        public class ConfigSiteSettings
+        {
+            public const int NumberOfConfigSite = 1;
+        }
     }
 }

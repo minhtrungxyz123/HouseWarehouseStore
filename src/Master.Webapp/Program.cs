@@ -46,6 +46,7 @@ builder.Services.AddScoped<IContactApiClient, ContactApiClient>();
 builder.Services.AddScoped<ISendDiscordHelper, SendDiscordHelper>();
 builder.Services.AddScoped<IArticleCategoryApiClient, ArticleCategoryApiClient>();
 builder.Services.AddScoped<IArticlesApiClient, ArticlesApiClient>();
+builder.Services.AddScoped<IConfigSiteApiClient, ConfigSiteApiClient>();
 
 #endregion Add DI
 

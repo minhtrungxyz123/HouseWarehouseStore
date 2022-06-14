@@ -10,5 +10,6 @@
         public string? MimeType { get; set; }
         public string? CollectionId { get; set; }
         public string? ArticleId { get; set; }
+        public string? ConfigSiteId { get; set; }
     }
 }

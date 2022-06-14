@@ -1,0 +1,164 @@
+﻿@model HouseWarehouseStore.Models.ConfigSiteModel
+
+@{
+    ViewData["Title"] = "Tạo FANPAGE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">FANPAGE</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tạo mới FANPAGE</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="ConfigSite"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group w-25">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ContactInfo" class="control-label"></label>
+                        <div id="ContactInfo"></div>
+                        <input type="hidden" asp-for="ContactInfo" class="form-control" />
+                        <span asp-validation-for="ContactInfo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FooterInfo" class="control-label"></label>
+                        <div id="FooterInfo"></div>
+                        <input type="hidden" asp-for="FooterInfo" class="form-control" />
+                        <span asp-validation-for="FooterInfo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SaleOffProgram" class="control-label"></label>
+                        <div id="SaleOffProgram"></div>
+                        <input type="hidden" asp-for="SaleOffProgram" class="form-control" />
+                        <span asp-validation-for="SaleOffProgram" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Facebook" class="control-label"></label>
+                        <input asp-for="Facebook" class="form-control" />
+                        <span asp-validation-for="Facebook" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Linkedin" class="control-label"></label>
+                        <input asp-for="Linkedin" class="form-control" />
+                        <span asp-validation-for="Linkedin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="GooglePlus" class="control-label"></label>
+                        <input asp-for="GooglePlus" class="form-control" />
+                        <span asp-validation-for="GooglePlus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Youtube" class="control-label"></label>
+                        <input asp-for="Youtube" class="form-control" />
+                        <span asp-validation-for="Youtube" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label asp-for="GoogleAnalytics" class="control-label"></label>
+                        <textarea asp-for="GoogleAnalytics" class="form-control"></textarea>
+                        <span asp-validation-for="GoogleAnalytics" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group w-25">
+                        <label asp-for="Hotline" class="control-label"></label>
+                        <input asp-for="Hotline" class="form-control" />
+                        <span asp-validation-for="Hotline" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group w-25">
+                        <label asp-for="nameShopee" class="control-label"></label>
+                        <input asp-for="nameShopee" class="form-control" />
+                        <span asp-validation-for="nameShopee" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label asp-for="LiveChat" class="control-label"></label>
+                        <textarea asp-for="LiveChat" class="form-control"></textarea>
+                        <span asp-validation-for="LiveChat" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group w-25">
+                        <label asp-for="urlWeb" class="control-label"></label>
+                        <input asp-for="urlWeb" class="form-control" />
+                        <span asp-validation-for="urlWeb" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Twitter" class="control-label"></label>
+                        <input asp-for="Twitter" class="form-control" />
+                        <span asp-validation-for="Twitter" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-group w-50">
+                        <label asp-for="GoogleMap" class="control-label"></label>
+                        <textarea asp-for="GoogleMap" class="form-control"></textarea>
+                        <span asp-validation-for="GoogleMap" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="FbMessage" class="control-label"></label>
+                        <input asp-for="FbMessage" class="form-control" />
+                        <span asp-validation-for="FbMessage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="filesadd" class="control-label"></label>
+                        <input asp-for="filesadd" type="file" class="form-control" />
+                        <span asp-validation-for="filesadd" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#ContactInfo').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#ContactInfo').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#ContactInfo').summernote('code');
+            console.log(markupStr)
+            $("input#ContactInfo").val(markupStr);
+        });
+    </script>
+}

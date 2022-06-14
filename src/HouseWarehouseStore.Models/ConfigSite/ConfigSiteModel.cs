@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
 {
@@ -62,5 +63,9 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Message Facebook"), UIHint("EditorBox")]
         public string FbMessage { get; set; }
+
+        public IFormFile? filesadd { get; set; }
+
+        public List<FilesModel>? FilesModels { get; set; }
     }
 }
