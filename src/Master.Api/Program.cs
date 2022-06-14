@@ -27,6 +27,7 @@ builder.Services.AddScoped<IDapper, Dapperr>();
 builder.Services.AddScoped<IArticleCategoryService, ArticleCategoryService>();
 builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IConfigSiteService, ConfigSiteService>();
+builder.Services.AddScoped<IVoucherService, VoucherService>();
 
 #endregion Add Service
 

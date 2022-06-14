@@ -44,7 +44,7 @@ namespace HouseWarehouseStore.Models
         public decimal ReductionMax { get; set; }
 
         [Display(Name = "Trạng thái kích hoạt")]
-        public bool? Active { get; set; }
+        public bool Active { get; set; }
 
         [Required(ErrorMessage = "Bạn chưa nhập thông tin")]
         [Display(Name = "Nhập mức giảm")]

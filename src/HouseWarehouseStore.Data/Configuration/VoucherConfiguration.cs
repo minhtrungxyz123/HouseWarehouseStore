@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Voucher> entity)
         {
-            entity.ToTable("Voucher");
+            entity.ToTable("Vouchers");
 
             entity.Property(e => e.Id)
                     .HasMaxLength(36)
