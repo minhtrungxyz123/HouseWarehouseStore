@@ -231,10 +231,10 @@ namespace FileApi.Controllers
 
         #region Utilities
 
-        [HttpGet("image/{id}")]
-        public async Task<IActionResult> GetFile(string id)
+        [HttpGet("image/{name}")]
+        public async Task<IActionResult> GetFile(string name)
         {
-            var check = await _filesArticleService.GetByNameAsync(id);
+            var check = await _filesArticleService.GetByNameAsync(name);
             var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
             var fs = System.IO.File.OpenRead(filePath);
             return File(fs, "image/png");
