@@ -29,7 +29,7 @@ namespace HouseWarehouseStore.Models
         public string urlWeb { get; set; }
 
         [StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), Display(Name = "Đường dẫn Google Plus"), Url(ErrorMessage = "Đường dẫn không chính xác"), UIHint("TextBox")]
-        public string GooglePlus { get; set; }
+        public string? GooglePlus { get; set; }
 
         [StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), Display(Name = "Đường dẫn Twitter"), Url(ErrorMessage = "Đường dẫn không chính xác"), UIHint("TextBox")]
         public string Twitter { get; set; }
@@ -56,7 +56,7 @@ namespace HouseWarehouseStore.Models
         public string Email { get; set; }
 
         [StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), Display(Name = "Logo")]
-        public string CoverImage { get; set; }
+        public string? CoverImage { get; set; }
 
         [Display(Name = "Chương trình khuyến mãi"), UIHint("EditorBox")]
         public string SaleOffProgram { get; set; }

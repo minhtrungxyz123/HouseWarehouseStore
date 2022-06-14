@@ -55,7 +55,7 @@ namespace Master.Webapp.ApiClient
 
         public async Task<List<FilesModel>> GetFilesConfigSite(int take)
         {
-            var data = await GetListAsync<FilesModel>($"/files/configsite/{take}");
+            var data = await GetListAsync<FilesModel>($"/files-configsite/configsite/{take}");
             return data;
         }
 
@@ -210,7 +210,7 @@ namespace Master.Webapp.ApiClient
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/create-image?configsiteId=" + configSiteId + "", requestContent);
+            var response = await client.PostAsync("/files-configsite/create-image?configsiteId=" + configSiteId + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -233,7 +233,7 @@ namespace Master.Webapp.ApiClient
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/update-image?configsiteId=" + configsiteId + "", requestContent);
+            var response = await client.PostAsync("/files-configsite/update-image?configsiteId=" + configsiteId + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -254,7 +254,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.DeleteAsync($"/files/delete?id={id}");
+            var response = await client.DeleteAsync($"/files-configsite/delete?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(body);
