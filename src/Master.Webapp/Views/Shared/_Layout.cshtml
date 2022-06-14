@@ -143,13 +143,29 @@
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ConfigSite"
                     aria-expanded="true" aria-controls="ConfigSite">
                     <i class="fa-solid fa-pager"></i>
-                    <span>Quản lý FANPAGE</span>
+                    <span>Quản lý Fanpage</span>
                 </a>
                 <div id="ConfigSite" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Danh mục liên hệ:</h6>
-                        <a class="collapse-item" asp-controller="ConfigSite" asp-action="Index">Thông tin FANPAGE</a>
-                        <a class="collapse-item" asp-controller="ConfigSite" asp-action="Create">Thêm mới FANPAGE</a>
+                        <a class="collapse-item" asp-controller="ConfigSite" asp-action="Index">Thông tin Fanpage</a>
+                        <a class="collapse-item" asp-controller="ConfigSite" asp-action="Create">Thêm mới Fanpage</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Voucher"
+                    aria-expanded="true" aria-controls="Voucher">
+                    <i class="fa-solid fa-file-invoice-dollar"></i>
+                    <span>Quản lý mã giảm giá</span>
+                </a>
+                <div id="Voucher" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh mục voucher:</h6>
+                        <a class="collapse-item" asp-controller="Voucher" asp-action="Index">Danh sách</a>
+                        <a class="collapse-item" asp-controller="Voucher" asp-action="Create">Thêm mới</a>
                     </div>
                 </div>
             </li>
