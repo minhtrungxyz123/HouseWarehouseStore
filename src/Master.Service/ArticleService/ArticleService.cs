@@ -63,7 +63,7 @@ namespace Master.Service
         public async Task<ApiResult<Pagination<ArticleModel>>> GetAllPaging(ArticleSearchContext ctx)
         {
             var query = from pr in _context.Articles
-                        join c in _context.ArticleCategories on pr.Id equals c.ArticleCategoryId into pt
+                        join c in _context.ArticleCategories on pr.ArticleCategoryId equals c.ArticleCategoryId into pt
                         from tp in pt.DefaultIfEmpty()
                         select new { pr, tp };
 

@@ -6,25 +6,25 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FileApi.Controllers
 {
-    [Route("files")]
+    [Route("files-articles")]
     [ApiController]
-    public class FilesController : ControllerBase
+    public class FilesArticlesController : ControllerBase
     {
         #region Fields
 
         private readonly IWebHostEnvironment _hostingEnvironment;
-        private readonly IFilesService _fileService;
+        private readonly IFilesArticleService _filesArticleService;
 
         #endregion Fields
 
         #region Ctor
 
-        public FilesController(
-            IFilesService fileService,
+        public FilesArticlesController(
+            IFilesArticleService filesArticleService,
             IWebHostEnvironment hostEnvironment)
         {
-            _fileService = fileService;
             _hostingEnvironment = hostEnvironment;
+            _filesArticleService = filesArticleService;
         }
 
         #endregion Ctor
@@ -40,7 +40,7 @@ namespace FileApi.Controllers
                 throw new ArgumentNullException(nameof(subidFile));
             }
 
-            var check = await _fileService.GetByIdAsync(subidFile);
+            var check = await _filesArticleService.GetByIdAsync(subidFile);
 
             if (check is null || string.IsNullOrEmpty(check.FileName) || string.IsNullOrEmpty(check.Path))
 
@@ -65,13 +65,13 @@ namespace FileApi.Controllers
         [HttpDelete]
         public async Task<IActionResult> Delete(string id)
         {
-            var result = await _fileService.Delete(id);
+            var result = await _filesArticleService.Delete(id);
             return Ok(result);
         }
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height = 100)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string articlesId, int width = 100, int height = 100)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -88,15 +88,6 @@ namespace FileApi.Controllers
             string sql = "";
             foreach (var formFile in filesadd)
             {
-                //if (!FormFileExtensions.IsImage(formFile) && !FormFileExtensions.IsExcel(formFile) && !FormFileExtensions.IsWord(formFile) && !FormFileExtensions.IsZipRar(formFile))
-                //{
-                //    if (sql.Length == 0)
-                //        sql = $"File width name {formFile.FileName} is not type word, excel, zip or image, rar";
-                //    else
-                //        sql = sql + $" .File width name {formFile.FileName} is not type word, excel, zip or image, rar";
-                //}
-                //else
-                //{
                 if (formFile.Length > 0 && formFile.Length <= 250000000)
                 {
                     var filePath = FormFile.CommonHelper.MapPath(path);
@@ -120,18 +111,17 @@ namespace FileApi.Controllers
                 {
                     sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
                 }
-                //}
             }
             var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
             if (listEntity.Count() > 0)
             {
-                await _fileService.InsertAsync(listEntity, collectionId);
+                await _filesArticleService.InsertAsync(listEntity, articlesId);
                 foreach (var item in listEntity)
                 {
                     var tem = new HouseWarehouseStore.Data.Entities.File();
                     tem.FileName = item.FileName;
                     tem.Path = item.Path;
-                    tem.CollectionId = collectionId;
+                    tem.ArticleId = articlesId;
                     listRes.Add(tem);
                 }
             }
@@ -145,7 +135,7 @@ namespace FileApi.Controllers
 
         [Route("update-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string collectionId, int width = 100, int height = 100)
+        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string articleId, int width = 100, int height = 100)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -162,15 +152,6 @@ namespace FileApi.Controllers
             string sql = "";
             foreach (var formFile in filesadd)
             {
-                //if (!FormFileExtensions.IsImage(formFile) && !FormFileExtensions.IsExcel(formFile) && !FormFileExtensions.IsWord(formFile) && !FormFileExtensions.IsZipRar(formFile))
-                //{
-                //    if (sql.Length == 0)
-                //        sql = $"File width name {formFile.FileName} is not type word, excel, zip or image, rar";
-                //    else
-                //        sql = sql + $" .File width name {formFile.FileName} is not type word, excel, zip or image, rar";
-                //}
-                //else
-                //{
                 if (formFile.Length > 0 && formFile.Length <= 250000000)
                 {
                     var filePath = FormFile.CommonHelper.MapPath(path);
@@ -194,18 +175,17 @@ namespace FileApi.Controllers
                 {
                     sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
                 }
-                //}
             }
             var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
             if (listEntity.Count() > 0)
             {
-                await _fileService.UpdateAsync(listEntity, collectionId);
+                await _filesArticleService.UpdateAsync(listEntity, articleId);
                 foreach (var item in listEntity)
                 {
                     var tem = new HouseWarehouseStore.Data.Entities.File();
                     tem.FileName = item.FileName;
                     tem.Path = item.Path;
-                    tem.CollectionId = collectionId;
+                    tem.ArticleId = articleId;
                     tem.MimeType = item.MimeType;
                     tem.Size = item.Size;
                     tem.Id = item.Id;
@@ -222,12 +202,12 @@ namespace FileApi.Controllers
 
         [HttpDelete]
         [Route("delete-files")]
-        public async Task<IActionResult> DeleteImage(string collectionId)
+        public async Task<IActionResult> DeleteImage(string articleId)
         {
             var result = false;
-            if (collectionId != null)
+            if (articleId != null)
             {
-                var check = await _fileService.GetByIdAsync(collectionId);
+                var check = await _filesArticleService.GetByIdAsync(articleId);
 
                 string filepath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
                 var deleteRes = DeleteImageByPath(filepath);
@@ -240,10 +220,10 @@ namespace FileApi.Controllers
 
         #region List
 
-        [HttpGet("collection/{take}")]
+        [HttpGet("articles/{take}")]
         public async Task<IActionResult> GetLatestProducts(int take)
         {
-            var files = await _fileService.GetFilesCollection(take);
+            var files = await _filesArticleService.GetFilesArticles(take);
             return Ok(files);
         }
 
@@ -251,10 +231,10 @@ namespace FileApi.Controllers
 
         #region Utilities
 
-        [HttpGet("image/{name}")]
-        public async Task<IActionResult> GetFile(string name)
+        [HttpGet("image/{id}")]
+        public async Task<IActionResult> GetFile(string id)
         {
-            var check = await _fileService.GetByNameAsync(name);
+            var check = await _filesArticleService.GetByNameAsync(id);
             var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
             var fs = System.IO.File.OpenRead(filePath);
             return File(fs, "image/png");

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
@@ -17,7 +18,7 @@ namespace HouseWarehouseStore.Models
         public string Body { get; set; }
 
         [Display(Name = "Hình ảnh đại diện"), UIHint("ImageArticle")]
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy HH:mm}")]
         [Display(Name = "Ngày đăng")]
@@ -37,7 +38,7 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Hiện trang chủ")]
         public bool Home { get; set; }
-        public string Url { get; set; }
+        public string? Url { get; set; }
 
         [Display(Name = "Thẻ tiêu đề"), StringLength(100, ErrorMessage = "Tối đa 100 ký tự"), UIHint("TextBox")]
         public string TitleMeta { get; set; }
@@ -51,5 +52,7 @@ namespace HouseWarehouseStore.Models
         public IFormFile? filesadd { get; set; }
 
         public List<FilesModel>? FilesModels { get; set; }
+
+        public IList<SelectListItem>? AvailableArticleCategories { get; set; }
     }
 }

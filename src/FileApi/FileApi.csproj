@@ -20,6 +20,8 @@
     <Folder Include="wwwroot\" />
     <Folder Include="wwwroot\uploads\2022\06\07\" />
     <Folder Include="wwwroot\uploads\2022\06\08\" />
+    <Folder Include="wwwroot\uploads\2022\06\10\" />
+    <Folder Include="wwwroot\uploads\2022\06\14\" />
   </ItemGroup>
 
 </Project>

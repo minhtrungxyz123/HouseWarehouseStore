@@ -129,7 +129,7 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            request.Image = "1";
+
             var result = await _collectionApiClient.Edit(request.CollectionId, request);
             if (result)
             {

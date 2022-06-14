@@ -3,6 +3,7 @@ using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Master.Webapp.Controllers
 {
@@ -45,10 +46,11 @@ namespace Master.Webapp.Controllers
         #region Method
 
         [HttpGet]
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var model = new ArticleModel();
             model.CreateDate = DateTime.UtcNow.ToLocalTime();
+            await GetDropDownList(model);
             return View(model);
         }
 
@@ -87,25 +89,38 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+                await GetDropDownList(model);
                 var updateRequest = new ArticleModel()
                 {
                     Active = model.Active,
                     Id = id,
                     TitleMeta = model.TitleMeta,
-                    Home = model.Home,
-                    Hot = model.Hot,
-                    ArticleCategoryId = model.ArticleCategoryId,
                     Body = model.Body,
                     CreateDate = model.CreateDate,
                     Description = model.Description,
+                    Home = model.Home,
+                    Hot = model.Hot,
+                    AvailableArticleCategories = model.AvailableArticleCategories,
                     DescriptionMetaTitle = model.DescriptionMetaTitle,
                     Image = model.Image,
                     KeyWord = model.KeyWord,
                     Subject = model.Subject,
                     Url = model.Url,
                     View = model.View,
-                    FilesModels = await _articlesApiClient.GetFilesArticle(SystemConstants.ArticleSettings.NumberOfArticle),
+                    FilesModels = await _articlesApiClient.GetFilesArticles(SystemConstants.ArticleSettings.NumberOfArticle),
                 };
+                
+                if (model.AvailableArticleCategories.Count > 0 &&
+                !string.IsNullOrEmpty(model.ArticleCategoryId))
+                {
+                    var item = model.AvailableArticleCategories
+                        .FirstOrDefault(x => x.Value.Equals(model.ArticleCategoryId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
@@ -116,7 +131,7 @@ namespace Master.Webapp.Controllers
         {
             if (!ModelState.IsValid)
                 return View();
-            request.Image = "1";
+
             var result = await _articlesApiClient.Edit(request.Id, request);
             if (result)
             {
@@ -162,24 +177,27 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+
+                await GetDropDownList(model);
+
                 var updateRequest = new ArticleModel()
                 {
                     Active = model.Active,
                     Id = id,
-                    TitleMeta = model.TitleMeta,
-                    View = model.View,
-                    Url = model.Url,
-                    Subject = model.Subject,
-                    KeyWord = model.KeyWord,
-                    ArticleCategoryId = model.ArticleCategoryId,
                     Body = model.Body,
                     CreateDate = model.CreateDate,
                     Description = model.Description,
-                    DescriptionMetaTitle = model.DescriptionMetaTitle,
                     Home = model.Home,
                     Hot = model.Hot,
+                    TitleMeta = model.TitleMeta,
+                    ArticleCategoryId = model.ArticleCategoryId,
+                    DescriptionMetaTitle = model.DescriptionMetaTitle,
+                    Url = model.Url,
                     Image = model.Image,
-                    FilesModels = await _articlesApiClient.GetFilesArticle(SystemConstants.ArticleSettings.NumberOfArticle),
+                    KeyWord = model.KeyWord,
+                    Subject = model.Subject,
+                    View = model.View,
+                    FilesModels = await _articlesApiClient.GetFilesArticles(SystemConstants.ArticleSettings.NumberOfArticle),
                 };
                 return View(updateRequest);
             }
@@ -187,5 +205,37 @@ namespace Master.Webapp.Controllers
         }
 
         #endregion Method
+
+        #region Utilities
+
+        private async Task GetDropDownList(ArticleModel model)
+        {
+            var availableCategory = await _articlesApiClient.GetCategory();
+
+            var categories = new List<SelectListItem>();
+            var data = availableCategory;
+
+            if (data?.Count > 0)
+            {
+                foreach (var m in data)
+                {
+                    var item = new SelectListItem
+                    {
+                        Text = m.CategoryName,
+                        Value = m.ArticleCategoryId,
+                    };
+                    categories.Add(item);
+                }
+            }
+            categories.OrderBy(e => e.Text);
+            if (categories == null || categories.Count == 0)
+            {
+                categories = new List<SelectListItem>();
+            }
+
+            model.AvailableArticleCategories = new List<SelectListItem>(categories);
+        }
+
+        #endregion Utilities
     }
 }

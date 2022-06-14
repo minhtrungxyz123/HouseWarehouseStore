@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace HouseWarehouseStore.Data.Entities
+﻿namespace HouseWarehouseStore.Data.Entities
 {
     public partial class ArticleCategory
     {

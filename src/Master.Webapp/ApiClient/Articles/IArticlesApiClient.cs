@@ -7,9 +7,9 @@ namespace Master.Webapp.ApiClient
     {
         public Task<bool> Create(ArticleModel request);
 
-        public Task<bool> CreateImage(FilesModel request, string articlesId);
+        public Task<bool> CreateImage(FilesModel request, string articleId);
 
-        public Task<bool> UpdateImage(FilesModel request, string articlesId);
+        public Task<bool> UpdateImage(FilesModel request, string articleId);
 
         public Task<bool> Edit(string? id, ArticleModel request);
 
@@ -21,8 +21,12 @@ namespace Master.Webapp.ApiClient
 
         Task<bool> DeleteDataFiles(string id);
 
-        Task<List<FilesModel>> GetFilesArticle(int take);
+        Task<List<FilesModel>> GetFilesArticles(int take);
 
         Task<bool> DeleteFiles(string id);
+
+        Task<List<ArticleModel>> GetAll();
+
+        Task<IList<ArticleCategoryModel>> GetCategory(bool showHidden = true);
     }
 }

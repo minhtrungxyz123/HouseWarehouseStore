@@ -57,9 +57,6 @@
                                 Trích dẫn ngắn
                             </th>
                             <th>
-                                Nội dung
-                            </th>
-                            <th>
                                 Hình ảnh đại diện
                             </th>
                             <th>
@@ -97,18 +94,15 @@
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Body)
-                                </td>
-                                <td>
                                     @if (item.Image != null)
                                     {
                                         if (item.Image.Contains("https"))
                                         {
-                                            <img src="@(Configuration["ApiFiles"]+"/files/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
+                                            <img src="@(Configuration["ApiFiles"]+"/files-articles/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
                                         }
                                         else
                                         {
-                                            <img src="@(Configuration["ApiFiles"]+"/files/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
+                                            <img src="@(Configuration["ApiFiles"]+"/files-articles/image/"+ @item.Image)" asp-append-version="true" width="80" height="80" />
 
                                         }
                                     }
@@ -122,38 +116,35 @@
                                 <td>
                                     @if (item.Active)
                                     {
-                                        <span class="btn btn-danger">Kích hoạt</span>
+                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
                                     }
                                     else
                                     {
-                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
+                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
 
                                     }
                                 </td>
                                 <td>
                                     @if (item.Hot)
                                     {
-                                        <span class="btn btn-danger">Kích hoạt</span>
+                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
                                     }
                                     else
                                     {
-                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
+                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
 
                                     }
                                 </td>
                                 <td>
                                     @if (item.Home)
                                     {
-                                        <span class="btn btn-danger">Kích hoạt</span>
+                                        <span style="background: green; border: green" class="btn btn-danger"><i class="fa-solid fa-check"></i></span>
                                     }
                                     else
                                     {
-                                        <span class="btn btn-danger">Ngừng kích hoạt</span>
+                                        <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
 
                                     }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Url)
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.TitleMeta)

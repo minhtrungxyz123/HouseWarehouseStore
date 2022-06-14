@@ -26,6 +26,30 @@ namespace Master.Webapp.ApiClient
 
         #region List
 
+        public async Task<IList<ArticleCategoryModel>> GetCategory(bool showHidden = true)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/article-category/get-category-active?showHidden={showHidden}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IList<ArticleCategoryModel>>(body);
+
+            return JsonConvert.DeserializeObject<IList<ArticleCategoryModel>>(body);
+        }
+
+        public async Task<List<ArticleModel>> GetAll()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/articles/get-all");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<List<ArticleModel>>(body);
+
+            return JsonConvert.DeserializeObject<List<ArticleModel>>(body);
+        }
+
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {
             var client = _httpClientFactory.CreateClient();
@@ -41,9 +65,9 @@ namespace Master.Webapp.ApiClient
             throw new Exception(body);
         }
 
-        public async Task<List<FilesModel>> GetFilesArticle(int take)
+        public async Task<List<FilesModel>> GetFilesArticles(int take)
         {
-            var data = await GetListAsync<FilesModel>($"/files/articles/{take}");
+            var data = await GetListAsync<FilesModel>($"/files-articles/articles/{take}");
             return data;
         }
 
@@ -65,7 +89,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.GetAsync($"/collection/get-by-id?id={id}");
+            var response = await client.GetAsync($"/articles/get-by-id?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<ApiSuccessResult<ArticleModel>>(body);
@@ -91,29 +115,26 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Body) ? "" : request.Body), "Body");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Quantity.ToString()) ? "" : request.Quantity.ToString()), "Quantity");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Factory) ? "" : request.Factory), "Factory");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Price.ToString()) ? "" : request.Price.ToString()), "Price");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Sort.ToString()) ? "" : request.Sort.ToString()), "Sort");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Hot.ToString()) ? "" : request.Hot.ToString()), "Hot");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Home.ToString()) ? "" : request.Home.ToString()), "Home");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Active.ToString()) ? "" : request.Active.ToString()), "Active");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.TitleMeta) ? "" : request.TitleMeta), "TitleMeta");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Content) ? "" : request.Content), "Content");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StatusProduct.ToString()) ? "" : request.StatusProduct.ToString()), "StatusProduct");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.BarCode) ? "" : request.BarCode), "BarCode");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateDate.ToString()) ? "" : request.CreateDate.ToString()), "CreateDate");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateBy) ? "" : request.CreateBy), "CreateBy");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Id) ? "" : request.Id), "Id");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Subject) ? "" : request.Subject), "Subject");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Body) ? "" : request.Body), "Body");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.View.ToString()) ? "" : request.View.ToString()), "View");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ArticleCategoryId) ? "" : request.ArticleCategoryId), "ArticleCategoryId");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Url) ? "" : request.Url), "Url");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.KeyWord) ? "" : request.KeyWord), "KeyWord");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Hot.ToString()) ? "" : request.Hot.ToString()), "Hot");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Home.ToString()) ? "" : request.Home.ToString()), "Home");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Active.ToString()) ? "" : request.Active.ToString()), "Active");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.TitleMeta) ? "" : request.TitleMeta), "TitleMeta");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.DescriptionMetaTitle) ? "" : request.DescriptionMetaTitle), "DescriptionMetaTitle");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateDate.ToString()) ? "" : request.CreateDate.ToString()), "CreateDate");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
-            var response = await client.PostAsync("/collection/create", requestContent);
+            var response = await client.PostAsync("/articles/create", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -138,28 +159,25 @@ namespace Master.Webapp.ApiClient
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
 
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Body) ? "" : request.Body), "Body");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Quantity.ToString()) ? "" : request.Quantity.ToString()), "Quantity");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Factory) ? "" : request.Factory), "Factory");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Price.ToString()) ? "" : request.Price.ToString()), "Price");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Sort.ToString()) ? "" : request.Sort.ToString()), "Sort");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Hot.ToString()) ? "" : request.Hot.ToString()), "Hot");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Home.ToString()) ? "" : request.Home.ToString()), "Home");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Active.ToString()) ? "" : request.Active.ToString()), "Active");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.TitleMeta) ? "" : request.TitleMeta), "TitleMeta");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Content) ? "" : request.Content), "Content");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.StatusProduct.ToString()) ? "" : request.StatusProduct.ToString()), "StatusProduct");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.BarCode) ? "" : request.BarCode), "BarCode");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateDate.ToString()) ? "" : request.CreateDate.ToString()), "CreateDate");
-            //requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateBy) ? "" : request.CreateBy), "CreateBy");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Id) ? "" : request.Id), "Id");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Subject) ? "" : request.Subject), "Subject");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Body) ? "" : request.Body), "Body");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.View.ToString()) ? "" : request.View.ToString()), "View");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ArticleCategoryId) ? "" : request.ArticleCategoryId), "ArticleCategoryId");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Url) ? "" : request.Url), "Url");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.KeyWord) ? "" : request.KeyWord), "KeyWord");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Hot.ToString()) ? "" : request.Hot.ToString()), "Hot");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Home.ToString()) ? "" : request.Home.ToString()), "Home");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Active.ToString()) ? "" : request.Active.ToString()), "Active");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.TitleMeta) ? "" : request.TitleMeta), "TitleMeta");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.DescriptionMetaTitle) ? "" : request.DescriptionMetaTitle), "DescriptionMetaTitle");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CreateDate.ToString()) ? "" : request.CreateDate.ToString()), "CreateDate");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.PutAsync($"/collection/update/" + id + "", requestContent);
+            var response = await client.PutAsync($"/articles/update/" + id + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -168,7 +186,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
-            var response = await client.DeleteAsync($"/collection/delete?id={id}");
+            var response = await client.DeleteAsync($"/articles/delete?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(body);
@@ -176,7 +194,7 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
-        public async Task<bool> CreateImage(FilesModel request, string collectionId)
+        public async Task<bool> CreateImage(FilesModel request, string articleId)
         {
             var requestContent = new MultipartFormDataContent();
 
@@ -190,16 +208,16 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ArticlesId) ? "" : request.ArticlesId), "ArticlesId");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/create-image?collectionId=" + collectionId + "", requestContent);
+            var response = await client.PostAsync("/files-articles/create-image?articlesId=" + articleId + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<bool> UpdateImage(FilesModel request, string collectionId)
+        public async Task<bool> UpdateImage(FilesModel request, string articlesId)
         {
             var requestContent = new MultipartFormDataContent();
 
@@ -213,11 +231,11 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
-            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.CollectionId) ? "" : request.CollectionId), "CollectionId");
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ArticlesId) ? "" : request.ArticlesId), "ArticlesId");
 
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.PostAsync("/files/update-image?collectionId=" + collectionId + "", requestContent);
+            var response = await client.PostAsync("/files-articles/update-image?articleId=" + articlesId + "", requestContent);
 
             return response.IsSuccessStatusCode;
         }
@@ -226,7 +244,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.DeleteAsync($"/files/delete-files?collectionId={id}");
+            var response = await client.DeleteAsync($"/files-articles/delete-files?articleId={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(body);
@@ -238,7 +256,7 @@ namespace Master.Webapp.ApiClient
         {
             var client = _httpClientFactory.CreateClient();
             client.BaseAddress = new Uri(_configuration["ApiFiles"]);
-            var response = await client.DeleteAsync($"/files/delete?id={id}");
+            var response = await client.DeleteAsync($"/files-articles/delete?id={id}");
             var body = await response.Content.ReadAsStringAsync();
             if (response.IsSuccessStatusCode)
                 return JsonConvert.DeserializeObject<bool>(body);
