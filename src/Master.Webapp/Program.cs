@@ -1,6 +1,7 @@
 using HouseWare.Base;
 using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Repositories;
+using HouseWarehouseStore.Data.UnitOfWork;
 using LazZiya.ExpressLocalization;
 using Master.Webapp.ApiClient;
 using Master.Webapp.CustomHandler;
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IArticleCategoryApiClient, ArticleCategoryApiClient>(
 builder.Services.AddScoped<IArticlesApiClient, ArticlesApiClient>();
 builder.Services.AddScoped<IConfigSiteApiClient, ConfigSiteApiClient>();
 builder.Services.AddScoped<IVoucherApiClient, VoucherApiClient>();
+builder.Services.AddScoped<UnitOfWork>();
 
 #endregion Add DI
 

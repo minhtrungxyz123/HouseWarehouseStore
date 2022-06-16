@@ -1,5 +1,6 @@
 ﻿using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Data.Repositories;
+using HouseWarehouseStore.Data.UnitOfWork;
 using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
@@ -13,10 +14,13 @@ namespace Master.Webapp.Controllers
         #region Fields
 
         private readonly IVoucherApiClient _voucherApiClient;
+        private readonly UnitOfWork _unitOfWork;
 
-        public VoucherController(IVoucherApiClient voucherApiClient)
+        public VoucherController(IVoucherApiClient voucherApiClient,
+            UnitOfWork unitOfWork)
         {
             _voucherApiClient = voucherApiClient;
+            _unitOfWork = unitOfWork;
         }
 
         #endregion Fields
@@ -164,7 +168,7 @@ namespace Master.Webapp.Controllers
         {
             if (code == null)
                 return Ok(false);
-            var voucher = _voucherApiClient.GetByCode(code);
+            var voucher = _unitOfWork.VoucherRepository.Get(x => x.Code.Equals(code)).FirstOrDefault();
             if (voucher != null)
                 return Ok(false);
             return Ok(new { c = code, t = true });

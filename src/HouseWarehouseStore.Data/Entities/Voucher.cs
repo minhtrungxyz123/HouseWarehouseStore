@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HouseWarehouseStore.Data.Repositories;
+using System;
 using System.Collections.Generic;
 
 namespace HouseWarehouseStore.Data.Entities
 {
-    public partial class Voucher
+    public partial class Voucher : BaseEntity
     {
-        public string? Id { get; set; } = null!;
         public string Name { get; set; } = null!;
         public string Code { get; set; } = null!;
         public bool Type { get; set; }

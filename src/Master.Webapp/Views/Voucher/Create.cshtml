@@ -93,13 +93,11 @@
         function RadomVoucher(code) {
             $.ajax({
                 type: 'POST',
-                url: '/Csm/VoucherRandom',
+                url: '/Voucher/VoucherRandom',
                 data: { code: code },
                 success: function(res) {
-                    //  console.log(res);
                     if (!res) {
                         RadomVoucher(makeid(6));
-                        // $("#Code").val(code)
                     }
                     if (res.t)
                         $("#Code").val(res.c);

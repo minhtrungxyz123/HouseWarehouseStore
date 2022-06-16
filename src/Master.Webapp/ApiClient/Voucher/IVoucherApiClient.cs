@@ -15,6 +15,5 @@ namespace Master.Webapp.ApiClient
 
         Task<bool> Delete(string id);
 
-        Task<VoucherModel> GetByCode(string code);
     }
 }
