@@ -102,6 +102,18 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
+        public async Task<VoucherModel> GetByCode(string code)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/voucher/get-by-code?code={code}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<VoucherModel>(body);
+
+            return JsonConvert.DeserializeObject<VoucherModel>(body);
+        }
+
         #endregion Method
     }
 }

@@ -160,12 +160,12 @@ namespace Master.Service
                 PriceUp = model.PriceUp,
                 Condition = model.Condition,
                 Code = model.Code,
-                Active  = model.Active,
+                Active = model.Active,
                 SumUse = model.SumUse,
-                PriceDown =model.PriceDown,
+                PriceDown = model.PriceDown,
                 ReductionMax = model.ReductionMax,
                 Type = model.Type,
-                Value=model.Value
+                Value = model.Value
             };
 
             await _context.Vouchers.AddAsync(item);

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Voucher\" />
-  </ItemGroup>
-
 </Project>

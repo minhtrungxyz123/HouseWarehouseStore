@@ -1,0 +1,112 @@
+﻿@model Pagination<HouseWarehouseStore.Models.VoucherModel>
+@{
+    ViewData["Title"] = "Danh sách  giá";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Voucher</h1>
+
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Danh sách Voucher</h6>
+        </div>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <a class="btn btn-success" onclick="Create()"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                </div>
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/Voucher/Index'" class="btn btn-dark">Tải lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    @if (ViewBag.SuccessMsg != null)
+                    {
+                        <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuccessMsg
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="white-space: nowrap;">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tên mã giảm giá
+                            </th>
+                            <th>
+                                Mã giảm giá
+                            </th>
+                            <th>
+                                Số lần dùng tối đa
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                            <th>
+                                Nhập mức giảm
+                            </th>
+                            <th>Chức năng</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Code)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SumUse)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Active)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Value)
+                                </td>
+                                <td>
+                                    <button onclick="Edit('@item.Id')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
+                                    <button onclick="Detail('@item.Id')" class="btn" style="background: yellow;"><i class="fa-solid fa-eye"></i> Chi tiết</button>
+                                    <button onclick="Delete('@item.Id')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        setTimeout(function () {
+            $('#msgAlert').fadeOut('slow');
+        }, 2000);
+
+</script>
+}
+
+

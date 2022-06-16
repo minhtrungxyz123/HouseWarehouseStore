@@ -1,4 +1,6 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Data.Entities;
+using HouseWarehouseStore.Data.Repositories;
+using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -153,5 +155,21 @@ namespace Master.Webapp.Controllers
         }
 
         #endregion Method
+
+        #region Uni
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public IActionResult VoucherRandom(string code)
+        {
+            if (code == null)
+                return Ok(false);
+            var voucher = _voucherApiClient.GetByCode(code);
+            if (voucher != null)
+                return Ok(false);
+            return Ok(new { c = code, t = true });
+        }
+
+        #endregion
     }
 }
