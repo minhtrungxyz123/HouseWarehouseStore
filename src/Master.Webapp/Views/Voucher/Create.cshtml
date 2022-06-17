@@ -31,7 +31,9 @@
                         <input asp-for="Code" class="form-control" />
                         <span asp-validation-for="Code" class="text-danger"></span>
                     </div>
-                    <p class="btn btn-success" id="rdcode">Tạo mã ngẫu nhiên</p>
+
+                    <p class="btn btn-success" id="rdcode"><i class="fa-solid fa-dice"></i> Tạo mã ngẫu nhiên</p>
+
                     <div class="form-group form-check">
                         <label class="form-check-label">
                             <input class="form-check-input" asp-for="Type" /> @Html.DisplayNameFor(model => model.Type)

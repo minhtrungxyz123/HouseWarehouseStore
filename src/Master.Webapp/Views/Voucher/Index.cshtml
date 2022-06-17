@@ -16,7 +16,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" onclick="Create()"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                    <a class="btn btn-success" asp-action="Create" asp-controller="Voucher"><i class="fa-solid fa-plus"></i> Tạo mới</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
@@ -86,8 +86,8 @@
                                     @Html.DisplayFor(modelItem => item.Value)
                                 </td>
                                 <td>
-                                    <button onclick="Edit('@item.Id')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
-                                    <button onclick="Detail('@item.Id')" class="btn" style="background: yellow;"><i class="fa-solid fa-eye"></i> Chi tiết</button>
+                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</a>
+                                    <a asp-action="Detail" asp-route-id="@item.Id" class="btn" style="background: yellow;"><i class="fa-solid fa-eye"></i> Chi tiết</a>
                                     <button onclick="Delete('@item.Id')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
                                 </td>
                             </tr>
@@ -102,11 +102,24 @@
 
 @section Scripts{
     <script>
-        setTimeout(function () {
+        setTimeout(function() {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
 
-</script>
+        function Delete(id) {
+            if (confirm("Bạn có chắc chắn xóa không?")) {
+                $.post("/Voucher/DeleteConfirmed", { id: id }, function(data) {
+                    if (data) {
+                        if (confirm("Xóa thành công"))
+                            window.location.assign('/Voucher/Index')
+                    } else {
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                    }
+                });
+            }
+        }
+
+    </script>
 }
 
 
