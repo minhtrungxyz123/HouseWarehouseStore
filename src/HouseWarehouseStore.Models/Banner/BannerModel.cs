@@ -19,7 +19,7 @@ namespace HouseWarehouseStore.Models
         public bool Active { get; set; }
 
         [Display(Name = "Vị trí quảng cáo"), Required(ErrorMessage = "Hãy chọn vị trí quảng cáo"), UIHint("GroupId")]
-        public int GroupId { get; set; }
+        public string GroupId { get; set; }
 
         [Display(Name = "Đường dẫn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
         public string Url { get; set; }

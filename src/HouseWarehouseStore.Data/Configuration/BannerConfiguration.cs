@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Banner> entity)
         {
-            entity.ToTable("Banner");
+            entity.ToTable("Banners");
 
             entity.Property(e => e.BannerId)
                     .HasMaxLength(36)
