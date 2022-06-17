@@ -51,6 +51,7 @@ builder.Services.AddScoped<IConfigSiteApiClient, ConfigSiteApiClient>();
 builder.Services.AddScoped<IVoucherApiClient, VoucherApiClient>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<IBannerApiClient, BannerApiClient>();
+builder.Services.AddScoped<IColorApiClient, ColorApiClient>();
 
 #endregion Add DI
 
