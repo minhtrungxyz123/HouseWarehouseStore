@@ -1,12 +1,8 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Entities;
+using HouseWarehouseStore.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Master.Service
 {
@@ -55,46 +51,73 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<ProductSizeColor>>> GetAllPaging(ProductSizeColorSearchContext ctx)
+        public async Task<ApiResult<Pagination<ProductSizeColorModel>>> GetAllPaging(ProductSizeColorSearchContext request)
         {
-            var query = _context.ProductSizeColors.AsQueryable();
-            if (!string.IsNullOrEmpty(ctx.Keyword))
+            var query = from pr in _context.ProductSizeColors
+                        join c in _context.Colors on pr.ColorId equals c.ColorId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        join w in _context.Sizes on pr.SizeId equals w.SizeId into wt
+                        from tw in wt.DefaultIfEmpty()
+                        join i in _context.Products on pr.ProductId equals i.ProductId into it
+                        from ti in it.DefaultIfEmpty()
+                        select new { pr, tp, tw, ti };
+
+            if (!string.IsNullOrEmpty(request.Keyword))
             {
-                query = query.Where(x => x.ProductId.Contains(ctx.Keyword));
+                query = query.Where(x => x.pr.ProductsProductId.Contains(request.Keyword));
             }
 
-            int totalRow = await query.CountAsync();
-
-            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
-                .Take(ctx.PageSize)
-                .Select(x => new ProductSizeColor()
-                {
-                    NameColor = x.NameColor,
-                    ColorId = x.ColorId,
-                    Code = x.Code
-                }).ToListAsync();
-
-            var pagedResult = new Pagination<Color>()
+            if (!string.IsNullOrEmpty(request.SizeId))
             {
-                TotalRecords = totalRow,
-                PageIndex = ctx.PageIndex,
-                PageSize = ctx.PageSize,
-                Items = data
+                query = query.Where(x => x.pr.SizeId == request.SizeId);
+            }
+
+            if (!string.IsNullOrEmpty(request.ColorId))
+            {
+                query = query.Where(x => x.pr.ColorId == request.ColorId);
+            }
+
+            if (!string.IsNullOrEmpty(request.ProductId))
+            {
+                query = query.Where(x => x.pr.ProductId == request.ProductId);
+            }
+
+            var totalRecords = await query.CountAsync();
+
+            var items = await query.Skip((request.PageIndex - 1) * request.PageSize)
+                .Take(request.PageSize)
+                .Select(u => new ProductSizeColorModel()
+                {
+                    Id = u.pr.Id,
+                    SizeId = u.tw.SizeProduct,
+                    ColorId = u.tp.NameColor,
+                    ProductsProductId = u.pr.ProductsProductId,
+                    ProductId = u.ti.Name
+                })
+                .ToListAsync();
+
+            var pagination = new Pagination<ProductSizeColorModel>
+            {
+                Items = items,
+                TotalRecords = totalRecords,
+                PageIndex = request.PageIndex,
+                PageSize = request.PageSize,
             };
-            return new ApiSuccessResult<Pagination<Color>>(pagedResult);
+
+            return new ApiSuccessResult<Pagination<ProductSizeColorModel>>(pagination);
         }
 
-        public async Task<Color?> GetById(string? id)
+        public async Task<ProductSizeColor?> GetById(string? id)
         {
             if (id is null)
             {
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var item = await _context.Colors
-                            .OrderByDescending(p => p.NameColor)
+            var item = await _context.ProductSizeColors
+                            .OrderByDescending(p => p.ProductId)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.ColorId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             return item;
         }
@@ -103,31 +126,33 @@ namespace Master.Service
 
         #region Method
 
-        public async Task<RepositoryResponse> Create(ColorModel model)
+        public async Task<RepositoryResponse> Create(ProductSizeColorModel model)
         {
             if (model is null)
             {
                 throw new ArgumentNullException(nameof(model));
             }
 
-            Color item = new Color()
+            ProductSizeColor item = new ProductSizeColor()
             {
-                NameColor = model.NameColor,
-                Code = model.Code,
-                ColorId = Guid.NewGuid().ToString(),
+                ProductId = model.ProductId,
+                ProductsProductId = model.ProductsProductId,
+                SizeId = model.SizeId,
+                Id = Guid.NewGuid().ToString(),
+                ColorId = model.ColorId,
             };
 
-            await _context.Colors.AddAsync(item);
+            await _context.ProductSizeColors.AddAsync(item);
             var result = await _context.SaveChangesAsync();
 
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.ColorId.ToString(),
+                Id = item.Id
             };
         }
 
-        public async Task<RepositoryResponse> Update(string? id, ColorModel model)
+        public async Task<RepositoryResponse> Update(string? id, ProductSizeColorModel model)
         {
             if (id is null)
             {
@@ -139,18 +164,20 @@ namespace Master.Service
                 throw new ArgumentNullException(nameof(model));
             }
 
-            var item = await _context.Colors.FindAsync(id);
-            item.NameColor = model.NameColor;
-            item.Code = model.Code;
+            var item = await _context.ProductSizeColors.FindAsync(id);
+            item.ProductId = model.ProductId;
+            item.ProductsProductId = model.ProductsProductId;
+            item.SizeId = model.SizeId;
+            item.ColorId = model.ColorId;
 
-            _context.Colors.Update(item);
+            _context.ProductSizeColors.Update(item);
 
             var result = await _context.SaveChangesAsync();
 
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id.ToString(),
+                Id = id,
             };
         }
 
@@ -161,9 +188,9 @@ namespace Master.Service
                 throw new ArgumentNullException(nameof(id));
             }
 
-            var item = await _context.Colors.FindAsync(id);
+            var item = await _context.ProductSizeColors.FindAsync(id);
 
-            _context.Colors.Remove(item);
+            _context.ProductSizeColors.Remove(item);
             var result = await _context.SaveChangesAsync();
 
             return result;

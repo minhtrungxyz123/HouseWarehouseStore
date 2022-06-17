@@ -30,6 +30,7 @@ builder.Services.AddScoped<IConfigSiteService, ConfigSiteService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<IColorService, ColorService>();
+builder.Services.AddScoped<IProductSizeColorService, ProductSizeColorService>();
 
 #endregion Add Service
 

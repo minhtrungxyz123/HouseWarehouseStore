@@ -8,7 +8,7 @@ namespace Master.Service
     {
         Task<IEnumerable<ProductSizeColor>> GetAll();
 
-        Task<ApiResult<Pagination<ProductSizeColor>>> GetAllPaging(ProductSizeColorSearchContext ctx);
+        Task<ApiResult<Pagination<ProductSizeColorModel>>> GetAllPaging(ProductSizeColorSearchContext ctx);
 
         Task<ProductSizeColor> GetById(string? id);
 
