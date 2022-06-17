@@ -1,17 +1,17 @@
-﻿@model HouseWarehouseStore.Models.ContactModel
+﻿@model HouseWarehouseStore.Models.ColorModel
 
 @{
-    ViewData["Title"] = "Sửa liên hệ";
+    ViewData["Title"] = "Sửa màu sắc";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Liên hệ</h1>
+    <h1 class="h3 mb-2 text-gray-800">Màu sắc</h1>
 
     <div class="card mb-4">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">Sửa liên hệ</h6>
+            <h6 class="m-0 font-weight-bold text-primary">Sửa màu sắc</h6>
         </div>
         <div class="card-header">
             <a class="btn btn-danger" asp-action="Index" asp-controller="Contact"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
@@ -21,37 +21,21 @@
             <div class="col-md-8">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="ContactId" />
-                    <div class="form-group bg-white">
-                        <label asp-for="Fullname" class="control-label"></label>
-                        <input asp-for="Fullname" class="form-control" />
-                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                    <input type="hidden" asp-for="ColorId" />
+                    <div id="box">
+                        <label for="colorPicker">Chọn màu:</label>
+                        <input type="color" value="#8888ff" id="colorPicker">
+                        <p id="output"></p>
                     </div>
-                    <div class="form-group bg-white">
-                        <label asp-for="Address" class="control-label"></label>
-                        <input asp-for="Address" class="form-control" />
-                        <span asp-validation-for="Address" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="Code" class="control-label"></label>
+                        <input asp-for="Code" class="form-control" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
                     </div>
-                    <div class="form-group bg-white">
-                        <label asp-for="Mobile" class="control-label"></label>
-                        <input asp-for="Mobile" class="form-control" />
-                        <span asp-validation-for="Mobile" class="text-danger"></span>
-                    </div>
-                    <div class="form-group bg-white">
-                        <label asp-for="Email" class="control-label"></label>
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
-                    <div class="form-group bg-white">
-                        <label asp-for="Subject" class="control-label"></label>
-                        <input asp-for="Subject" class="form-control" />
-                        <span asp-validation-for="Subject" class="text-danger"></span>
-                    </div>
-                    <div class="form-group bg-white">
-                        <label asp-for="Body" class="control-label"></label>
-                        <div id="Body"></div>
-                        <input type="hidden" asp-for="Body" class="form-control" />
-                        <span asp-validation-for="Body" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="NameColor" class="control-label"></label>
+                        <input asp-for="NameColor" class="form-control" />
+                        <span asp-validation-for="NameColor" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Lưu" class="btn btn-primary" />
@@ -64,33 +48,22 @@
 
 @section Scripts{
     <script>
-        $('#Body').summernote({
-            placeholder: 'Mời bạn soạn thảo',
-            tabsize: 2,
-            height: 500,              // set editor height
-            minHeight: null,             // set minimum height of editor
-            maxHeight: null,             // set maximum height of editor
-            focus: true,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']]
-            ]
-        });
 
-        $('#Body').on('summernote.change', function(we, contents, $editable) {
-            var markupStr = $('#Body').summernote('code');
-            console.log(markupStr)
-            $("input#Body").val(markupStr);
-        });
+        let colorPicker = document.getElementById("colorPicker");
+        let box = document.getElementById("box");
+        let output = document.getElementById("output");
 
-        $(document).ready(function() {
-            $('#Body').summernote('code', $("input#Body").val());
-        })
+        box.style.borderColor = colorPicker.value;
+
+        colorPicker.addEventListener("input", function(event) {
+            box.style.borderColor = event.target.value;
+        }, false);
+
+        colorPicker.addEventListener("change", function(event) {
+            //   output.innerText = "Color set to " + colorPicker.value + ".";
+            $("#Code").val(colorPicker.value);
+        }, false);
+
     </script>
 }
 
