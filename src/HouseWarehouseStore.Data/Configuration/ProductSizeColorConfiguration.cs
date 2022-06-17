@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ProductSizeColor> entity)
         {
-            entity.ToTable("ProductSizeColor");
+            entity.ToTable("ProductSizeColors");
 
             entity.HasIndex(e => e.ColorId, "IX_ProductSizeColors_ColorID");
 
