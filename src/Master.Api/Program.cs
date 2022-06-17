@@ -29,6 +29,7 @@ builder.Services.AddScoped<IArticleService, ArticleService>();
 builder.Services.AddScoped<IConfigSiteService, ConfigSiteService>();
 builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IBannerService, BannerService>();
+builder.Services.AddScoped<IColorService, ColorService>();
 
 #endregion Add Service
 
