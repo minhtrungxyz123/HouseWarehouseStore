@@ -18,6 +18,7 @@ builder.Services.AddDbContext<HouseWarehouseStoreDbContext>(options => options.U
 builder.Services.AddScoped<IFilesService, FilesService>();
 builder.Services.AddScoped<IFilesArticleService, FilesArticleService>();
 builder.Services.AddScoped<IFilesConfigsiteService, FilesConfigsiteService>();
+builder.Services.AddScoped<IFilesBannerService, FilesBannerService>();
 
 #endregion Add Service
 

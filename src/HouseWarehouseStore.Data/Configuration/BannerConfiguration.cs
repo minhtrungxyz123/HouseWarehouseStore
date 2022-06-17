@@ -19,9 +19,7 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.Property(e => e.CoverImage).HasMaxLength(500);
 
-            entity.Property(e => e.GroupId)
-                .HasMaxLength(36)
-                .IsUnicode(false);
+            entity.Property(e => e.GroupId).IsRequired();
 
             entity.Property(e => e.Title).HasMaxLength(100);
 

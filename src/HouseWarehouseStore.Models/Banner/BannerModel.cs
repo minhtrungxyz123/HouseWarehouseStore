@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
 {
@@ -19,7 +20,7 @@ namespace HouseWarehouseStore.Models
         public bool Active { get; set; }
 
         [Display(Name = "Vị trí quảng cáo"), Required(ErrorMessage = "Hãy chọn vị trí quảng cáo"), UIHint("GroupId")]
-        public string GroupId { get; set; }
+        public int GroupId { get; set; }
 
         [Display(Name = "Đường dẫn"), StringLength(500, ErrorMessage = "Tối đa 500 ký tự"), UIHint("TextBox")]
         public string Url { get; set; }
@@ -28,12 +29,17 @@ namespace HouseWarehouseStore.Models
         public int Soft { get; set; }
 
         [Display(Name = "Hình ảnh"), StringLength(500)]
-        public string CoverImage { get; set; }
+        public string? CoverImage { get; set; }
 
         [Display(Name = "Tiêu đề")]
         public string Title { get; set; }
 
         [Display(Name = "Nội dung")]
         public string Content { get; set; }
+
+        [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
+        public IFormFile? filesadd { get; set; }
+
+        public List<FilesModel>? FilesModels { get; set; }
     }
 }

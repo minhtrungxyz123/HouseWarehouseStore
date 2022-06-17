@@ -10,7 +10,7 @@ namespace HouseWarehouseStore.Data.Entities
         public int Width { get; set; }
         public int Height { get; set; }
         public bool Active { get; set; }
-        public string GroupId { get; set; } = null!;
+        public int GroupId { get; set; }
         public string? Url { get; set; }
         public int Soft { get; set; }
         public string? CoverImage { get; set; }

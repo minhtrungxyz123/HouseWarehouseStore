@@ -1,0 +1,109 @@
+﻿@model HouseWarehouseStore.Models.BannerModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+
+@{
+    ViewData["Title"] = "Chi tiết quảng cáo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Quảng cáo</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết quảng cáo</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Voucher"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Detail" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="BannerId" />
+                    <input type="hidden" asp-for="FilesModels" />
+                    @foreach (var item in Model.FilesModels)
+                    {
+                        var url = $"/{_loc["bannerUrl"]}/{item.CollectionId}";
+                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
+                    }
+
+                    <div class="form-group w-50">
+                        <label asp-for="BannerName " class="control-label"></label>
+                        <input asp-for="BannerName" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="BannerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Content" class="control-label"></label>
+                        <div id="Content"></div>
+                        <input type="hidden" asp-for="Content" class="form-control" />
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Width" class="control-label"></label>
+                        <input asp-for="Width" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Width" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Height" class="control-label"></label>
+                        <input asp-for="Height" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Height" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Url" class="control-label"></label>
+                        <input asp-for="Url" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Soft" class="control-label"></label>
+                        <input asp-for="Soft" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Soft" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script>
+         $('#Content').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#Content').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#Content').summernote('code');
+            console.log(markupStr)
+            $("input#Content").val(markupStr);
+        });
+
+    </script>
+}

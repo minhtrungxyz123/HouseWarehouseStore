@@ -21,5 +21,6 @@ namespace HouseWarehouseStore.Models
 
         public string ArticlesId { get; set; }
         public string? ConfigsiteId { get; set; }
+        public  string? BannerId { get; set; }
     }
 }

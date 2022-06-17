@@ -14,5 +14,9 @@
         {
             public const int NumberOfConfigSite = 1;
         }
+        public class BannerSettings
+        {
+            public const int NumberOfBanner = 1;
+        }
     }
 }

@@ -1,0 +1,139 @@
+﻿@model HouseWarehouseStore.Models.BannerModel
+
+@{
+    ViewData["Title"] = "Tạo quảng cáo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Quảng cáo</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Tạo mới quảng cáo</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Banner"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Create" enctype="multipart/form-data" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group w-50">
+                        <label asp-for="BannerName " class="control-label"></label>
+                        <input asp-for="BannerName" class="form-control" />
+                        <span asp-validation-for="BannerName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-50">
+                        <label asp-for="Title" class="control-label"></label>
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Content" class="control-label"></label>
+                        <div id="Content"></div>
+                        <input type="hidden" asp-for="Content" class="form-control" />
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Width" class="control-label"></label>
+                        <input asp-for="Width" class="form-control" />
+                        <span asp-validation-for="Width" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Height" class="control-label"></label>
+                        <input asp-for="Height" class="form-control" />
+                        <span asp-validation-for="Height" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="GroupId" class="control-label"></label>
+                        <br />
+                        <select asp-for="GroupId">
+                            <option value="1">Slide on Top 1440 x 632</option>
+                            <option value="2">Banner Slide 465 x 330(áp dụng với slide có 3 banner)</option>
+                            <option value="3">Banner To Home 700 x 497</option>
+                            <option value="4">Banner Nhỏ Home auto x 243</option>
+                        </select>
+                        <span asp-validation-for="GroupId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Url" class="control-label"></label>
+                        <input asp-for="Url" class="form-control" />
+                        <span asp-validation-for="Url" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Soft" class="control-label"></label>
+                        <input asp-for="Soft" class="form-control" />
+                        <span asp-validation-for="Soft" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="filesadd" class="control-label"></label>
+                        <input asp-for="filesadd" type="file" class="form-control" />
+                        <span asp-validation-for="filesadd" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Tạo mới" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#Content').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#Content').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#Content').summernote('code');
+            console.log(markupStr)
+            $("input#Content").val(markupStr);
+        });
+
+        //
+        $("#GroupId").change(function() {
+            var id = parseInt($("#GroupId").val());
+            switch (id) {
+                case 1:
+                    $("#Height").val(632);
+                    $("#Width").val(1440);
+                    break;
+                case 2:
+                    $("#Height").val(330);
+                    $("#Width").val(465);
+                    break;
+                case 3:
+                    $("#Height").val(497);
+                    $("#Width").val(700);
+                    break;
+                case 4:
+                    $("#Height").val(243);
+                    $("#Width").val(335);
+                    break;
+            }
+        });
+    </script>
+}
