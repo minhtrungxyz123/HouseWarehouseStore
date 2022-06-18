@@ -283,6 +283,12 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<List<FilesModel>> GetFilesCoverProductCategory(int take)
+        {
+            var data = await GetListAsync<FilesModel>($"/files-product-category/filesProductCategory/{take}");
+            return data;
+        }
+
         #endregion Method
     }
 }

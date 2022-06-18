@@ -99,11 +99,11 @@
                                     {
                                         if (item.CoverImage.Contains("https"))
                                         {
-                                            <img src="@(Configuration["ApiFiles"]+"/files-product-category/image/"+ @item.CoverImage)" asp-append-version="true" width="80" height="80" />
+                                            <img src="@(Configuration["ApiFiles"]+"/files-product-category/converImage/"+ @item.CoverImage)" asp-append-version="true" width="80" height="80" />
                                         }
                                         else
                                         {
-                                            <img src="@(Configuration["ApiFiles"]+"/files-product-category/image/"+ @item.CoverImage)" asp-append-version="true" width="80" height="80" />
+                                            <img src="@(Configuration["ApiFiles"]+"/files-product-category/converImage/"+ @item.CoverImage)" asp-append-version="true" width="80" height="80" />
 
                                         }
                                     }

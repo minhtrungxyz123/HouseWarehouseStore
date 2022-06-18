@@ -14,6 +14,10 @@ namespace Files.Service
 
         Task<List<FilesModel>> GetFilesProductCategory(int take);
 
+        Task<List<FilesModel>> GetFilesCoverProductCategory(int take);
+
         Task<HouseWarehouseStore.Data.Entities.File> GetByNameAsync(string name);
+
+        Task<HouseWarehouseStore.Data.Entities.File> GetByFilesConverAsync(string name);
     }
 }

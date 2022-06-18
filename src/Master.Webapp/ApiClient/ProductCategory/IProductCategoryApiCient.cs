@@ -25,6 +25,8 @@ namespace Master.Webapp.ApiClient
 
         Task<List<FilesModel>> GetFilesProductCategory(int take);
 
+        Task<List<FilesModel>> GetFilesCoverProductCategory(int take);
+
         Task<bool> DeleteFiles(string id);
 
         Task<List<ProductCategoryModel>> GetAll();

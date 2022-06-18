@@ -59,7 +59,7 @@ namespace Master.Webapp.Controllers
 
             request.ProductCategorieId = Guid.NewGuid().ToString();
             request.Image = request.ProductCategorieId;
-            request.CoverImage = request.ProductCategorieId;
+            request.CoverImage = request.Name;
 
             var result = await _productCategoryApiCient.Create(request);
 
@@ -74,7 +74,7 @@ namespace Master.Webapp.Controllers
                 await _productCategoryApiCient.CreateImage(filemodels, request.ProductCategorieId);
 
                 //
-                await _productCategoryApiCient.CreateImageConver(filemodels, request.ProductCategorieId);
+                await _productCategoryApiCient.CreateImageConver(filemodels, request.Name);
 
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
@@ -107,6 +107,7 @@ namespace Master.Webapp.Controllers
                     ParentId = model.ParentId,
                     Url = model.Url,
                     FilesModels = await _productCategoryApiCient.GetFilesProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
+                    CoverFilesModels = await _productCategoryApiCient.GetFilesCoverProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
                 };
                 return View(updateRequest);
             }
@@ -179,6 +180,7 @@ namespace Master.Webapp.Controllers
                     DescriptionMeta = model.DescriptionMeta,
                     Soft = model.Soft,
                     FilesModels = await _productCategoryApiCient.GetFilesProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
+                    CoverFilesModels = await _productCategoryApiCient.GetFilesCoverProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
                 };
                 return View(updateRequest);
             }

@@ -99,7 +99,6 @@ namespace Files.Service
 
         public async Task<List<FilesModel>> GetFilesProductCategory(int take)
         {
-            //1. Select join
             var query = from p in _context.Files
                         select new { p };
 
@@ -145,6 +144,40 @@ namespace Files.Service
                 select x;
 
             return query.FirstOrDefaultAsync();
+        }
+
+        public Task<HouseWarehouseStore.Data.Entities.File> GetByFilesConverAsync(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+            var query =
+                from x in _context.Files
+                where x.ProductCategoryId == name
+                select x;
+
+            return query.FirstOrDefaultAsync();
+        }
+
+        public async Task<List<FilesModel>> GetFilesCoverProductCategory(int take)
+        {
+            var query = from p in _context.Files
+                        select new { p };
+
+            var data = await query.OrderByDescending(x => x.p.FileName).Take(take)
+                .Select(x => new FilesModel()
+                {
+                    Id = x.p.Id,
+                    FileName = x.p.FileName,
+                    ProductCategoryId = x.p.ProductCategoryId,
+                    Size = x.p.Size,
+                    Extension = x.p.Extension,
+                    MimeType = x.p.MimeType,
+                    Path = x.p.Path
+                }).ToListAsync();
+
+            return data;
         }
 
         #endregion List

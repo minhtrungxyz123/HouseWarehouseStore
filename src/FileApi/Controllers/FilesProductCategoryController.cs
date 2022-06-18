@@ -291,6 +291,13 @@ namespace FileApi.Controllers
             return Ok(files);
         }
 
+        [HttpGet("filesProductCategory/{take}")]
+        public async Task<IActionResult> GetFilesCoverProducts(int take)
+        {
+            var files = await _filesProductCategoryService.GetFilesCoverProductCategory(take);
+            return Ok(files);
+        }
+
         #endregion List
 
         #region Utilities
@@ -302,6 +309,15 @@ namespace FileApi.Controllers
             var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
             var fs = System.IO.File.OpenRead(filePath);
             return File(fs, "image/png");
+        }
+
+        [HttpGet("converImage/{name}")]
+        public async Task<IActionResult> GetFileConver(string name)
+        {
+            var check = await _filesProductCategoryService.GetByNameAsync(name);
+            var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+            var fs = System.IO.File.OpenRead(filePath);
+            return File(fs, "converImage/png");
         }
 
         private static string GetExtension(string name)
