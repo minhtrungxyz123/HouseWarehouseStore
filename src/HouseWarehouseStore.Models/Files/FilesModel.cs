@@ -18,7 +18,7 @@ namespace HouseWarehouseStore.Models
         public string? CollectionId { get; set; }
 
         public IFormFile? filesadd { get; set; }
-
+        public IFormFile? Coverfilesadd { get; set; }
         public string ArticlesId { get; set; }
         public string? ConfigsiteId { get; set; }
         public  string? BannerId { get; set; }

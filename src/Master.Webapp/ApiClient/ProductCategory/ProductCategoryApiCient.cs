@@ -103,6 +103,18 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
+
+            if (request.Coverfilesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.Coverfilesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.Coverfilesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "Coverfilesadd", request.filesadd.FileName);
+            }
+
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductCategorieId) ? "" : request.ProductCategorieId), "ProductCategorieId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
@@ -190,6 +202,7 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
+
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductCategoryId) ? "" : request.ProductCategoryId), "ProductCategoryId");
 
             var client = _httpClientFactory.CreateClient();
@@ -244,6 +257,30 @@ namespace Master.Webapp.ApiClient
                 return JsonConvert.DeserializeObject<bool>(body);
 
             return JsonConvert.DeserializeObject<bool>(body);
+        }
+
+        public async Task<bool> CreateImageConver(FilesModel request, string productCategoryId)
+        {
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.Coverfilesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.Coverfilesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.Coverfilesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "Coverfilesadd", request.Coverfilesadd.FileName);
+            }
+
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductCategoryId) ? "" : request.ProductCategoryId), "ProductCategoryId");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.PostAsync("/files-product-category/create-image-cover?productCategoryId=" + productCategoryId + "", requestContent);
+
+            return response.IsSuccessStatusCode;
         }
 
         #endregion Method

@@ -133,6 +133,70 @@ namespace FileApi.Controllers
             });
         }
 
+        [Route("create-image-cover")]
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> CreateImageCover([FromForm] List<IFormFile> Coverfilesadd, string productCategoryId, int width = 100, int height = 100)
+        {
+            if (Coverfilesadd == null || Coverfilesadd.Count == 0)
+
+                return BadRequest(new ApiBadRequestResponse("No image selected"));
+
+            var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
+
+            string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
+            var path = FormFile.CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            CreateFolderExtension.CreateFolder(path);
+            if (path == null)
+                path = "image";
+            var filePaths = new List<string>();
+            string sql = "";
+            foreach (var formFile in Coverfilesadd)
+            {
+                if (formFile.Length > 0 && formFile.Length <= 250000000)
+                {
+                    var filePath = FormFile.CommonHelper.MapPath(path);
+                    filePaths.Add(filePath);
+                    var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
+                    var fileNameWithPath = string.Concat(filePath, "\\", randomname);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                        var tem = new HouseWarehouseStore.Data.Entities.File();
+                        tem.FileName = randomname;
+                        tem.Path = @"/uploads/" + createFolderDate + "";
+                        tem.Extension = GetExtension(randomname);
+                        tem.MimeType = formFile.ContentType;
+                        tem.Size = formFile.Length;
+                        listEntity.Add(tem);
+                    }
+                    FormFile.CommonHelper.Resize(fileNameWithPath, width, height);
+                }
+                else
+                {
+                    sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
+                }
+            }
+            var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
+            if (listEntity.Count() > 0)
+            {
+                await _filesProductCategoryService.InsertAsync(listEntity, productCategoryId);
+                foreach (var item in listEntity)
+                {
+                    var tem = new HouseWarehouseStore.Data.Entities.File();
+                    tem.FileName = item.FileName;
+                    tem.Path = item.Path;
+                    tem.ProductCategoryId = productCategoryId;
+                    listRes.Add(tem);
+                }
+            }
+            return Ok(new
+            {
+                error = sql,
+                result = true,
+                res = listRes,
+            });
+        }
+
         [Route("update-image")]
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string productCategoryId, int width = 100, int height = 100)

@@ -12,12 +12,10 @@ namespace HouseWarehouseStore.Models
         [MaxLength(50)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập thông tin")]
         [Display(Name = "Ảnh banner")]
         [MaxLength(500)]
         public string? Image { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập thông tin")]
         [Display(Name = "Biểu tượng")]
         [MaxLength(500)]
         public string? CoverImage { get; set; }
@@ -49,9 +47,14 @@ namespace HouseWarehouseStore.Models
         [Display(Name = "Nội dung sản phẩm")]
         public string Body { get; set; }
 
-        [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
+        [Display(Name = "Files banner"), Required(ErrorMessage = "Hãy lưu files")]
         public IFormFile? filesadd { get; set; }
 
         public List<FilesModel>? FilesModels { get; set; }
+
+        [Display(Name = "Files biểu tượng"), Required(ErrorMessage = "Hãy lưu files")]
+        public IFormFile? Coverfilesadd { get; set; }
+
+        public List<FilesModel>? CoverFilesModels { get; set; }
     }
 }

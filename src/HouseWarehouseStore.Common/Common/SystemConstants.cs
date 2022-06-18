@@ -20,7 +20,7 @@
         }
         public class ProductCategorySettings
         {
-            public const int NumberOfProductCategory = 2;
+            public const int NumberOfProductCategory = 1;
         }
     }
 }

@@ -68,7 +68,13 @@ namespace Master.Webapp.Controllers
                 var filemodels = new FilesModel();
                 filemodels.ProductCategoryId = request.ProductCategorieId;
                 filemodels.filesadd = request.filesadd;
+                filemodels.Coverfilesadd = request.Coverfilesadd;
+
+                //
                 await _productCategoryApiCient.CreateImage(filemodels, request.ProductCategorieId);
+
+                //
+                await _productCategoryApiCient.CreateImageConver(filemodels, request.ProductCategorieId);
 
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
@@ -171,7 +177,7 @@ namespace Master.Webapp.Controllers
                     Image = model.Image,
                     CoverImage = model.CoverImage,
                     DescriptionMeta = model.DescriptionMeta,
-                    Soft =model.Soft,
+                    Soft = model.Soft,
                     FilesModels = await _productCategoryApiCient.GetFilesProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
                 };
                 return View(updateRequest);

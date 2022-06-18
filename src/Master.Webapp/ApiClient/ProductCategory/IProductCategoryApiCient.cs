@@ -9,6 +9,8 @@ namespace Master.Webapp.ApiClient
 
         public Task<bool> CreateImage(FilesModel request, string productCategoryId);
 
+        public Task<bool> CreateImageConver(FilesModel request, string productCategoryId);
+
         public Task<bool> UpdateImage(FilesModel request, string productCategoryId);
 
         public Task<bool> Edit(string? id, ProductCategoryModel request);
