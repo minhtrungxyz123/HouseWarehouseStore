@@ -31,11 +31,11 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
             <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
                 <div class="sidebar-brand-icon rotate-n-15">
-                    <i class="fas fa-laugh-wink"></i>
+                    <i class="fa-solid fa-hand-holding-heart"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">AN TRÍ GIRT <sup>*</sup></div>
             </a>
 
             <!-- Divider -->
@@ -43,9 +43,9 @@
 
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
-                    <i class="fas fa-fw fa-tachometer-alt"></i>
-                    <span>Dashboard</span>
+                <a class="nav-link" href="/">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Trang Quản Trị</span>
                 </a>
             </li>
 
@@ -199,6 +199,38 @@
                         <h6 class="collapse-header">Danh mục:</h6>
                         <a class="collapse-item" asp-controller="Color" asp-action="Index">Danh sách</a>
                         <a class="collapse-item" asp-controller="Color" asp-action="Create">Thêm mới</a>
+                    </div>
+                </div>
+            </li>
+
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ProductCategory"
+                   aria-expanded="true" aria-controls="ProductCategory">
+                    <i class="fa-solid fa-shirt"></i>
+                    <span>Quản lý loại sản phẩm</span>
+                </a>
+                <div id="ProductCategory" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh mục:</h6>
+                        <a class="collapse-item" asp-controller="ProductCategory" asp-action="Index">Danh sách</a>
+                        <a class="collapse-item" asp-controller="ProductCategory" asp-action="Create">Thêm mới</a>
+                    </div>
+                </div>
+            </li>
+
+             <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Product"
+                   aria-expanded="true" aria-controls="Product">
+                    <i class="fa-solid fa-person-circle-check"></i>
+                    <span>Quản lý sản phẩm</span>
+                </a>
+                <div id="Product" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh mục:</h6>
+                        <a class="collapse-item" asp-controller="Product" asp-action="Index">Danh sách</a>
+                        <a class="collapse-item" asp-controller="Product" asp-action="Create">Thêm mới</a>
                     </div>
                 </div>
             </li>
