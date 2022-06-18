@@ -105,9 +105,7 @@ namespace Master.Webapp.Controllers
                     DescriptionMeta = model.DescriptionMeta,
                     Image = model.Image,
                     ParentId = model.ParentId,
-                    Url = model.Url,
-                    FilesModels = await _productCategoryApiCient.GetFilesProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
-                    CoverFilesModels = await _productCategoryApiCient.GetFilesCoverProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
+                    Url = model.Url
                 };
                 return View(updateRequest);
             }
@@ -178,9 +176,7 @@ namespace Master.Webapp.Controllers
                     Image = model.Image,
                     CoverImage = model.CoverImage,
                     DescriptionMeta = model.DescriptionMeta,
-                    Soft = model.Soft,
-                    FilesModels = await _productCategoryApiCient.GetFilesProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
-                    CoverFilesModels = await _productCategoryApiCient.GetFilesCoverProductCategory(SystemConstants.ProductCategorySettings.NumberOfProductCategory),
+                    Soft = model.Soft
                 };
                 return View(updateRequest);
             }

@@ -26,19 +26,10 @@
                     <input type="hidden" asp-for="ProductCategorieId" />
                     <input type="hidden" asp-for="CoverImage" />
                     <input type="hidden" asp-for="Image" />
-                    <input type="hidden" asp-for="FilesModels" />
 
-                    @foreach (var item in Model.FilesModels)
-                    {
-                        var url = $"/{_loc["productCategoryUrl"]}/{item.CollectionId}";
-                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
-                    }
-
-                     @foreach (var item in Model.CoverFilesModels)
-                    {
-                        var url = $"/{_loc["productCategoryUrl"]}/{item.ProductCategoryId}";
-                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
-                    }
+                        <a><img src="@(Configuration["ApiFiles"]+"/files-product-category/image/"+ Model.Image)" asp-append-version="true" width="80" height="80" /></a>
+                        <a><img src="@(Configuration["ApiFiles"]+"/files-product-category/converImage/"+ Model.CoverImage)" asp-append-version="true" width="80" height="80" /></a>
+                    
 
                     <div class="container-fluid">
                         <div class="row">
