@@ -12,5 +12,6 @@
         public string? ArticleId { get; set; }
         public string? ConfigSiteId { get; set; }
         public string? BannerId { get; set; }
+        public  string? ProductCategoryId { get; set; }
     }
 }

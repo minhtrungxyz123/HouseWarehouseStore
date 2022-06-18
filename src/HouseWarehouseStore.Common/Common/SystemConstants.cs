@@ -18,5 +18,9 @@
         {
             public const int NumberOfBanner = 1;
         }
+        public class ProductCategorySettings
+        {
+            public const int NumberOfProductCategory = 2;
+        }
     }
 }

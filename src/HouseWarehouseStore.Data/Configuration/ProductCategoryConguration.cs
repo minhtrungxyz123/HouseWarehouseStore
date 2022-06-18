@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ProductCategory> entity)
         {
-            entity.ToTable("ProductCategory");
+            entity.ToTable("ProductCategories");
 
             entity.HasKey(e => e.ProductCategorieId);
 

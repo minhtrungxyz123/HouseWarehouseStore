@@ -31,6 +31,7 @@ builder.Services.AddScoped<IVoucherService, VoucherService>();
 builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<IColorService, ColorService>();
 builder.Services.AddScoped<IProductSizeColorService, ProductSizeColorService>();
+builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 
 #endregion Add Service
 

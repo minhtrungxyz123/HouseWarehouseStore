@@ -114,7 +114,7 @@ namespace Master.Service
             return new RepositoryResponse()
         {
             Result = result,
-                Id = item.SizeId.ToString(),
+                Id = item.SizeId
             };
     }
 
@@ -140,7 +140,7 @@ namespace Master.Service
         return new RepositoryResponse()
         {
             Result = result,
-            Id = id.ToString()
+            Id = id
         };
     }
 
