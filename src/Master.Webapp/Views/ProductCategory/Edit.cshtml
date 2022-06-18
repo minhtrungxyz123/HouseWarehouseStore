@@ -27,9 +27,37 @@
                     <input type="hidden" asp-for="CoverImage" />
                     <input type="hidden" asp-for="Image" />
 
-                        <a><img src="@(Configuration["ApiFiles"]+"/files-product-category/image/"+ Model.Image)" asp-append-version="true" width="80" height="80" /></a>
-                        <a><img src="@(Configuration["ApiFiles"]+"/files-product-category/converImage/"+ Model.CoverImage)" asp-append-version="true" width="80" height="80" /></a>
-                    
+                    <div class="form-group bg-white font-weight-bold">        
+                        <div class="section-image-title d-flex justify-content-between">            
+                            <p class="text-danger mt-3 mb-1">Ảnh banner</p>            
+                            <span asp-validation-for="Image" class="text-danger"></span>      
+                        </div>        
+                        <div class="section-image-list insert-two container">                  
+                            <div class="row">                    
+                                <div class="col-3 mb-3 position-relative"> 
+                                    <a data-image="@Model.Image" data-fancybox="gallery" class="@Model.Image" href="/@Model.Image">                               
+                                        <img style="max-width:100%" class="" src="@(Configuration["ApiFiles"]+"/files-product-category/image/"+ Model.Image)" />                                                           
+                                    </a>                                                
+                                </div>
+                            </div>       
+                        </div>
+                    </div>
+
+                    <div class="form-group bg-white font-weight-bold">        
+                        <div class="section-image-title d-flex justify-content-between">            
+                            <p class="text-danger mt-3 mb-1">Biểu tượng</p>            
+                            <span asp-validation-for="CoverImage" class="text-danger"></span>      
+                        </div>        
+                        <div class="section-image-list insert-two container">                  
+                            <div class="row">                    
+                                <div class="col-3 mb-3 position-relative"> 
+                                    <a data-image="@Model.CoverImage" data-fancybox="gallery" class="@Model.CoverImage" href="/@Model.CoverImage">                               
+                                        <img style="max-width:100%" class="" src="@(Configuration["ApiFiles"]+"/files-product-category/converImage/"+ Model.CoverImage)" />                                                           
+                                    </a>                                                
+                                </div>
+                            </div>       
+                        </div>
+                    </div>
 
                     <div class="container-fluid">
                         <div class="row">
