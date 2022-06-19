@@ -26,5 +26,9 @@
         {
             public const int NumberOfProductCategoryCover = 1;
         }
+        public class ProductSettings
+        {
+            public const int NumberOfProduct = 10;
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -16,9 +17,8 @@ namespace HouseWarehouseStore.Models
         [Display(Name = "Mã sản phẩm")]
         public string Description { get; set; }
 
-        [Required(ErrorMessage = "Xin vui lòng chọn hình ảnh !")]
         [Display(Name = "Hình ảnh")]
-        public string Image { get; set; }
+        public string? Image { get; set; }
 
         [Display(Name = "Nội dung ngắn")]
         public string Body { get; set; }
@@ -92,11 +92,15 @@ namespace HouseWarehouseStore.Models
         public DateTime CreateDate { get; set; }
 
         [Display(Name = "Người tạo")]
-        public string CreateBy { get; set; }
+        public string? CreateBy { get; set; }
 
         [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
         public IFormFile? filesadd { get; set; }
 
         public List<FilesModel>? FilesModels { get; set; }
+
+        public IList<SelectListItem>? AvailableProductCategory { get; set; }
+
+        public IList<SelectListItem>? AvailableCollection { get; set; }
     }
 }

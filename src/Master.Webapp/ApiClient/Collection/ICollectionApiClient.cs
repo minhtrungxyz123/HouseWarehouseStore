@@ -28,5 +28,7 @@ namespace Master.Webapp.ApiClient
         Task<AdminModel> GetByUserId(string id);
 
         Task<List<CollectionModel>> GetAll();
+
+        Task<IList<CollectionModel>> GetActive(bool showHidden = true);
     }
 }

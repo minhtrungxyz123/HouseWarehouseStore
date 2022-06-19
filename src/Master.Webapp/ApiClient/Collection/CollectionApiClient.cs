@@ -25,6 +25,18 @@ namespace Master.Webapp.ApiClient
         #endregion Fields
 
         #region List
+
+        public async Task<IList<CollectionModel>> GetActive(bool showHidden = true)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/collection/get-active?showHidden={showHidden}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IList<CollectionModel>>(body);
+
+            return JsonConvert.DeserializeObject<IList<CollectionModel>>(body);
+        }
         public async Task<List<CollectionModel>> GetAll()
         {
             var client = _httpClientFactory.CreateClient();

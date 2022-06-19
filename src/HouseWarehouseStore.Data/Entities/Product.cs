@@ -10,7 +10,7 @@ namespace HouseWarehouseStore.Data.Entities
         public string Description { get; set; } = null!;
         public string Image { get; set; } = null!;
         public string? Body { get; set; }
-        public string ProductCategorieId { get; set; } = null!;
+        public string ProductCategorieId { get; set; }
         public int Quantity { get; set; }
         public string? Factory { get; set; }
         public decimal Price { get; set; }
