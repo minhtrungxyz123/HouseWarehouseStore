@@ -67,7 +67,7 @@ namespace Master.Webapp.Controllers
 
             request.ProductId = Guid.NewGuid().ToString();
             request.Image = request.ProductId;
-
+            request.CreateDate = DateTime.UtcNow.ToLocalTime();
             var claims = HttpContext.User.Claims;
             var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;
             request.CreateBy = userId;

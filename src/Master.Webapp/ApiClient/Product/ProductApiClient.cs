@@ -103,6 +103,7 @@ namespace Master.Webapp.ApiClient
                 ByteArrayContent bytes = new ByteArrayContent(data);
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductId) ? "" : request.ProductId), "ProductId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "Name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
@@ -156,6 +157,7 @@ namespace Master.Webapp.ApiClient
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
 
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductId) ? "" : request.ProductId), "ProductId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "Name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Description) ? "" : request.Description), "Description");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
