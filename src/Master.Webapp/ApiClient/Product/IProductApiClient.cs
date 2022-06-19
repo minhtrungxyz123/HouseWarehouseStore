@@ -7,6 +7,10 @@ namespace Master.Webapp.ApiClient
     {
         public Task<bool> Create(ProductModel request);
 
+        public Task<bool> CreateImage(FilesModel request, string productId);
+
+        public Task<bool> UpdateImage(FilesModel request, string productId);
+
         public Task<bool> Edit(string? id, ProductModel request);
 
         Task<ApiResult<Pagination<ProductModel>>> Get(ProductSearchModel request);
@@ -14,5 +18,13 @@ namespace Master.Webapp.ApiClient
         Task<ApiResult<ProductModel>> GetById(string id);
 
         Task<bool> Delete(string id);
+
+        Task<bool> DeleteDataFiles(string id);
+
+        Task<List<FilesModel>> GetFilesProduct(int take);
+
+        Task<bool> DeleteFiles(string id);
+
+        Task<List<ProductModel>> GetAll();
     }
 }
