@@ -61,7 +61,9 @@ namespace Master.Service
         public async Task<ApiResult<Pagination<ProductCategoryModel>>> GetAllPaging(ProductCategorySearchContext ctx)
         {
             var query = from pr in _context.ProductCategories
-                        select new { pr };
+                        join c in _context.ProductCategories on pr.ParentId equals c.ProductCategorieId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { pr, tp };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -84,7 +86,7 @@ namespace Master.Service
                     Soft = u.pr.Soft,
                     DescriptionMeta = u.pr.DescriptionMeta,
                     CoverImage = u.pr.CoverImage,
-                    ParentId = u.pr.ParentId,
+                    ParentId = u.tp.Name,
                     Url = u.pr.Url,
                     ProductCategorieId = u.pr.ProductCategorieId
                 })

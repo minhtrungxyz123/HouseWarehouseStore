@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
@@ -56,5 +57,7 @@ namespace HouseWarehouseStore.Models
         public IFormFile? Coverfilesadd { get; set; }
 
         public List<FilesModel>? CoverFilesModels { get; set; }
+
+        public IList<SelectListItem>? AvailablePath { get; set; }
     }
 }

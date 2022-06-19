@@ -347,6 +347,18 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
+        public async Task<IList<ProductCategoryModel>> GetPath(bool showHidden = true)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/product-category/get-active?showHidden={showHidden}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IList<ProductCategoryModel>>(body);
+
+            return JsonConvert.DeserializeObject<IList<ProductCategoryModel>>(body);
+        }
+
         #endregion Method
     }
 }

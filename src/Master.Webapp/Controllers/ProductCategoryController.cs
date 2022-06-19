@@ -2,6 +2,7 @@
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Master.Webapp.Controllers
 {
@@ -44,9 +45,10 @@ namespace Master.Webapp.Controllers
         #region Method
 
         [HttpGet]
-        public ActionResult Create()
+        public async Task<IActionResult> Create()
         {
             var model = new ProductCategoryModel();
+            await GetDropDownList(model);
             return View(model);
         }
 
@@ -91,6 +93,7 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+                await GetDropDownList(model);
                 var updateRequest = new ProductCategoryModel()
                 {
                     Active = model.Active,
@@ -103,9 +106,22 @@ namespace Master.Webapp.Controllers
                     Soft = model.Soft,
                     DescriptionMeta = model.DescriptionMeta,
                     Image = model.Image,
-                    ParentId = model.ParentId,
+                    AvailablePath = model.AvailablePath,
                     Url = model.Url
                 };
+
+                if (model.AvailablePath.Count > 0 &&
+                !string.IsNullOrEmpty(model.ParentId))
+                {
+                    var item = model.AvailablePath
+                        .FirstOrDefault(x => x.Value.Equals(model.ParentId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
+
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
@@ -191,6 +207,7 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+                await GetDropDownList(model);
                 var updateRequest = new ProductCategoryModel()
                 {
                     Active = model.Active,
@@ -200,17 +217,62 @@ namespace Master.Webapp.Controllers
                     Home = model.Home,
                     TitleMeta = model.TitleMeta,
                     Url = model.Url,
-                    ParentId = model.ParentId,
+                    AvailablePath = model.AvailablePath,
                     Image = model.Image,
                     CoverImage = model.CoverImage,
                     DescriptionMeta = model.DescriptionMeta,
                     Soft = model.Soft
                 };
+
+                if (model.AvailablePath.Count > 0 &&
+                !string.IsNullOrEmpty(model.ParentId))
+                {
+                    var item = model.AvailablePath
+                        .FirstOrDefault(x => x.Value.Equals(model.ParentId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
+
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
         }
 
         #endregion Method
+
+        #region Utilities
+
+        private async Task GetDropDownList(ProductCategoryModel model)
+        {
+            var availableCategory = await _productCategoryApiCient.GetPath();
+
+            var categories = new List<SelectListItem>();
+            var data = availableCategory;
+
+            if (data?.Count > 0)
+            {
+                foreach (var m in data)
+                {
+                    var item = new SelectListItem
+                    {
+                        Text = m.Name,
+                        Value = m.ProductCategorieId,
+                    };
+                    categories.Add(item);
+                }
+            }
+            categories.OrderBy(e => e.Text);
+            if (categories == null || categories.Count == 0)
+            {
+                categories = new List<SelectListItem>();
+            }
+
+            model.AvailablePath = new List<SelectListItem>(categories);
+        }
+
+        #endregion Utilities
     }
 }

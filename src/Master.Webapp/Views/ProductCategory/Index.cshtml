@@ -69,6 +69,9 @@
                                 Hiển trang chủ
                             </th>
                             <th>
+                               Danh mục cha
+                            </th>
+                            <th>
                                 Chức năng
                             </th>
                         </tr>
@@ -132,7 +135,10 @@
                                         <span  class="btn btn-danger"><i class="fa-solid fa-circle-minus"></i></span>
 
                                     }
-                                </td> 
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ParentId)
+                                </td>
                                 <td>
                                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-pen"></i> Sửa</a>
                                     <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-eye"></i> Chi tiết</a>

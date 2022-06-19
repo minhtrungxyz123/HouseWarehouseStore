@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HouseWarehouseStore.Models
@@ -92,5 +93,10 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Người tạo")]
         public string CreateBy { get; set; }
+
+        [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
+        public IFormFile? filesadd { get; set; }
+
+        public List<FilesModel>? FilesModels { get; set; }
     }
 }

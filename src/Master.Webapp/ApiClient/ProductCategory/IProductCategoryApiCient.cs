@@ -36,5 +36,7 @@ namespace Master.Webapp.ApiClient
         Task<bool> DeleteFilesCover(string id);
 
         Task<List<ProductCategoryModel>> GetAll();
+
+        Task<IList<ProductCategoryModel>> GetPath(bool showHidden = true);
     }
 }
