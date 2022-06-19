@@ -136,7 +136,7 @@
                                 <td>
                                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-pen"></i> Sửa</a>
                                     <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
-                                     @Html.ActionLink("Xóa", "Delete", new { id = item.ProductCategorieId, name = item.Name })
+                                     @Html.ActionLink("Xóa", "Delete", new { id = item.ProductCategorieId, name = item.Name }, new { @class="btn btn-danger" })
                                 </td>
                             </tr>
                         }
