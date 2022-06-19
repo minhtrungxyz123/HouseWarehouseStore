@@ -39,7 +39,7 @@ namespace Master.Api.Controllers
         [HttpGet("get")]
         public async Task<IActionResult> GetAllPaging([FromQuery] ProductSearchContext ctx)
         {
-            var products = await _productService.Get(ctx);
+            var products = await _productService.GetAllPaging(ctx);
             return Ok(products);
         }
 
@@ -56,20 +56,13 @@ namespace Master.Api.Controllers
             return Ok(item);
         }
 
-        [Route("get-available")]
-        [HttpGet]
-        public async Task<IActionResult> GetAvailableList(bool showHidden = true)
-        {
-            var user = _productService.GetMvcListItems(showHidden);
-            return Ok(user);
-        }
-
         #endregion List
 
         #region Method
 
         [HttpPost("create")]
-        public async Task<IActionResult> Post([FromBody] ProductModel model)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Post([FromForm] ProductModel model)
         {
             var result = await _productService.Create(model);
 
@@ -79,12 +72,13 @@ namespace Master.Api.Controllers
             }
             else
             {
-                return BadRequest(new ApiBadRequestResponse("Create product failed"));
+                return BadRequest(new ApiBadRequestResponse("Create Product failed"));
             }
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Put([FromBody] ProductModel model, string id)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Put([FromForm] ProductModel model, string id)
         {
             var item = await _productService.GetById(id);
             if (item == null)
@@ -111,5 +105,41 @@ namespace Master.Api.Controllers
         }
 
         #endregion Method
+
+        #region Utilities
+
+        [Route("get-status-product")]
+        [HttpGet]
+        public async Task<IActionResult> GetStatusProduct(bool showHidden = true)
+        {
+            var user = _productService.GetStatusProduct(showHidden);
+            return Ok(user);
+        }
+
+        [Route("get-active")]
+        [HttpGet]
+        public async Task<IActionResult> GetActive(bool showHidden = true)
+        {
+            var user = _productService.GetActive(showHidden);
+            return Ok(user);
+        }
+
+        [Route("get-home")]
+        [HttpGet]
+        public async Task<IActionResult> GetHome(bool showHidden = true)
+        {
+            var user = _productService.GetHome(showHidden);
+            return Ok(user);
+        }
+
+        [Route("get-hot")]
+        [HttpGet]
+        public async Task<IActionResult> GetHot(bool showHidden = true)
+        {
+            var user = _productService.GetHot(showHidden);
+            return Ok(user);
+        }
+
+        #endregion Utilities
     }
 }

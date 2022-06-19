@@ -8,7 +8,7 @@ namespace Master.Service
     {
         Task<IEnumerable<Product>> GetAll();
 
-        Task<ApiResult<Pagination<Product>>> Get(ProductSearchContext ctx);
+        Task<ApiResult<Pagination<ProductModel>>> GetAllPaging(ProductSearchContext ctx);
 
         Task<Product> GetById(string? id);
 
@@ -20,6 +20,12 @@ namespace Master.Service
 
         Task<ApiResult<Product>> GetByIdAsyn(string? id);
 
-        IList<Product> GetMvcListItems(bool showHidden = true);
+        IList<Product> GetActive(bool showHidden = true);
+
+        IList<Product> GetHome(bool showHidden = true);
+
+        IList<Product> GetHot(bool showHidden = true);
+
+        IList<Product> GetStatusProduct(bool showHidden = true);
     }
 }

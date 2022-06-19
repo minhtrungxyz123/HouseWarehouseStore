@@ -37,28 +37,28 @@ namespace Master.Service
             {
                 Name = item.Name,
                 Active = item.Active,
-                ProductId = item.ProductId,
                 CollectionId = item.CollectionId,
                 BarCode = item.BarCode,
-                Content = item.Content,
                 Body = item.Body,
+                Content = item.Content,
                 CreateBy = item.CreateBy,
                 CreateDate = item.CreateDate,
                 Description = item.Description,
-                DescriptionMeta = item.DescriptionMeta,
                 Factory = item.Factory,
-                GiftInfo = item.GiftInfo,
                 Home = item.Home,
                 Hot = item.Hot,
                 Image = item.Image,
                 Price = item.Price,
-                ProductCategorieId = item.ProductCategorieId,
                 Quantity = item.Quantity,
-                QuyCach = item.QuyCach,
-                SaleOff = item.SaleOff,
                 Sort = item.Sort,
                 StatusProduct = item.StatusProduct,
                 TitleMeta = item.TitleMeta,
+                DescriptionMeta = item.DescriptionMeta,
+                ProductId = item.ProductId,
+                ProductCategorieId = item.ProductCategorieId,
+                GiftInfo = item.GiftInfo,
+                QuyCach = item.QuyCach,
+                SaleOff = item.SaleOff
             };
             return new ApiSuccessResult<Product>(model);
         }
@@ -70,55 +70,59 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Product>>> Get(ProductSearchContext ctx)
+        public async Task<ApiResult<Pagination<ProductModel>>> GetAllPaging(ProductSearchContext ctx)
         {
-            var query = _context.Products.AsQueryable();
+            var query = from pr in _context.Products
+                        select new { pr };
+
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Name.Contains(ctx.Keyword) || x.Name.Contains(ctx.Keyword) || x.Content.Contains(ctx.Keyword));
+                query = query.Where(x => x.pr.Name.Contains(ctx.Keyword)
+                || x.pr.TitleMeta.Contains(ctx.Keyword));
             }
 
-            int totalRow = await query.CountAsync();
+            var totalRecords = await query.CountAsync();
 
-            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(x => new Product()
+                .Select(u => new ProductModel()
                 {
-                    Active = x.Active,
-                    Description = x.Description,
-                    TitleMeta = x.TitleMeta,
-                    StatusProduct = x.StatusProduct,
-                    Sort = x.Sort,
-                    BarCode = x.BarCode,
-                    Body = x.Body,
-                    CollectionId = x.CollectionId,
-                    Content = x.Content,
-                    CreateBy = x.CreateBy,
-                    CreateDate = x.CreateDate,
-                    DescriptionMeta = x.DescriptionMeta,
-                    Factory = x.Factory,
-                    GiftInfo = x.GiftInfo,
-                    Home = x.Home,
-                    Hot = x.Hot,
-                    Image = x.Image,
-                    Name = x.Name,
-                    Price = x.Price,
-                    ProductCategorieId = x.ProductCategorieId,
-                    ProductId = x.ProductId,
-                    Quantity = x.Quantity,
-                    QuyCach = x.QuyCach,
-                    SaleOff = x.SaleOff
+                    Name = u.pr.Name,
+                    CollectionId = u.pr.CollectionId,
+                    Active = u.pr.Active,
+                    TitleMeta = u.pr.TitleMeta,
+                    Content = u.pr.Content,
+                    StatusProduct = u.pr.StatusProduct,
+                    Sort = u.pr.Sort,
+                    Quantity = u.pr.Quantity,
+                    BarCode = u.pr.BarCode,
+                    Price = u.pr.Price,
+                    Body = u.pr.Body,
+                    CreateBy = u.pr.CreateBy,
+                    CreateDate = u.pr.CreateDate,
+                    Description = u.pr.Description,
+                    Factory = u.pr.Factory,
+                    Home = u.pr.Home,
+                    Hot = u.pr.Hot,
+                    Image = u.pr.Image,
+                    SaleOff = u.pr.SaleOff,
+                    QuyCach = u.pr.QuyCach,
+                    GiftInfo = u.pr.GiftInfo,
+                    ProductCategorieId = u.pr.ProductCategorieId,
+                    ProductId = u.pr.ProductId,
+                    DescriptionMeta = u.pr.DescriptionMeta
+                })
+                .ToListAsync();
 
-                }).ToListAsync();
-
-            var pagedResult = new Pagination<Product>()
+            var pagination = new Pagination<ProductModel>
             {
-                TotalRecords = totalRow,
+                Items = items,
+                TotalRecords = totalRecords,
                 PageIndex = ctx.PageIndex,
                 PageSize = ctx.PageSize,
-                Items = data
             };
-            return new ApiSuccessResult<Pagination<Product>>(pagedResult);
+
+            return new ApiSuccessResult<Pagination<ProductModel>>(pagination);
         }
 
         public async Task<Product?> GetById(string? id)
@@ -136,7 +140,7 @@ namespace Master.Service
             return item;
         }
 
-        public IList<Product> GetMvcListItems(bool showHidden = true)
+        public IList<Product> GetActive(bool showHidden = true)
         {
             var query = from p in _context.Products.AsQueryable() select p;
             if (showHidden)
@@ -144,6 +148,28 @@ namespace Master.Service
                 query = from p in query where p.Active select p;
             }
             query = from p in query orderby p.Name select p;
+            return query.ToList();
+        }
+
+        public IList<Product> GetHome(bool showHidden = true)
+        {
+            var query = from p in _context.Products.AsQueryable() select p;
+            if (showHidden)
+            {
+                query = from p in query where p.Home select p;
+            }
+            query = from p in query orderby p.Name select p;
+            return query.ToList();
+        }
+
+        public IList<Product> GetHot(bool showHidden = true)
+        {
+            var query = from p in _context.Products.AsQueryable() select p;
+            if (showHidden)
+            {
+                query = from p in query where p.Hot select p;
+            }
+            query = from p in query orderby p.Hot select p;
             return query.ToList();
         }
 
@@ -160,30 +186,30 @@ namespace Master.Service
 
             Product item = new Product()
             {
+                CollectionId = model.CollectionId,
+                Name = model.Name,
                 Active = model.Active,
-                Description = model.Description,
-                TitleMeta = model.TitleMeta,
-                StatusProduct = model.StatusProduct,
-                Sort = model.Sort,
                 BarCode = model.BarCode,
                 Body = model.Body,
-                CollectionId = model.CollectionId,
                 Content = model.Content,
                 CreateBy = model.CreateBy,
                 CreateDate = model.CreateDate,
-                DescriptionMeta = model.DescriptionMeta,
+                Description = model.Description,
                 Factory = model.Factory,
-                GiftInfo = model.GiftInfo,
                 Home = model.Home,
                 Hot = model.Hot,
                 Image = model.Image,
-                Name = model.Name,
                 Price = model.Price,
-                ProductCategorieId = model.ProductCategorieId,
                 Quantity = model.Quantity,
+                Sort = model.Sort,
+                StatusProduct = model.StatusProduct,
+                TitleMeta = model.TitleMeta,
+                ProductId = model.ProductId,
+                DescriptionMeta = model.DescriptionMeta,
+                ProductCategorieId = model.ProductCategorieId,
+                GiftInfo = model.GiftInfo,
                 QuyCach = model.QuyCach,
-                SaleOff = model.SaleOff,
-                ProductId = Guid.NewGuid().ToString(),
+                SaleOff = model.SaleOff
             };
 
             await _context.Products.AddAsync(item);
@@ -192,7 +218,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.ProductId.ToString(),
+                Id = item.ProductId
             };
         }
 
@@ -209,28 +235,27 @@ namespace Master.Service
             }
 
             var item = await _context.Products.FindAsync(id);
-
+            item.CollectionId = model.CollectionId;
+            item.Name = model.Name;
             item.Active = model.Active;
-            item.Description = model.Description;
-            item.TitleMeta = model.TitleMeta;
-            item.StatusProduct = model.StatusProduct;
-            item.Sort = model.Sort;
             item.BarCode = model.BarCode;
             item.Body = model.Body;
-            item.CollectionId = model.CollectionId;
             item.Content = model.Content;
             item.CreateBy = model.CreateBy;
             item.CreateDate = model.CreateDate;
-            item.DescriptionMeta = model.DescriptionMeta;
+            item.Description = model.Description;
             item.Factory = model.Factory;
-            item.GiftInfo = model.GiftInfo;
             item.Home = model.Home;
             item.Hot = model.Hot;
             item.Image = model.Image;
-            item.Name = model.Name;
             item.Price = model.Price;
-            item.ProductCategorieId = model.ProductCategorieId;
             item.Quantity = model.Quantity;
+            item.Sort = model.Sort;
+            item.StatusProduct = model.StatusProduct;
+            item.TitleMeta = model.TitleMeta;
+            item.DescriptionMeta = model.DescriptionMeta;
+            item.ProductCategorieId = model.ProductCategorieId;
+            item.GiftInfo = model.GiftInfo;
             item.QuyCach = model.QuyCach;
             item.SaleOff = model.SaleOff;
 
@@ -241,7 +266,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id.ToString(),
+                Id = id
             };
         }
 
@@ -258,6 +283,17 @@ namespace Master.Service
             var result = await _context.SaveChangesAsync();
 
             return result;
+        }
+
+        public IList<Product> GetStatusProduct(bool showHidden = true)
+        {
+            var query = from p in _context.Products.AsQueryable() select p;
+            if (showHidden)
+            {
+                query = from p in query where p.StatusProduct select p;
+            }
+            query = from p in query orderby p.Name select p;
+            return query.ToList();
         }
 
         #endregion Method
