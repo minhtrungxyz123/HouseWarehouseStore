@@ -136,7 +136,7 @@
                                 <td>
                                     <a class="btn btn-primary" asp-action="Edit" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-pen"></i> Sửa</a>
                                     <a class="btn" style="background: yellow;" asp-action="Detail" asp-route-id="@item.ProductCategorieId"><i class="fa-solid fa-eye"></i> Chi tiết</a>
-                                    <a class="btn btn-danger" onclick="Delete('@item.ProductCategorieId')"><i class="fa-solid fa-trash-can"></i> Xóa</a>
+                                     @Html.ActionLink("Xóa", "Delete", new { id = item.ProductCategorieId, name = item.Name })
                                 </td>
                             </tr>
                         }
@@ -154,19 +154,6 @@
         setTimeout(function() {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
-
-        function Delete(id) {
-            if (confirm("Bạn có chắc chắn xóa không?")) {
-                $.post("/ProductCategory/DeleteConfirmed", { id: id }, function(data) {
-                    if (data) {
-                        if (confirm("Xóa thành công"))
-                            window.location.assign('/ProductCategory/Index')
-                    } else {
-                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
-                    }
-                });
-            }
-        }
 
     </script>
 }

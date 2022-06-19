@@ -180,6 +180,36 @@ namespace Files.Service
             return data;
         }
 
+        public async Task<HouseWarehouseStore.Data.Entities.File> GetByNameImageCoverAsync(string name)
+        {
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            var query =
+                from x in _context.Files
+                where x.ProductCategoryId == name
+                select x;
+
+            return await query.FirstOrDefaultAsync();
+        }
+
+        public async Task<int> DeleteCover(string id)
+        {
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var item = await _context.Files.FirstOrDefaultAsync(x => x.ProductCategoryId.Equals(id));
+
+            _context.Files.Remove(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result;
+        }
+
         #endregion List
     }
 }

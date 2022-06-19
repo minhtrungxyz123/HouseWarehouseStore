@@ -1,0 +1,38 @@
+﻿@model HouseWarehouseStore.Models.ProductCategoryModel
+@{
+    ViewData["Title"] = "Xóa loại sản phảm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Loại sản phẩm</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Xóa loại sản phẩm</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="ProductCategory"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <dl class="row">
+                    <dt class="col-sm-2">
+                        @Html.DisplayNameFor(model => model.Name)
+                    </dt>
+                    <dd class="col-sm-10">
+                        @Html.DisplayFor(model => model.Name)
+                    </dd>
+                </dl>
+                <form asp-action="Delete" enctype="multipart/form-data" method="post">
+                    <input asp-for="ProductCategorieId" type="hidden" />
+                    <input asp-for="Name" type="hidden" />
+                    <input type="submit" value="Xóa" class="btn btn-danger" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+

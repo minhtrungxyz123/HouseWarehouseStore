@@ -69,6 +69,14 @@ namespace FileApi.Controllers
             return Ok(result);
         }
 
+        [Route("delete-cover")]
+        [HttpDelete]
+        public async Task<IActionResult> DeleteCover(string id)
+        {
+            var result = await _filesProductCategoryService.DeleteCover(id);
+            return Ok(result);
+        }
+
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
         public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string productCategoryId, int width = 100, int height = 100)
@@ -264,6 +272,73 @@ namespace FileApi.Controllers
             });
         }
 
+        [Route("update-image-cover")]
+        [HttpPost, DisableRequestSizeLimit]
+        public async Task<IActionResult> UpdateImageCover([FromForm] List<IFormFile> Coverfilesadd, string productCategoryId, int width = 100, int height = 100)
+        {
+            if (Coverfilesadd == null || Coverfilesadd.Count == 0)
+
+                return BadRequest(new ApiBadRequestResponse("No image selected"));
+
+            var listEntity = new List<HouseWarehouseStore.Data.Entities.File>();
+
+            string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
+            var path = FormFile.CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            CreateFolderExtension.CreateFolder(path);
+            if (path == null)
+                path = "image";
+            var filePaths = new List<string>();
+            string sql = "";
+            foreach (var formFile in Coverfilesadd)
+            {
+                if (formFile.Length > 0 && formFile.Length <= 250000000)
+                {
+                    var filePath = FormFile.CommonHelper.MapPath(path);
+                    filePaths.Add(filePath);
+                    var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
+                    var fileNameWithPath = string.Concat(filePath, "\\", randomname);
+                    using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                    {
+                        await formFile.CopyToAsync(stream);
+                        var tem = new HouseWarehouseStore.Data.Entities.File();
+                        tem.FileName = randomname;
+                        tem.Path = @"/uploads/" + createFolderDate + "";
+                        tem.Extension = GetExtension(randomname);
+                        tem.MimeType = formFile.ContentType;
+                        tem.Size = formFile.Length;
+                        listEntity.Add(tem);
+                    }
+                    FormFile.CommonHelper.Resize(fileNameWithPath, width, height);
+                }
+                else
+                {
+                    sql = sql + $" The file width name {formFile.FileName}  must be > 0 and <25M ! ";
+                }
+            }
+            var listRes = new List<HouseWarehouseStore.Data.Entities.File>();
+            if (listEntity.Count() > 0)
+            {
+                await _filesProductCategoryService.UpdateAsync(listEntity, productCategoryId);
+                foreach (var item in listEntity)
+                {
+                    var tem = new HouseWarehouseStore.Data.Entities.File();
+                    tem.FileName = item.FileName;
+                    tem.Path = item.Path;
+                    tem.ProductCategoryId = productCategoryId;
+                    tem.MimeType = item.MimeType;
+                    tem.Size = item.Size;
+                    tem.Id = item.Id;
+                    listRes.Add(tem);
+                }
+            }
+            return Ok(new
+            {
+                error = sql,
+                result = true,
+                res = listRes,
+            });
+        }
+
         [HttpDelete]
         [Route("delete-files")]
         public async Task<IActionResult> DeleteImage(string productCategoryId)
@@ -272,6 +347,22 @@ namespace FileApi.Controllers
             if (productCategoryId != null)
             {
                 var check = await _filesProductCategoryService.GetByIdAsync(productCategoryId);
+
+                string filepath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+                var deleteRes = DeleteImageByPath(filepath);
+                return Ok(deleteRes);
+            }
+            return Ok(false);
+        }
+
+        [HttpDelete]
+        [Route("delete-files-cover")]
+        public async Task<IActionResult> DeleteImageCover(string productCategoryId)
+        {
+            var result = false;
+            if (productCategoryId != null)
+            {
+                var check = await _filesProductCategoryService.GetByNameImageCoverAsync(productCategoryId);
 
                 string filepath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
                 var deleteRes = DeleteImageByPath(filepath);

@@ -8,9 +8,13 @@ namespace Files.Service
 
         Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string? id);
 
+        Task<HouseWarehouseStore.Data.Entities.File> GetByNameImageCoverAsync(string name);
+
         Task<long> UpdateAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string productCategoryId);
 
         Task<int> Delete(string id);
+
+        Task<int> DeleteCover(string id);
 
         Task<List<FilesModel>> GetFilesProductCategory(int take);
 

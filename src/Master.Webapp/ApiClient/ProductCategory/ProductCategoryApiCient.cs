@@ -156,6 +156,17 @@ namespace Master.Webapp.ApiClient
                 requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
 
+            if (request.Coverfilesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.Coverfilesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.Coverfilesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "Coverfilesadd", request.Coverfilesadd.FileName);
+            }
+
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductCategorieId) ? "" : request.ProductCategorieId), "ProductCategorieId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "name");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Image) ? "" : request.Image), "Image");
@@ -287,6 +298,53 @@ namespace Master.Webapp.ApiClient
         {
             var data = await GetListAsync<FilesModel>($"/files-product-category/filesProductCategory/{take}");
             return data;
+        }
+
+        public async Task<bool> DeleteFilesCover(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.DeleteAsync($"/files-product-category/delete-files-cover?productCategoryId={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            return JsonConvert.DeserializeObject<bool>(body);
+        }
+
+        public async Task<bool> UpdateImageCover(FilesModel request, string productCategoryId)
+        {
+            var requestContent = new MultipartFormDataContent();
+
+            if (request.Coverfilesadd != null)
+            {
+                byte[] data;
+                using (var br = new BinaryReader(request.Coverfilesadd.OpenReadStream()))
+                {
+                    data = br.ReadBytes((int)request.Coverfilesadd.OpenReadStream().Length);
+                }
+                ByteArrayContent bytes = new ByteArrayContent(data);
+                requestContent.Add(bytes, "Coverfilesadd", request.Coverfilesadd.FileName);
+            }
+            requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductCategoryId) ? "" : request.ProductCategoryId), "ProductCategoryId");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.PostAsync("/files-product-category/update-image-cover?productCategoryId=" + productCategoryId + "", requestContent);
+
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteDataFilesCover(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+            var response = await client.DeleteAsync($"/files-product-category/delete-cover?id={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            return JsonConvert.DeserializeObject<bool>(body);
         }
 
         #endregion Method

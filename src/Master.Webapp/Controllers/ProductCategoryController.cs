@@ -1,5 +1,4 @@
-﻿using HouseWarehouseStore.Common;
-using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -129,6 +128,11 @@ namespace Master.Webapp.Controllers
                 //update files
                 await _productCategoryApiCient.UpdateImage(filemodels, request.ProductCategorieId);
 
+                //cover image
+                filemodels.Coverfilesadd = request.Coverfilesadd;
+                await _productCategoryApiCient.DeleteFilesCover(request.Name);
+                await _productCategoryApiCient.UpdateImageCover(filemodels, request.Name);
+
                 TempData["result"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
@@ -137,15 +141,39 @@ namespace Master.Webapp.Controllers
             return View(request);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> DeleteConfirmed(string id)
-        {
-            if (!ModelState.IsValid)
-                return View();
-            var result = await _productCategoryApiCient.Delete(id);
 
-            await _productCategoryApiCient.DeleteFiles(id);
-            await _productCategoryApiCient.DeleteDataFiles(id);
+        [HttpGet]
+        public IActionResult Delete(string id, string name)
+        {
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            if (name is null)
+            {
+                throw new ArgumentNullException(nameof(name));
+            }
+
+            return View(new ProductCategoryModel()
+            {
+                ProductCategorieId = id,
+                Name = name
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(ProductCategoryModel request)
+        {
+            var result = await _productCategoryApiCient.Delete(request.ProductCategorieId);
+
+            await _productCategoryApiCient.DeleteFiles(request.ProductCategorieId);
+            await _productCategoryApiCient.DeleteDataFiles(request.ProductCategorieId);
+
+            //cover image
+            await _productCategoryApiCient.DeleteFilesCover(request.Name);
+            await _productCategoryApiCient.DeleteDataFilesCover(request.Name);
+
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
@@ -153,7 +181,7 @@ namespace Master.Webapp.Controllers
             }
 
             ModelState.AddModelError("", "Xóa không thành công");
-            return View();
+            return View(request);
         }
 
         [HttpGet]
