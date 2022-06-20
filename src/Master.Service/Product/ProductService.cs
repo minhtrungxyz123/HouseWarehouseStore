@@ -73,7 +73,11 @@ namespace Master.Service
         public async Task<ApiResult<Pagination<ProductModel>>> GetAllPaging(ProductSearchContext ctx)
         {
             var query = from pr in _context.Products
-                        select new { pr };
+                        join c in _context.ProductCategories on pr.ProductCategorieId equals c.ProductCategorieId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        join w in _context.Collections on pr.CollectionId equals w.CollectionId into wt
+                        from tw in wt.DefaultIfEmpty()
+                        select new { pr, tp, tw };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -88,7 +92,7 @@ namespace Master.Service
                 .Select(u => new ProductModel()
                 {
                     Name = u.pr.Name,
-                    CollectionId = u.pr.CollectionId,
+                    CollectionId = u.tw.Name,
                     Active = u.pr.Active,
                     TitleMeta = u.pr.TitleMeta,
                     Content = u.pr.Content,
@@ -108,7 +112,7 @@ namespace Master.Service
                     SaleOff = u.pr.SaleOff,
                     QuyCach = u.pr.QuyCach,
                     GiftInfo = u.pr.GiftInfo,
-                    ProductCategorieId = u.pr.ProductCategorieId,
+                    ProductCategorieId = u.tp.Name,
                     ProductId = u.pr.ProductId,
                     DescriptionMeta = u.pr.DescriptionMeta
                 })
