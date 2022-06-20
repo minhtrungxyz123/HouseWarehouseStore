@@ -235,6 +235,22 @@
                 </div>
             </li>
 
+            <!-- Nav Item - Pages Collapse Menu -->
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Tag"
+                   aria-expanded="true" aria-controls="Tag">
+                    <i class="fa-solid fa-tag"></i>
+                    <span>Quản lý tag sản phẩm</span>
+                </a>
+                <div id="Tag" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Danh mục:</h6>
+                        <a class="collapse-item" asp-controller="Tag" asp-action="Index">Danh sách</a>
+                        <a class="collapse-item" asp-controller="Tag" asp-action="Create">Thêm mới</a>
+                    </div>
+                </div>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 

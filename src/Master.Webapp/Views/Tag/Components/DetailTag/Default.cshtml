@@ -1,0 +1,31 @@
+﻿@model HouseWarehouseStore.Models.TagModel
+
+<div>
+    <h4>Chi tiết tag sản phẩm</h4>
+    <hr />
+    <form asp-controller="Tag" asp-action="Detail">
+        <div class="form-body">
+            <input type="hidden" asp-for="TagId" />
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="Name" class="control-label"></label>
+                    <input asp-for="Name" class="form-control" min="0" readonly="@(true)" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="Soft" class="control-label"></label>
+                    <input asp-for="Soft" class="form-control" min="0" readonly="@(true)" />
+                    <span asp-validation-for="Soft" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group form-group-sm">
+                    Trạng thái
+                    <div class="col-md-9">
+                        @Html.DisplayFor(m => m.Active)
+                    </div>
+            </div>
+        </div>
+    </form>
+</div>
