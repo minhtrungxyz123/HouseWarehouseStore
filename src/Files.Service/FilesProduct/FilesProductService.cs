@@ -117,7 +117,7 @@ namespace Files.Service
             return data;
         }
 
-        public async Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string? id)
+        public async Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string id)
         {
             if (id is null)
             {

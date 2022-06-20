@@ -6,7 +6,7 @@ namespace Files.Service
     {
         Task<long> InsertAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string productId);
 
-        Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string? id);
+        Task<HouseWarehouseStore.Data.Entities.File> GetByIdAsync(string id);
 
         Task<long> UpdateAsync(IList<HouseWarehouseStore.Data.Entities.File> entities, string productId);
 

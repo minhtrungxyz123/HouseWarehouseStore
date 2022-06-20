@@ -168,12 +168,12 @@ namespace Master.Webapp.Controllers
             var result = await _productApiCient.Edit(request.ProductId, request);
             if (result)
             {
-                await _productApiCient.DeleteFiles(request.ProductId);
                 foreach (var item in request.filesadd)
                 {
                     var filemodels = new FilesModel();
                     filemodels.ProductId = request.ProductId;
                     filemodels.filesadd = item;
+                    await _productApiCient.DeleteFiles(request.ProductId);
                     await _productApiCient.UpdateImage(filemodels, request.ProductId);
                 } 
 
