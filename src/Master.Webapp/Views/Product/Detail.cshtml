@@ -26,11 +26,23 @@
                     <input type="hidden" asp-for="ProductId" />
                     <input type="hidden" asp-for="CreateDate" />
                     <input type="hidden" asp-for="FilesModels" />
-                    @foreach (var item in Model.FilesModels)
-                    {
-                        var url = $"/{_loc["productUrl"]}/{item.ProductId}";
-                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
-                    }
+
+                    <div class="form-group bg-white font-weight-bold">
+                        <div class="section-image-title d-flex justify-content-between">
+                            <p class="text-danger mt-3 mb-1">Ảnh sản phẩm</p>
+                        </div>
+                        <div class="section-image-list insert-two container">
+                            <div class="row">
+                                <div class="col-3 mb-3 position-relative">
+                                    @foreach (var item in Model.FilesModels)
+                                    {
+                                        var url = $"/{_loc["productUrl"]}/{item.ProductId}";
+                                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="container-fluid">
                         <div class="row">
@@ -48,7 +60,7 @@
 
                                 <div class="form-group">
                                     <label asp-for="ProductCategorieId" class="control-label"></label>
-                                     @Html.DropDownListFor(m => m.ProductCategorieId, Model.AvailableProductCategory, "Loại sản phẩm", new { @class = "form-control", style = "width: 100%" })
+                                    @Html.DropDownListFor(m => m.ProductCategorieId, Model.AvailableProductCategory, "Loại sản phẩm", new { @class = "form-control", style = "width: 100%" })
                                     <span asp-validation-for="ProductCategorieId" class="text-danger"></span>
 
                                 </div>
@@ -97,7 +109,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="CollectionId" class="control-label"></label>
-                                     @Html.DropDownListFor(m => m.CollectionId, Model.AvailableCollection, "Bộ sưu tập", new { @class = "form-control", style = "width: 100%" })
+                                    @Html.DropDownListFor(m => m.CollectionId, Model.AvailableCollection, "Bộ sưu tập", new { @class = "form-control", style = "width: 100%" })
 
                                     <span asp-validation-for="CollectionId" class="text-danger"></span>
 

@@ -168,13 +168,14 @@ namespace Master.Webapp.Controllers
             var result = await _productApiCient.Edit(request.ProductId, request);
             if (result)
             {
-                var filemodels = new FilesModel();
-                filemodels.ProductId = request.ProductId;
-                filemodels.filesadd = (IFormFile?)request.filesadd;
-                //delete files
                 await _productApiCient.DeleteFiles(request.ProductId);
-                //update files
-                await _productApiCient.UpdateImage(filemodels, request.ProductId);
+                foreach (var item in request.filesadd)
+                {
+                    var filemodels = new FilesModel();
+                    filemodels.ProductId = request.ProductId;
+                    filemodels.filesadd = item;
+                    await _productApiCient.UpdateImage(filemodels, request.ProductId);
+                } 
 
                 TempData["result"] = "Sửa thành công";
                 return RedirectToAction("Index");
@@ -248,6 +249,25 @@ namespace Master.Webapp.Controllers
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (!ModelState.IsValid)
+                return View();
+            var result = await _productApiCient.Delete(id);
+
+            await _productApiCient.DeleteFiles(id);
+            await _productApiCient.DeleteDataFiles(id);
+            if (result)
+            {
+                TempData["result"] = "Xóa thành công";
+                return RedirectToAction("Index");
+            }
+
+            ModelState.AddModelError("", "Xóa không thành công");
+            return View();
         }
 
         #endregion Method
