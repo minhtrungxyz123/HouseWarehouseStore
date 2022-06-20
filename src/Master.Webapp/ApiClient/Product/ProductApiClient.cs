@@ -92,16 +92,18 @@ namespace Master.Webapp.ApiClient
         public async Task<bool> Create(ProductModel request)
         {
             var requestContent = new MultipartFormDataContent();
-
             if (request.filesadd != null)
             {
-                byte[] data;
-                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                foreach (var item in request.filesadd)
                 {
-                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                    byte[] data;
+                    using (var br = new BinaryReader(item.OpenReadStream()))
+                    {
+                        data = br.ReadBytes((int)item.OpenReadStream().Length);
+                    }
+                    ByteArrayContent bytes = new ByteArrayContent(data);
+                    requestContent.Add(bytes, "filesadd", item.FileName);
                 }
-                ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductId) ? "" : request.ProductId), "ProductId");
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.Name) ? "" : request.Name), "Name");
@@ -148,13 +150,16 @@ namespace Master.Webapp.ApiClient
 
             if (request.filesadd != null)
             {
-                byte[] data;
-                using (var br = new BinaryReader(request.filesadd.OpenReadStream()))
+                foreach (var item in request.filesadd)
                 {
-                    data = br.ReadBytes((int)request.filesadd.OpenReadStream().Length);
+                    byte[] data;
+                    using (var br = new BinaryReader(item.OpenReadStream()))
+                    {
+                        data = br.ReadBytes((int)item.OpenReadStream().Length);
+                    }
+                    ByteArrayContent bytes = new ByteArrayContent(data);
+                    requestContent.Add(bytes, "filesadd", item.FileName);
                 }
-                ByteArrayContent bytes = new ByteArrayContent(data);
-                requestContent.Add(bytes, "filesadd", request.filesadd.FileName);
             }
 
             requestContent.Add(new StringContent(string.IsNullOrEmpty(request.ProductId) ? "" : request.ProductId), "ProductId");

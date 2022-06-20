@@ -76,11 +76,13 @@ namespace Master.Webapp.Controllers
 
             if (result)
             {
-                var filemodels = new FilesModel();
-                filemodels.ProductId = request.ProductId;
-                filemodels.filesadd = request.filesadd;
-                //
-                await _productApiCient.CreateImage(filemodels, request.ProductId);
+                foreach (var item in request.filesadd)
+                {
+                    var filemodels = new FilesModel();
+                    filemodels.ProductId = request.ProductId;
+                    filemodels.filesadd = item;
+                    await _productApiCient.CreateImage(filemodels, request.ProductId);
+                }
 
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
@@ -168,7 +170,7 @@ namespace Master.Webapp.Controllers
             {
                 var filemodels = new FilesModel();
                 filemodels.ProductId = request.ProductId;
-                filemodels.filesadd = request.filesadd;
+                filemodels.filesadd = (IFormFile?)request.filesadd;
                 //delete files
                 await _productApiCient.DeleteFiles(request.ProductId);
                 //update files

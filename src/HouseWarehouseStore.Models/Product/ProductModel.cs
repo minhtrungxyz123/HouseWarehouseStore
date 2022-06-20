@@ -95,7 +95,7 @@ namespace HouseWarehouseStore.Models
         public string? CreateBy { get; set; }
 
         [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
-        public IFormFile? filesadd { get; set; }
+        public List<IFormFile>? filesadd { get; set; }
 
         public List<FilesModel>? FilesModels { get; set; }
 
