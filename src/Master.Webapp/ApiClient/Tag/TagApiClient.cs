@@ -115,6 +115,18 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
+        public async Task<IList<TagModel>> GetActive(bool showHidden = true)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/Tag/get-available?showHidden={showHidden}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IList<TagModel>>(body);
+
+            return JsonConvert.DeserializeObject<IList<TagModel>>(body);
+        }
+
         #endregion Method
     }
 }

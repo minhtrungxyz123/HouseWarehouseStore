@@ -1,0 +1,29 @@
+﻿@model HouseWarehouseStore.Models.TagProductModel
+
+<div>
+    <h4>Thêm mới tag sản phẩm</h4>
+    <hr />
+    <form asp-controller="TagProduct" asp-action="Create">
+        <div class="form-body">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.ProductId, Model.AvailableProduct, "Sản phẩm", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="TagId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.TagId, Model.AvailableTag, "Tag", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="TagId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-footer form-actions">
+                <button type="submit" class="btn btn-success btn-sm">
+                    Lưu
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -199,6 +199,18 @@ namespace Master.Webapp.Controllers
                     View = model.View,
                     FilesModels = await _articlesApiClient.GetFilesArticles(SystemConstants.ArticleSettings.NumberOfArticle),
                 };
+
+                if (model.AvailableArticleCategories.Count > 0 &&
+                !string.IsNullOrEmpty(model.ArticleCategoryId))
+                {
+                    var item = model.AvailableArticleCategories
+                        .FirstOrDefault(x => x.Value.Equals(model.ArticleCategoryId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
                 return View(updateRequest);
             }
             return RedirectToAction("Error", "Home");

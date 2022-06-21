@@ -13,6 +13,7 @@ namespace Master.Webapp.ApiClient
 
         Task<ApiResult<TagModel>> GetById(string id);
 
+        Task<IList<TagModel>> GetActive(bool showHidden = true);
 
         Task<bool> Delete(string id);
     }

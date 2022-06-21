@@ -27,5 +27,7 @@ namespace Master.Webapp.ApiClient
 
         Task<List<ProductModel>> GetAll();
 
+        Task<IList<ProductModel>> GetActive(bool showHidden = true);
+
     }
 }

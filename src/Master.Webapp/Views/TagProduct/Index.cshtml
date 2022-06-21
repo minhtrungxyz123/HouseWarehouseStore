@@ -1,15 +1,15 @@
-﻿@model Pagination<HouseWarehouseStore.Models.TagModel>
+﻿@model Pagination<HouseWarehouseStore.Models.TagProductModel>
 
 @{
-    ViewData["Title"] = "Danh sánh tag";
+    ViewData["Title"] = "Danh sánh tag sản phẩm";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container-fluid">
-    <h1 class="mt-4">Danh sách tag</h1>
+    <h1 class="mt-4">Danh sách tài khoản</h1>
     <ol class="breadcrumb mb-4">
         <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
-        <li class="breadcrumb-item active">Danh sách tag</li>
+        <li class="breadcrumb-item active">Danh sách tag sản phẩm</li>
     </ol>
     <div class="card mb-12">
         <div class="card-header">
@@ -25,7 +25,7 @@
                             </div>
                             <div class="cold-md-3">
                                 <button type="submit" class="btn btn-primary">Tìm</button>
-                                <button type="button" onclick="window.location.href='/Tag/Index'" class="btn btn-dark">Tải lại</button>
+                                <button type="button" onclick="window.location.href='/TagProduct/Index'" class="btn btn-dark">Tải lại</button>
                             </div>
                         </div>
                     </form>
@@ -49,13 +49,10 @@
                     <thead>
                         <tr>
                             <th>
-                                Tên nhóm sản phẩm
+                                Tên sản phẩm
                             </th>
                             <th>
-                                Thứ tự
-                            </th>
-                            <th>
-                                Trạng thái
+                                Tag
                             </th>
                             <th>Chức năng</th>
                         </tr>
@@ -65,17 +62,12 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.ProductName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Soft)
+                                    @Html.DisplayFor(modelItem => item.TagName)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.Active)
-                                </td>
-                                <td>
-                                    <a onclick="Edit('@item.TagId')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</a>
-                                    <a onclick="Detail('@item.TagId')" class="btn" style="background: yellow;" ><i class="fa-solid fa-eye"></i> Chi tiết</a>
                                     <a onclick="Delete('@item.TagId')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</a>
                                 </td>
                             </tr>
@@ -97,22 +89,15 @@
         }, 2000);
 
         function Create() {
-            $.get("/Tag/Create", function (data) {
+            $.get("/TagProduct/Create", function (data) {
                 $("#contactDetails").html(data);
                 $("#contactDetails").dialog("open");
                 $(".k-overlay").removeClass("d-none");
             });
         }
 
-        function Edit(id) {
-                $.get("/Tag/Edit", { id: id }, function (data) {
-                    $("#contactDetails").html(data);
-                    $("#contactDetails").dialog("open");
-                });
-        }
-
         function Detail(id) {
-                $.get("/Tag/Detail", { id: id }, function (data) {
+                $.get("/TagProduct/Detail", { id: id }, function (data) {
                     $("#contactDetails").html(data);
                     $("#contactDetails").dialog("open");
                 });
@@ -120,10 +105,10 @@
 
         function Delete(id) {         
             if (confirm("Bạn có chắc chắn xóa không?")) {                  
-                $.post("/Tag/Delete", { id: id }, function (data) {              
+                $.post("/TagProduct/Delete", { id: id }, function (data) {              
                     if (data) {                
                         if (confirm("Xóa thành công"))                         
-                        window.location.assign('/Tag/Index')                     
+                        window.location.assign('/TagProduct/Index')                     
                     } else {                            
                         alert("Quá trình thực hiện không thành công. Hãy thử lại");                      
                     }                      
@@ -149,3 +134,4 @@
 
 </script>
 }
+
