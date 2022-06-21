@@ -164,6 +164,13 @@ namespace Master.Service
             return result;
         }
 
+        public IList<Color> GetActive()
+        {
+            var query = from p in _context.Colors.AsQueryable() select p;
+            query = from p in query orderby p.NameColor select p;
+            return query.ToList();
+        }
+
         #endregion Method
     }
 }

@@ -19,5 +19,7 @@ namespace Master.Service
         Task<int> Delete(string? id);
 
         Task<ApiResult<Color>> GetByIdAsyn(string? id);
+
+        IList<Color> GetActive();
     }
 }

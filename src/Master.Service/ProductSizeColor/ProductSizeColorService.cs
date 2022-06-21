@@ -67,21 +67,6 @@ namespace Master.Service
                 query = query.Where(x => x.pr.ProductsProductId.Contains(request.Keyword));
             }
 
-            if (!string.IsNullOrEmpty(request.SizeId))
-            {
-                query = query.Where(x => x.pr.SizeId == request.SizeId);
-            }
-
-            if (!string.IsNullOrEmpty(request.ColorId))
-            {
-                query = query.Where(x => x.pr.ColorId == request.ColorId);
-            }
-
-            if (!string.IsNullOrEmpty(request.ProductId))
-            {
-                query = query.Where(x => x.pr.ProductId == request.ProductId);
-            }
-
             var totalRecords = await query.CountAsync();
 
             var items = await query.Skip((request.PageIndex - 1) * request.PageSize)
@@ -89,8 +74,10 @@ namespace Master.Service
                 .Select(u => new ProductSizeColorModel()
                 {
                     Id = u.pr.Id,
-                    SizeId = u.tw.SizeProduct,
-                    ColorId = u.tp.NameColor,
+                    SizeId = u.pr.SizeId,
+                    SizeName = u.tw.SizeProduct,
+                    ColorId = u.pr.ColorId,
+                    ColorName = u.tp.NameColor,
                     ProductsProductId = u.pr.ProductsProductId,
                     ProductId = u.ti.Name
                 })

@@ -11,7 +11,6 @@ namespace Master.Webapp.ApiClient
 
         Task<ApiResult<TagProductModel>> GetById(string id);
 
-
         Task<bool> Delete(string id);
     }
 }

@@ -1,0 +1,32 @@
+﻿@model HouseWarehouseStore.Models.ProductSizeColorModel
+
+<div>
+    <h4>Chi tiết Size màu sắc</h4>
+    <hr />
+    <form asp-controller="ProductSize" asp-action="Detail">
+        <div class="form-body">
+            <input type="hidden" asp-for="Id" />
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.ProductId, Model.AvailableProduct, "Sản phẩm", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="ColorId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.ColorId, Model.AvailableColor, "Màu", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="ColorId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="SizeId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.SizeId, Model.AvailableSize, "kích cỡ", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="SizeId" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

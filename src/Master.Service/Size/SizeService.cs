@@ -159,6 +159,13 @@ namespace Master.Service
         return result;
     }
 
-    #endregion Method
-}
+        public IList<Size> GetActive()
+        {
+            var query = from p in _context.Sizes.AsQueryable() select p;
+            query = from p in query orderby p.SizeProduct select p;
+            return query.ToList();
+        }
+
+        #endregion Method
+    }
 }

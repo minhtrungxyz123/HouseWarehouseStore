@@ -55,6 +55,7 @@ builder.Services.AddScoped<IColorApiClient, ColorApiClient>();
 builder.Services.AddScoped<IProductCategoryApiCient, ProductCategoryApiCient>();
 builder.Services.AddScoped<ITagApiClient, TagApiClient>();
 builder.Services.AddScoped<ITagProductApiClient, TagProductApiClient>();
+builder.Services.AddScoped<IProductSizeColorApiClient, ProductSizeColorApiClient>();
 
 #endregion Add DI
 

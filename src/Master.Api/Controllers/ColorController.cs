@@ -22,6 +22,14 @@ namespace Master.Api.Controllers
 
         #region List
 
+        [Route("get-available")]
+        [HttpGet]
+        public async Task<IActionResult> GetAvailableList()
+        {
+            var user = _colorService.GetActive();
+            return Ok(user);
+        }
+
         [Route("get-by-id")]
         [HttpGet]
         public async Task<IActionResult> GetById(string id)

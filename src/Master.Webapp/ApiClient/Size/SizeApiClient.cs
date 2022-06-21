@@ -102,6 +102,18 @@ namespace Master.Webapp.ApiClient
             return JsonConvert.DeserializeObject<bool>(body);
         }
 
+        public async Task<IList<SizeModel>> GetActive()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/size/get-available");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<IList<SizeModel>>(body);
+
+            return JsonConvert.DeserializeObject<IList<SizeModel>>(body);
+        }
+
         #endregion Method
     }
 }

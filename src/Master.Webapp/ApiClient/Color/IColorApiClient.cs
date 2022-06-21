@@ -14,5 +14,7 @@ namespace Master.Webapp.ApiClient
         Task<ApiResult<ColorModel>> GetById(string id);
 
         Task<bool> Delete(string id);
+
+        Task<IList<ColorModel>> GetActive();
     }
 }
