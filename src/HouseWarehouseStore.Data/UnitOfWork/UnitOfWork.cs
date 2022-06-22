@@ -14,8 +14,14 @@ namespace HouseWarehouseStore.Data.UnitOfWork
         }
 
         private RepositoryEF<Voucher> _voucher;
+        private GenericRepository<Order> _orderRepository;
+        private GenericRepository<UserVoucher> _usevoucher;
+        private GenericRepository<OrderDetail> _orderdetailRepository;
 
         public RepositoryEF<Voucher> VoucherRepository => _voucher ?? (_voucher = new RepositoryEF<Voucher>(_context));
+        public GenericRepository<Order> OrderRepository => _orderRepository ?? (_orderRepository = new GenericRepository<Order>(_context));
+        public GenericRepository<UserVoucher> UserVoucherRepository => _usevoucher ?? (_usevoucher = new GenericRepository<UserVoucher>(_context));
+        public GenericRepository<OrderDetail> OrderDetailRepository => _orderdetailRepository ?? (_orderdetailRepository = new GenericRepository<OrderDetail>(_context));
 
         public async Task Save()
         {

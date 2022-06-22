@@ -1,5 +1,294 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model HouseWarehouseStore.Models.ListOrderViewModel
 @{
+    ViewData["Title"] = "Danh sách đơn đặt hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<h2>Danh sách đơn đặt hàng</h2>
+<div class="box_content">
+    <form action="ListOrder">
+        <table class="form_table">
+            <tr>
+                <td>Mã đơn hàng</td>
+                <td><input asp-for="MaDonhang" class="form-control" /></td>
+                <td>Tên khách hàng</td>
+                <td><input asp-for="CustomerName" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Điện thoại khách hàng</td>
+                <td><input asp-for="CustomerMobile" class="form-control" /></td>
+                <td>Email khách hàng</td>
+                <td><input asp-for="CustomerEmail" class="form-control" /></td>
+            </tr>
+            <tr>
+                <td>Ngày đặt hàng từ</td>
+                <td>
+                    <input asp-for="FromDate" value="@Model.FromDate" type="datetime" class="datepicker form-control" readonly="readonly" />
+                </td>
+                <td>Đến ngày</td>
+                <td>
+                    <input asp-for="ToDate" type="datetime" class="datepicker form-control" readonly="readonly" />
+                </td>
+            </tr>
+            <tr>
+                <td>Trạng thái đơn hàng</td>
+                <td>
+                    <select name="status" class="form_control">
+                        <option value="">Tất cả đơn hàng</option>
+                        <option value="0">Đang xử lý</option>
+                        <option value="1">Đang giao hàng</option>
+                        <option value="3">Hủy đơn</option>
+                    </select>
+                </td>
+                <td>Trạng thái thanh toán</td>
+                <td>
+                    <select name="Payment" class="form_control">
+                        <option value="">Tất cả đơn hàng</option>
+                        <option value="1">Chưa thanh toán</option>
+                        <option value="2">Đã thanh toán</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Số đơn trên trang</td>
+                <td><input asp-for="PageSize" class="form-control" style="width:100px" type="number" max="200" /></td>
+                <td colspan="2" style="text-align: center"><button type="submit">TÌM KIẾM</button></td>
+            </tr>
+        </table>
+    </form>
+    <p>
+        Có tổng số
+        <strong>@Model.Orders.Count()</strong> đơn hàng -
+        <button type="button" onclick="window.location='/ListOrder/ExportOrder'">Xuất EXCEL</button>
+    </p>
+    <table class="list_table tablecenter">
+        <tr>
+            <th style="width: 40px">Mã ĐH</th>
+            <th>Thông tin đơn hàng</th>
+            <th>Tổng tiền<br />(VNĐ)</th>
+            <th>Trạng thái thanh toán</th>
+            <th>Trạng thái xử lý</th>
+            <th>Ghi chú</th>
+            <th style="width: 100px;"></th>
+        </tr>
+        @foreach (var order in Model.Orders.Where(a => a.MaDonHang != null))
+        {
+            var colorStats = "";
+            if (order.Status == 1)
+            {
+                colorStats = "process-order";
+            }
+            if (order.Payment)
+            {
+                colorStats = "payment-order";
+            }
+            var total = order.OrderDetails.Sum(a => a.Price * a.Quantity) < 500000 ? order.OrderDetails.Sum(a => a.Price * a.Quantity) + 30000 : order.OrderDetails.Sum(a => a.Price * a.Quantity);
+            var congno = total - order.ThanhToanTruoc;
+            <tr data-id="@order.Id">
+                <td><a href="javascript:;" onclick="loadOrder(@order.Id)" class="@colorStats">@order.MaDonHang</a></td>
+                <td class="left">
+                    <p><strong>Người mua</strong> @order.Fullname</p>
+                    <p><strong>Địa chỉ</strong> @order.Address</p>
+                    <p><strong>Điện thoại</strong> @order.Mobile</p>
+                    <p><strong>Email</strong> @order.Email</p>
+                    <p><strong>Ngày đặt:</strong> @order.CreateDate.ToString("dd/MM/yyyy HH:mm")</p>
+                </td>
+                <td>
+                    <strong style="font-size: 16px;">@Convert.ToDecimal(total).ToString("N0")</strong>
+                    @{
+                        foreach (var item in Model.UserVoucher.Where(x => x.MaDonHang.Equals(order.MaDonHang)))
+                        {
+                            <br />
+                            <strong style="font-size: 16px;">Voucher</strong>
+                            <br />
+                            <strong style="font-size: 16px;">@item.Code</strong>
+                            <br />
+                            <strong style="font-size: 16px;">@Convert.ToDecimal(item.SumHd).ToString("N0")</strong>
+                            break;
+                        }
+
+                    }
+
+                </td>
+                <td>
+                    <select name="Payment" class="form_control" onchange="updatePayment(@order.Id, this.value)">
+                        <option value="1">Chưa thanh toán</option>
+                        @if (order.Payment)
+                        {
+                            <option value="2" selected="selected">Đã thanh toán</option>
+                        }
+                        else
+                        {
+                            <option value="2">Đã thanh toán</option>
+                        }
+
+                    </select>
+
+                </td>
+                <td>
+                    <select name="Status" onchange="updateOrder(@order.Id, this.value)" class="form_control">
+                        @{
+                            if (order.Status == 0)
+                            {
+                                <option value="0" selected="selected">Đang xử lý</option>
+                                <option value="1">Đang giao hàng</option>
+                                <option value="3">Hủy đơn</option>
+                            }
+                            else if (order.Status == 1)
+                            {
+                                <option value="0">Đang xử lý</option>
+                                <option value="1" selected="selected">Đang giao hàng</option>
+                                <option value="3">Hủy đơn</option>
+                            }
+                            else if (order.Status == 3)
+                            {
+                                <option value="0">Đang xử lý</option>
+                                <option value="1">Đang giao hàng</option>
+                                <option value="3" selected="selected">Hủy đơn</option>
+                            }
+                        }
+                    </select>
+                </td>
+                <td>
+                    <p class="left">
+                        Đã thanh toán: <input type="text" class="form_control w100 input-number" name="ThanhToanTruoc" value="@order.ThanhToanTruoc" min="0" /><br /><br />
+                        Công nợ: <strong>@Convert.ToInt32(congno).ToString("N0")</strong>
+                    </p>
+                    <p>
+                        <textarea name="Notice" rows="4" class="form_control" placeholder="Ghi chú">@order.Body</textarea>
+                    </p>
+                    <button type="button" onclick="updateNoticeOrder(@order.Id)">Cập nhật</button>
+                </td>
+                <td>
+                    <a href="javascript:;" data-fancybox data-type="iframe"
+                       data-src="@Url.Action("ViewHoaDon", new{orderId = order.Id})">[In HĐ]</a><br /><br />
+                    <a href="javascript:;" onclick="loadOrder(@order.Id)">[Xem đơn]</a><br /><br />
+                    <a href="javascript:;" onclick="deleteOrder(@order.Id)">[Xóa đơn]</a>
+                </td>
+            </tr>
+        }
+        @if (Model.Orders.Count() > 0)
+        {
+            <tr>
+                @{
+                    var prevDisabled = !Model.Orders.HasPreviousPage ? "disabled" : "";
+                    var nextDisabled = !Model.Orders.HasNextPage ? "disabled" : "";
+                }
+                <td colspan="7">
+                    <a asp-action="ListOrder"
+                       asp-route-page="@(Model.Orders.PageIndex - 1)"
+                       asp-route-status="@Model.Status"
+                       asp-route-name="@Model.CustomerName"
+                       asp-route-email="@Model.CustomerEmail"
+                       asp-route-mobile="@Model.CustomerMobile"
+                       asp-route-formdate="@Model.FromDate"
+                       asp-route-todate="@Model.ToDate"
+                       asp-route-pagesize="@Model.PageSize"
+                       class="btn btn-success @prevDisabled">
+                        Trước
+                    </a>
+                    <a asp-action="ListOrder"
+                       asp-route-page="@(Model.Orders.PageIndex + 1)"
+                       asp-route-status="@Model.Status"
+                       asp-route-name="@Model.CustomerName"
+                       asp-route-email="@Model.CustomerEmail"
+                       asp-route-mobile="@Model.CustomerMobile"
+                       asp-route-formdate="@Model.FromDate"
+                       asp-route-todate="@Model.ToDate"
+                       asp-route-pagesize="@Model.PageSize"
+                       class="btn btn-success @nextDisabled">
+                        Sau
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<div id="contactDetails"></div>
+
+@section scripts
+{
+    <script>
+        $(".datepicker").datepicker({
+            dateFormat: 'dd/mm/yy'
+        });
+        $(function () {
+            $(".input-number").maskMoney({
+                precision: 0,
+                thousands: ','
+            });
+        });
+        function updateOrder(id, status) {
+            $.post("/ListOrder/UpdateOrder", { orderId: id, status }, function (data) {
+                if (data) {
+                    alert("Cập nhật đơn hàng thành công");
+                } else {
+                    alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                }
+            });
+        }
+        function updatePayment(id, payment) {
+            $.post("/ListOrder/UpdateOrder", { orderId: id, payment }, function (data) {
+                if (data) {
+                    alert("Cập nhật đơn hàng thành công");
+                } else {
+                    alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                }
+            });
+        }
+        function updateNoticeOrder(id) {
+            var divId = $("tr[data-id='" + id + "']");
+            var notice = divId.find("textarea").val();
+            var thanhtoan = divId.find("input[name=ThanhToanTruoc]").val();
+
+            var thanhtoantruoc = thanhtoan.replace(/\,/g, "");
+            if (thanhtoantruoc < 0) {
+                alert("Số tiền thanh toán trước phải lơn hơn bằng 0");
+            }
+
+            $.post("/ListOrder/UpdateOrderNotice", { orderId: id, notice, thanhtoantruoc }, function (data) {
+                if (data) {
+                    alert("Cập nhật đơn hàng thành công");
+                } else {
+                    alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                }
+            });
+        }
+
+        function deleteOrder(id) {
+            if (confirm("Bạn có chắc chắn hủy đơn hàng này không?")) {
+                $.post("/ListOrder/DeleteOrder", { orderId: id }, function (data) {
+                    if (data) {
+                        alert("Hủy đơn hàng thành công");
+                        $("tr[data-id='" + id + "']").fadeOut();
+                    } else {
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                    }
+                });
+            }
+        }
+        function loadOrder(id) {
+            $.get("/ListOrder/LoadOrder", { orderId: id }, function (data) {
+                $("#contactDetails").html(data);
+                $("#contactDetails").dialog("open");
+            });
+        }
+        $(function () {
+            $("#contactDetails").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 800,
+                show: {
+                    effect: "blind",
+                    duration: 1000
+                },
+                hide: {
+                    effect: "explode",
+                    duration: 1000
+                }
+            });
+        });
+    </script>
+}
+

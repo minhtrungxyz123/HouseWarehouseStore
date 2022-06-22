@@ -50,6 +50,7 @@ builder.Services.AddScoped<IArticlesApiClient, ArticlesApiClient>();
 builder.Services.AddScoped<IConfigSiteApiClient, ConfigSiteApiClient>();
 builder.Services.AddScoped<IVoucherApiClient, VoucherApiClient>();
 builder.Services.AddScoped<UnitOfWork>();
+builder.Services.AddScoped(typeof(GenericRepository<>));
 builder.Services.AddScoped<IBannerApiClient, BannerApiClient>();
 builder.Services.AddScoped<IColorApiClient, ColorApiClient>();
 builder.Services.AddScoped<IProductCategoryApiCient, ProductCategoryApiCient>();

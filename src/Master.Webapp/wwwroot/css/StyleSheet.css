@@ -3,7 +3,7 @@
     color: #000;
     margin: 0;
     padding: 10px;
-    background: url(../image/bgsite.gif) repeat;
+    background: url(../img/bgsite.gif) repeat;
 }
 
 a {
@@ -100,7 +100,7 @@ input, select, h1, h2, h3, ul {
 }
 
 .form_control {
-    background: url(../image/form_control_bg.gif) repeat-x top left white;
+    background: url(../img/form_control_bg.gif) repeat-x top left white;
     border: 1px #CCC solid;
     font-size: 13px;
     font-weight: normal;

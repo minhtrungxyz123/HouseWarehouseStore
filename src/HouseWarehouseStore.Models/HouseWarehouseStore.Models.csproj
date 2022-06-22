@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HouseWarehouseStore.Common\HouseWarehouseStore.Common.csproj" />
+    <ProjectReference Include="..\HouseWarehouseStore.Data\HouseWarehouseStore.Data.csproj" />
   </ItemGroup>
 
 </Project>
