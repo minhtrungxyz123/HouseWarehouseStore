@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<OrderDetail> entity)
         {
-            entity.ToTable("OrderDetail");
+            entity.ToTable("OrderDetails");
 
             entity.HasKey(e => new { e.OrderId, e.ProductId, e.Size, e.Color });
 
