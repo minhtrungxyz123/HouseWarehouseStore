@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  master.api:
+    image: ${DOCKER_REGISTRY-}masterapi
+    build:
+      context: .
+      dockerfile: src/Master.Api/Dockerfile
+
+  fileapi:
+    image: ${DOCKER_REGISTRY-}fileapi
+    build:
+      context: .
+      dockerfile: src/FileApi/Dockerfile
+
+
+  master.webapp:
+    image: ${DOCKER_REGISTRY-}masterwebapp
+    build:
+      context: .
+      dockerfile: src/Master.Webapp/Dockerfile
+

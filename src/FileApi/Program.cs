@@ -27,7 +27,7 @@ builder.Services.AddScoped<IFilesProductService, FilesProductService>();
 builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
 {
     builder.AllowAnyOrigin()
-    .WithOrigins("https://localhost:5100")
+    .WithOrigins("http://localhost:5100")
            .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials()
@@ -47,8 +47,6 @@ if (app.Environment.IsDevelopment())
 app.UseCors("AllowAll");
 
 app.UseStaticFiles();
-
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
