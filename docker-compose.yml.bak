@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: src/Master.Webapp/Dockerfile
 
-  sqlserver:
+sqlserver:
     image: mcr.microsoft.com/mssql/server:2019-latest 
     container_name: sqlServer
     environment:

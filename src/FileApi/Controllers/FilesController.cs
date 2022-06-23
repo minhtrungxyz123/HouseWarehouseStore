@@ -3,6 +3,7 @@ using Files.Service;
 using HouseWarehouseStore.Common;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace FileApi.Controllers
 {
@@ -81,6 +82,7 @@ namespace FileApi.Controllers
 
             string createFolderDate = DateTime.Now.ToString("yyyy/MM/dd");
             var path = FormFile.CommonHelper.MapPath(@"/wwwroot/uploads/" + createFolderDate + "");
+            Console.WriteLine(path);
             CreateFolderExtension.CreateFolder(path);
             if (path == null)
                 path = "image";
@@ -103,6 +105,7 @@ namespace FileApi.Controllers
                     filePaths.Add(filePath);
                     var randomname = DateTime.Now.ToFileTime() + Path.GetRandomFileName().Replace(".", "") + Path.GetExtension(formFile.FileName);
                     var fileNameWithPath = string.Concat(filePath, "\\", randomname);
+                    Console.WriteLine(fileNameWithPath);
                     using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
                     {
                         await formFile.CopyToAsync(stream);
@@ -255,7 +258,10 @@ namespace FileApi.Controllers
         public async Task<IActionResult> GetFile(string name)
         {
             var check = await _fileService.GetByNameAsync(name);
-            var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot/" + check.Path + "/" + check.FileName);
+            var filePath = FormFile.CommonHelper.MapPath(@"/wwwroot" + check.Path + "/" + check.FileName);
+            Console.WriteLine(check.Path);
+            Console.WriteLine(check.FileName);
+            Console.WriteLine(filePath);
             var fs = System.IO.File.OpenRead(filePath);
             return File(fs, "image/png");
         }

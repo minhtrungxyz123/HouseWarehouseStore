@@ -40,7 +40,7 @@ builder.Services.AddScoped<ITagProductService, TagProductService>();
 builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
 {
     builder.AllowAnyOrigin()
-    .WithOrigins("https://localhost:5100")
+    .WithOrigins("http://localhost:5100")
            .AllowAnyMethod()
            .AllowAnyHeader()
            .AllowCredentials()

@@ -1,0 +1,18 @@
+port sql docker:
+--
+localhost,5433
+
+//
+
+docker-compose sqlServer
+--
+sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest 
+    container_name: sqlServer
+    environment:
+            SA_PASSWORD: "@Admin123"
+            ACCEPT_EULA: "Y"
+    ports:
+      - "5433:1433"
+    volumes:
+      - ./storage/sqlserver:/var/opt/mssql/data

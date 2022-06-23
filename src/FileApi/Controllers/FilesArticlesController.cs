@@ -3,6 +3,7 @@ using Files.Service;
 using HouseWarehouseStore.Common;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Net;
 
 namespace FileApi.Controllers
 {
@@ -261,6 +262,42 @@ namespace FileApi.Controllers
             }
             return System.IO.File.Exists(path) == false;
         }
+
+        //[HttpGet("image/{name}")]
+        //[ProducesResponseType((int)HttpStatusCode.NotFound)]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        //// GET: /<controller>/
+        //public async Task<ActionResult> GetImageAsync(string name)
+        //{
+
+        //    var check = await _filesArticleService.GetByNameAsync(name);
+        //    var webRoot = _hostingEnvironment.WebRootPath;
+        //    var path = Path.Combine(webRoot, "" + check.Path + "/" + check.FileName);
+
+        //    string imageFileExtension = Path.GetExtension(name);
+        //    string mimetype = GetImageMimeTypeFromImageFileExtension(imageFileExtension);
+
+        //    var buffer = await System.IO.File.ReadAllBytesAsync(path);
+
+        //    return File(buffer, mimetype);
+        //}
+
+        //private string GetImageMimeTypeFromImageFileExtension(string extension)
+        //{
+        //    string mimetype = extension switch
+        //    {
+        //        ".png" => "image/png",
+        //        ".gif" => "image/gif",
+        //        ".jpg" or ".jpeg" => "image/jpeg",
+        //        ".bmp" => "image/bmp",
+        //        ".tiff" => "image/tiff",
+        //        ".wmf" => "image/wmf",
+        //        ".jp2" => "image/jp2",
+        //        ".svg" => "image/svg+xml",
+        //         _=> "application/octet-stream",
+        //    };
+        //    return mimetype;
+        //}
 
         #endregion Utilities
     }
