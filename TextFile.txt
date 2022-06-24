@@ -1,4 +1,4 @@
-port sql docker:
+﻿port sql docker:
 --
 localhost,5433
 
@@ -16,3 +16,7 @@ sqlserver:
       - "5433:1433"
     volumes:
       - ./storage/sqlserver:/var/opt/mssql/data
+
+      //
+      port: 103.79.141.93:8808
+      tài khoản remote: Administrator/MT8Frm5DZTFcUCNv
