@@ -19,6 +19,31 @@ namespace HouseWarehouseStore.Models
         [Display(Name = "Trạng thái")]
         public bool Active { get; set; }
 
+        [Display(Name = "Quyền")]
         public string Role { get; set; }
+
+        [Display(Name = "Hình ảnh")]
+        public string? Image { get; set; }
+
+        [Display(Name = "Họ và tên")]
+        public string? FullName { get; set; }
+
+        [Display(Name = "Ngày tạo")]
+        public DateTime? CreateDate { get; set; }
+
+        [Display(Name = "Địa chỉ")]
+        public string? Address { get; set; }
+
+        [Display(Name = "Giới tính")]
+        public string? Sex { get; set; }
+
+        [Display(Name = "Tuổi")]
+        public string? Age { get; set; }
+
+        [Display(Name = "Chức vụ")]
+        public string? Position { get; set; }
+
+        [Display(Name = "Gmail")]
+        public  string Email { get; set; }
     }
 }

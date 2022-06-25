@@ -43,7 +43,15 @@ namespace Master.Service
                 Active = item.Active,
                 Id = item.Id,
                 Password = item.Password,
-                Role = item.Role
+                Role = item.Role,
+                Position = item.Position,
+                Sex = item.Sex,
+                CreateDate = item.CreateDate,
+                FullName = item.FullName,
+                Image = item.Image,
+                Address = item.Address,
+                Age = item.Age,
+                Email = item.Email
             };
             return new ApiSuccessResult<Admin>(model);
         }
@@ -73,7 +81,15 @@ namespace Master.Service
                     Password = x.Password,
                     Id = x.Id,
                     Role = x.Role,
-                    Active = x.Active
+                    Active = x.Active,
+                    Address = x.Address,
+                    Age = x.Age,
+                    Image = x.Image,
+                    Sex = x.Sex,
+                    FullName = x.FullName,
+                    CreateDate = x.CreateDate,
+                    Position = x.Position,
+                    Email = x.Email
                 }).ToListAsync();
 
             var pagedResult = new Pagination<Admin>()
@@ -145,6 +161,14 @@ namespace Master.Service
                 Password = model.Password,
                 Role = model.Role,
                 Id = Guid.NewGuid().ToString(),
+                Position = model.Position,
+                CreateDate = model.CreateDate,
+                Address = model.Address,
+                Age = model.Age,
+                FullName = model.FullName,
+                Sex = model.Sex,
+                Image = model.Image,
+                Email = model.Email
             };
 
             await _context.Admins.AddAsync(item);
@@ -174,6 +198,14 @@ namespace Master.Service
             item.Active = model.Active;
             item.Password = model.Password;
             item.Role = model.Role;
+            item.Position = model.Position;
+            item.CreateDate = model.CreateDate;
+            item.Address = model.Address;
+            item.Age = model.Age;
+            item.FullName = model.FullName;
+            item.Sex = model.Sex;
+            item.Image = model.Image;
+            item.Email = model.Email;
 
             _context.Admins.Update(item);
 

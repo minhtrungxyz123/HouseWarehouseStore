@@ -66,7 +66,7 @@ namespace Master.Webapp.Controllers
 
             var hashedPassword = new PasswordHasher<AdminModel>().HashPassword(new AdminModel(), request.Password);
             request.Password = hashedPassword;
-
+            request.Image = "1";
             var result = await _adminApiClient.Create(request);
 
             if (result)
@@ -90,8 +90,16 @@ namespace Master.Webapp.Controllers
                 {
                     Active = model.Active,
                     Id = id,
-                    Role=model.Role,
-                    Username = model.Username
+                    Role = model.Role,
+                    Username = model.Username,
+                    Position = model.Position,
+                    Image = model.Image,
+                    Sex = model.Sex,
+                    FullName = model.FullName,
+                    Age = model.Age,
+                    Address = model.Address,
+                    CreateDate = model.CreateDate,
+                    Email = model.Email
                 };
                 return ViewComponent("EditAdmin", updateRequest);
             }
@@ -101,6 +109,7 @@ namespace Master.Webapp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(AdminModel request)
         {
+            request.Image = "1";
             if (!ModelState.IsValid)
                 return View();
 
@@ -146,9 +155,48 @@ namespace Master.Webapp.Controllers
                     Active = model.Active,
                     Username = model.Username,
                     Id = id,
-                    Role=model.Role
+                    Role = model.Role,
+                    Address = model.Role,
+                    Age = model.Age,
+                    CreateDate = model.CreateDate,
+                    FullName = model.FullName,
+                    Image = model.Image,
+                    Position = model.Position,
+                    Sex = model.Sex,
+                    Email = model.Email
                 };
                 return ViewComponent("DetailAdmin", updateRequest);
+            }
+            return RedirectToAction("Error", "Home");
+        }
+
+        #endregion
+
+        #region Utilities
+
+        [HttpGet]
+        public async Task<IActionResult> Profile(string id)
+        {
+            var result = await _adminApiClient.GetById(id);
+            if(result.IsSuccessed)
+            {
+                var model = result.ResultObj;
+                var detail = new AdminModel()
+                {
+                    Active = model.Active,
+                    Username = model.Username,
+                    Id = id,
+                    Role = model.Role,
+                    Address = model.Role,
+                    Age = model.Age,
+                    CreateDate = model.CreateDate,
+                    FullName = model.FullName,
+                    Image = model.Image,
+                    Position = model.Position,
+                    Sex = model.Sex,
+                    Email = model.Email
+                };
+                return View(detail);
             }
             return RedirectToAction("Error", "Home");
         }

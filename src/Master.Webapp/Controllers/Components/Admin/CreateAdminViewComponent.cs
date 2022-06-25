@@ -12,6 +12,7 @@ namespace Master.Webapp.Controllers.Components.Admin
         public async Task<IViewComponentResult> InvokeAsync()
         {
             var model = new AdminModel();
+            model.CreateDate = DateTime.UtcNow.ToLocalTime();
             return View(model);
         }
     }
