@@ -93,6 +93,11 @@ namespace Master.Webapp.Controllers
             return View();
         }
 
+        public IActionResult ForgotPassword()
+        {
+            return View();
+        }
+
         #endregion Method
 
         #region Unitiels
