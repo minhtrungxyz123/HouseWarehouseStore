@@ -174,33 +174,6 @@ namespace Master.Webapp.Controllers
 
         #region Utilities
 
-        [HttpGet]
-        public async Task<IActionResult> Profile(string id)
-        {
-            var result = await _adminApiClient.GetById(id);
-            if(result.IsSuccessed)
-            {
-                var model = result.ResultObj;
-                var detail = new AdminModel()
-                {
-                    Active = model.Active,
-                    Username = model.Username,
-                    Id = id,
-                    Role = model.Role,
-                    Address = model.Role,
-                    Age = model.Age,
-                    CreateDate = model.CreateDate,
-                    FullName = model.FullName,
-                    Image = model.Image,
-                    Position = model.Position,
-                    Sex = model.Sex,
-                    Email = model.Email
-                };
-                return View(detail);
-            }
-            return RedirectToAction("Error", "Home");
-        }
-
         #endregion
     }
 }

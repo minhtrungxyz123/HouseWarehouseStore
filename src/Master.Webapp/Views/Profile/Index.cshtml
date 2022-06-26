@@ -1,0 +1,78 @@
+﻿@model HouseWarehouseStore.Models.AdminModel
+@{
+    ViewData["Title"] = "Hồ sơ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Hồ sơ</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết hồ sơ</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Home"><i class="fa-solid fa-arrow-left"></i> Về trang chủ</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Index" enctype="multipart/form-data" method="get">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group w-25">
+                        <label asp-for="Username" class="control-label"></label>
+                        <input asp-for="Username" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Role" class="control-label"></label>
+                        <input asp-for="Role" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="FullName" class="control-label"></label>
+                        <input asp-for="FullName" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="CreateDate" class="control-label"></label>
+                        <input asp-for="CreateDate" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="CreateDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Sex" class="control-label"></label>
+                        <input asp-for="Sex" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Sex" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Age" class="control-label"></label>
+                        <input asp-for="Age" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Position" class="control-label"></label>
+                        <input asp-for="Position" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Position" class="text-danger"></span>
+                    </div>
+                    <div class="form-group w-25">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-group-sm">
+                    Trạng thái
+                    <div class="col-md-9">
+                        @Html.DisplayFor(m => m.Active)
+                    </div>
+            </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
