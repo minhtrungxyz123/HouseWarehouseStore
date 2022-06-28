@@ -1,0 +1,133 @@
+﻿@model Pagination<HouseWarehouseStore.Models.FilesModel>
+
+@{
+    ViewData["Title"] = "Danh sách files";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <h1 class="mt-4">Files</h1>
+    <ol class="breadcrumb mb-4">
+        <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+        <li class="breadcrumb-item active">Danh sách files</li>
+    </ol>
+    <div class="card mb-12">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-6 col-xs-12">
+                    <form asp-action="Index" method="get">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <input type="text" value="@ViewBag.Keyword" name="keyword" class="form-control" />
+                            </div>
+                            <div class="cold-md-3">
+                                <button type="submit" class="btn btn-primary">Tìm</button>
+                                <button type="button" onclick="window.location.href='/Files/Index'" class="btn btn-dark">Tải lại</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    @if (ViewBag.SuccessMsg != null)
+                    {
+                        <div id="msgAlert" class="alert alert-success" role="alert">
+                            @ViewBag.SuccessMsg
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Tên files
+                            </th>
+                            <th>
+                                Đường dẫn
+                            </th>
+                            <th>
+                                Loại files
+                            </th>
+                            <th>
+                                Dung lượng(1024 bytes = 1 kb)
+                            </th>
+                            <th>
+                                Bộ sưu tập
+                            </th>
+                            <th>
+                                Bài viết
+                            </th>
+                            <th>
+                                Fanpage
+                            </th>
+                            <th>
+                                Quảng cáo
+                            </th>
+                            <th>
+                                Loại sản phẩm
+                            </th>
+                            <th>
+                                Sản phẩm
+                            </th>
+                            <th>
+                                Tài khoản
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Items)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FileName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Path)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.MimeType)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Size)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.CollectionId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ArticlesId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ConfigsiteId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.BannerId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductCategoryId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductId)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.AdminId)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @await Component.InvokeAsync("Pager", Model)
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+
+</script>
+}

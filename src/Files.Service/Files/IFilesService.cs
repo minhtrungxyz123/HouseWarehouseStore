@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Models;
 
 namespace Files.Service
 {
@@ -15,5 +16,7 @@ namespace Files.Service
         Task<List<FilesModel>> GetFilesCollection(int take);
 
         Task<HouseWarehouseStore.Data.Entities.File> GetByNameAsync(string name);
+
+        Task<ApiResult<Pagination<FilesModel>>> GetAllPaging(FileSearchContext ctx);
     }
 }
