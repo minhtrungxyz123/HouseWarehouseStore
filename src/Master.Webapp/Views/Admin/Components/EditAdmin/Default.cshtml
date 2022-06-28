@@ -8,6 +8,7 @@
     <form asp-controller="Admin" asp-action="Edit" enctype="multipart/form-data" method="post">
         <div class="form-body">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="Image" />
             <input type="hidden" asp-for="FilesModels" />
 
             @foreach (var item in Model.FilesModels)
