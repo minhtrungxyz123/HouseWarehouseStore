@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Data.EF;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -96,6 +97,63 @@ namespace Files.Service
         #endregion Method
 
         #region List
+
+        public async Task<ApiResult<Pagination<FilesModel>>> GetAllPaging(FileSearchContext ctx)
+        {
+            var query = from pr in _context.Files
+                        join c in _context.Collections on pr.CollectionId equals c.CollectionId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        join w in _context.Articles on pr.ArticleId equals w.Id into wt
+                        from tw in wt.DefaultIfEmpty()
+                        join f in _context.ConfigSites on pr.ConfigSiteId equals f.ConfigSiteId into ft
+                        from tf in ft.DefaultIfEmpty()
+                        join b in _context.Banners on pr.BannerId equals b.BannerId into bt
+                        from tb in bt.DefaultIfEmpty()
+                        join r in _context.ProductCategories on pr.ProductCategoryId equals r.ProductCategorieId into rt
+                        from tr in rt.DefaultIfEmpty()
+                        join u in _context.Products on pr.ProductId equals u.ProductId into ut
+                        from tu in ut.DefaultIfEmpty()
+                        join a in _context.Admins on pr.AdminId equals a.Id into at
+                        from ta in at.DefaultIfEmpty()
+                        select new { pr, tp, tw, tf, tr, tu, ta };
+
+            if (!string.IsNullOrEmpty(ctx.Keyword))
+            {
+                query = query.Where(x => x.pr.FileName.Contains(ctx.Keyword));
+            }
+
+            var totalRecords = await query.CountAsync();
+
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+                .Take(ctx.PageSize)
+                .Select(u => new FilesModel()
+                {
+                    FileName = u.pr.FileName,
+                    Id = u.pr.Id,
+                    AdminId = u.pr.AdminId,
+                    ProductId = u.pr.ProductId,
+                    ArticlesId = u.pr.ArticleId,
+                    BannerId = u.pr.BannerId,
+                    CollectionId = u.pr.CollectionId,
+                    ConfigsiteId = u.pr.ConfigSiteId,
+                    Extension = u.pr.Extension,
+                    MimeType = u.pr.MimeType,
+                    Path = u.pr.Path,
+                    ProductCategoryId = u.pr.ProductCategoryId,
+                    Size = u.pr.Size
+                })
+                .ToListAsync();
+
+            var pagination = new Pagination<FilesModel>
+            {
+                Items = items,
+                TotalRecords = totalRecords,
+                PageIndex = ctx.PageIndex,
+                PageSize = ctx.PageSize,
+            };
+
+            return new ApiSuccessResult<Pagination<FilesModel>>(pagination);
+        }
 
         public async Task<List<FilesModel>> GetFilesCollection(int take)
         {

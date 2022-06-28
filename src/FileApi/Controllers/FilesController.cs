@@ -231,6 +231,13 @@ namespace FileApi.Controllers
 
         #region List
 
+        [HttpGet("get")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] FileSearchContext ctx)
+        {
+            var products = await _fileService.GetAllPaging(ctx);
+            return Ok(products);
+        }
+
         [HttpGet("collection/{take}")]
         public async Task<IActionResult> GetLatestProducts(int take)
         {
