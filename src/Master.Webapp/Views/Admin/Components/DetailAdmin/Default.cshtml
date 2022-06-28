@@ -9,11 +9,11 @@
         <div class="form-body">
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="FilesModels" />
-                    @foreach (var item in Model.FilesModels)
-                    {
-                        var url = $"/{_loc["adminUrl"]}/{item.AdminId}";
-                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
-                    }
+            @foreach (var item in Model.FilesModels)
+            {
+                var url = $"/{_loc["adminUrl"]}/{item.AdminId}";
+                <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
+            }
             <div class="modal-body">
                 <div class="form-group">
                     <label asp-for="Username" class="control-label"></label>
@@ -71,18 +71,18 @@
                 </div>
             </div>
             <div class="form-group">
-                    <label asp-for="Role" class="control-label"></label>
-                    <select asp-for="Role">
-                                    <option value="Admin">Quản trị</option>
-                                    <option value="User">Nhân viên</option>
-                                </select>
-                    <span asp-validation-for="Role" class="text-danger"></span>
+                <label asp-for="Role" class="control-label"></label>
+                <select asp-for="Role">
+                    <option value="Admin">Quản trị</option>
+                    <option value="User">Nhân viên</option>
+                </select>
+                <span asp-validation-for="Role" class="text-danger"></span>
             </div>
             <div class="form-group form-group-sm">
-                    Trang thai
-                    <div class="col-md-9">
-                        @Html.DisplayFor(m => m.Active)
-                    </div>
+                Trang thai
+                <div class="col-md-9">
+                    @Html.DisplayFor(m => m.Active)
+                </div>
             </div>
 
             <div class="modal-body">

@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -41,7 +42,8 @@ namespace Master.Webapp.Controllers
                     Image = model.Image,
                     Position = model.Position,
                     Sex = model.Sex,
-                    Email = model.Email
+                    Email = model.Email,
+                    FilesModels = await _adminApiClient.GetFilesAdmin(SystemConstants.AdminSettings.NumberOfAdmin)
                 };
                 return View(detail);
             }
