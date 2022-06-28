@@ -90,7 +90,8 @@ namespace Master.Api.Controllers
         #region Method
 
         [HttpPost("create")]
-        public async Task<IActionResult> Post([FromBody] AdminModel model)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Post([FromForm] AdminModel model)
         {
             var check = await _adminService.GetAdmin(new Admin()
             {
@@ -118,7 +119,8 @@ namespace Master.Api.Controllers
         }
 
         [HttpPut("update/{id}")]
-        public async Task<IActionResult> Put([FromBody] AdminModel model, string id)
+        [Consumes("multipart/form-data")]
+        public async Task<IActionResult> Put([FromForm] AdminModel model, string id)
         {
             var item = await _adminService.GetById(id);
             if (item == null)

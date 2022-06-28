@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
 {
@@ -44,6 +45,11 @@ namespace HouseWarehouseStore.Models
         public string? Position { get; set; }
 
         [Display(Name = "Gmail")]
-        public  string Email { get; set; }
+        public  string? Email { get; set; }
+
+        [Display(Name = "Hình ảnh"), Required(ErrorMessage = "Hãy lưu files")]
+        public IFormFile? filesadd { get; set; }
+
+        public List<FilesModel>? FilesModels { get; set; }
     }
 }

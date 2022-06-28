@@ -27,7 +27,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\uploads\2022\06\" />
-    <Folder Include="wwwroot\uploads\2022\06\20\" />
   </ItemGroup>
 
 </Project>

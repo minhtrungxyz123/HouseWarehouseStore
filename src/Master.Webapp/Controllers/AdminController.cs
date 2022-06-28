@@ -1,4 +1,5 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Models;
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -66,11 +67,17 @@ namespace Master.Webapp.Controllers
 
             var hashedPassword = new PasswordHasher<AdminModel>().HashPassword(new AdminModel(), request.Password);
             request.Password = hashedPassword;
-            request.Image = "1";
+            request.Id = Guid.NewGuid().ToString();
+            request.Image = request.Id;
             var result = await _adminApiClient.Create(request);
 
             if (result)
             {
+                var filemodels = new FilesModel();
+                filemodels.AdminId = request.Id;
+                filemodels.filesadd = request.filesadd;
+                await _adminApiClient.CreateImage(filemodels, request.Id);
+
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }
@@ -99,7 +106,8 @@ namespace Master.Webapp.Controllers
                     Age = model.Age,
                     Address = model.Address,
                     CreateDate = model.CreateDate,
-                    Email = model.Email
+                    Email = model.Email,
+                    FilesModels = await _adminApiClient.GetFilesAdmin(SystemConstants.AdminSettings.NumberOfAdmin)
                 };
                 return ViewComponent("EditAdmin", updateRequest);
             }
@@ -109,7 +117,6 @@ namespace Master.Webapp.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(AdminModel request)
         {
-            request.Image = "1";
             if (!ModelState.IsValid)
                 return View();
 
@@ -119,6 +126,14 @@ namespace Master.Webapp.Controllers
             var result = await _adminApiClient.Edit(request.Id, request);
             if (result)
             {
+                var filemodels = new FilesModel();
+                filemodels.AdminId = request.Id;
+                filemodels.filesadd = request.filesadd;
+                //delete files
+                await _adminApiClient.DeleteFiles(request.Id);
+                //update files
+                await _adminApiClient.UpdateImage(filemodels, request.Id);
+
                 TempData["result"] = "Sửa thành công";
                 return RedirectToAction("Index");
             }
@@ -133,6 +148,10 @@ namespace Master.Webapp.Controllers
             if (!ModelState.IsValid)
                 return View();
             var result = await _adminApiClient.Delete(id);
+
+            await _adminApiClient.DeleteFiles(id);
+            await _adminApiClient.DeleteDataFiles(id);
+
             if (result)
             {
                 TempData["result"] = "Xóa thành công";
@@ -163,17 +182,14 @@ namespace Master.Webapp.Controllers
                     Image = model.Image,
                     Position = model.Position,
                     Sex = model.Sex,
-                    Email = model.Email
+                    Email = model.Email,
+                    FilesModels = await _adminApiClient.GetFilesAdmin(SystemConstants.AdminSettings.NumberOfAdmin)
                 };
                 return ViewComponent("DetailAdmin", updateRequest);
             }
             return RedirectToAction("Error", "Home");
         }
 
-        #endregion
-
-        #region Utilities
-
-        #endregion
+        #endregion Method
     }
 }

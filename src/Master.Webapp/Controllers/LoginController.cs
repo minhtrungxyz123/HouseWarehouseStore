@@ -51,6 +51,7 @@ namespace Master.Webapp.Controllers
                             var userClaims = new List<Claim>()
                         {
                                 new Claim("Username", users.Username),
+                                new Claim("Image", users.Image),
                                 new Claim("Id", users.Id),
                         };
                             var userIdentity = new ClaimsIdentity(userClaims, CookieAuthenticationDefaults.AuthenticationScheme);

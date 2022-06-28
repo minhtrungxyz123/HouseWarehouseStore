@@ -6,6 +6,11 @@
         {
             public const int NumberOfCollection = 1;
         }
+        public class AdminSettings
+        {
+            public const int NumberOfAdmin = 1;
+        }
+
         public class ArticleSettings
         {
             public const int NumberOfArticle = 1;
