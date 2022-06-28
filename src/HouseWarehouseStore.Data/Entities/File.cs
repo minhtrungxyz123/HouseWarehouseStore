@@ -14,5 +14,6 @@
         public string? BannerId { get; set; }
         public  string? ProductCategoryId { get; set; }
         public string? ProductId { get; set; }
+        public string? AdminId { get; set; }
     }
 }

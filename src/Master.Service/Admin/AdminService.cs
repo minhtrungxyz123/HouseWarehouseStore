@@ -63,43 +63,48 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Admin>>> GetAllPaging(AdminSearchContext ctx)
+        public async Task<ApiResult<Pagination<AdminModel>>> GetAllPaging(AdminSearchContext ctx)
         {
-            var query = _context.Admins.AsQueryable();
+            var query = from pr in _context.Admins
+                        select new { pr };
+
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Username.Contains(ctx.Keyword));
+                query = query.Where(x => x.pr.FullName.Contains(ctx.Keyword)
+                || x.pr.Username.Contains(ctx.Keyword));
             }
 
-            int totalRow = await query.CountAsync();
+            var totalRecords = await query.CountAsync();
 
-            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(x => new Admin()
+                .Select(u => new AdminModel()
                 {
-                    Username = x.Username,
-                    Password = x.Password,
-                    Id = x.Id,
-                    Role = x.Role,
-                    Active = x.Active,
-                    Address = x.Address,
-                    Age = x.Age,
-                    Image = x.Image,
-                    Sex = x.Sex,
-                    FullName = x.FullName,
-                    CreateDate = x.CreateDate,
-                    Position = x.Position,
-                    Email = x.Email
-                }).ToListAsync();
+                    FullName = u.pr.FullName,
+                    Id = u.pr.Id,
+                    Active = u.pr.Active,
+                    Image = u.pr.Image,
+                    Username = u.pr.Username,
+                    Address = u.pr.Address,
+                    Age = u.pr.Age,
+                    CreateDate = u.pr.CreateDate,
+                    Email = u.pr.Email,
+                    Password = u.pr.Password,
+                    Position = u.pr.Position,
+                    Role = u.pr.Role,
+                    Sex = u.pr.Sex
+                })
+                .ToListAsync();
 
-            var pagedResult = new Pagination<Admin>()
+            var pagination = new Pagination<AdminModel>
             {
-                TotalRecords = totalRow,
+                Items = items,
+                TotalRecords = totalRecords,
                 PageIndex = ctx.PageIndex,
                 PageSize = ctx.PageSize,
-                Items = data
             };
-            return new ApiSuccessResult<Pagination<Admin>>(pagedResult);
+
+            return new ApiSuccessResult<Pagination<AdminModel>>(pagination);
         }
 
         public async Task<Admin?> GetById(string? id)
@@ -160,7 +165,7 @@ namespace Master.Service
                 Active = model.Active,
                 Password = model.Password,
                 Role = model.Role,
-                Id = Guid.NewGuid().ToString(),
+                Id = model.Id,
                 Position = model.Position,
                 CreateDate = model.CreateDate,
                 Address = model.Address,
@@ -177,7 +182,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.Id.ToString(),
+                Id = item.Id,
             };
         }
 
@@ -214,7 +219,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id.ToString(),
+                Id = id
             };
         }
 

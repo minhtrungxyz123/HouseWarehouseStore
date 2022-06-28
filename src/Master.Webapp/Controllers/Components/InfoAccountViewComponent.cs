@@ -21,6 +21,9 @@ namespace Master.Webapp.Controllers.Components
             var claims = HttpContext.User.Claims;
             var userName = claims.FirstOrDefault(c => c.Type == "Username").Value;
             model.Username = userName;
+
+            var image = claims.FirstOrDefault(c => c.Type == "Image").Value;
+            model.Image = image;
             _logger.LogInformation("End get SetCookie");
             return View(model);
         }

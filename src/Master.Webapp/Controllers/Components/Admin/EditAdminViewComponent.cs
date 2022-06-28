@@ -1,12 +1,16 @@
-﻿using HouseWarehouseStore.Models;
+﻿using HouseWarehouseStore.Common;
+using HouseWarehouseStore.Models;
+using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Master.Webapp.Controllers.Components.Admin
 {
     public class EditAdminViewComponent : ViewComponent
     {
-        public EditAdminViewComponent()
+        private readonly IAdminApiClient _adminApiClient;
+        public EditAdminViewComponent(IAdminApiClient adminApiClient)
         {
+            _adminApiClient = adminApiClient;
         }
 
         public async Task<IViewComponentResult> InvokeAsync(AdminModel view)
@@ -25,6 +29,7 @@ namespace Master.Webapp.Controllers.Components.Admin
             model.Image = view.Image;
             model.Position = view.Position;
             model.Sex = view.Sex;
+            model.FilesModels = await _adminApiClient.GetFilesAdmin(SystemConstants.AdminSettings.NumberOfAdmin);
             return View(model);
         }
     }

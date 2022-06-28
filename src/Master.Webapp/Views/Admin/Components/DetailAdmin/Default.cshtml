@@ -1,11 +1,19 @@
 ﻿@model HouseWarehouseStore.Models.AdminModel
+@inject LazZiya.ExpressLocalization.ISharedCultureLocalizer _loc;
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
 
 <div>
     <h4>Chi tiết tài khoản</h4>
     <hr />
-    <form asp-controller="Admin" asp-action="Detail">
+    <form asp-controller="Admin" asp-action="Detail" enctype="multipart/form-data" method="post">
         <div class="form-body">
             <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="FilesModels" />
+                    @foreach (var item in Model.FilesModels)
+                    {
+                        var url = $"/{_loc["adminUrl"]}/{item.AdminId}";
+                        <a href="@url"><img src="@(Configuration["ApiFiles"]+item.Path+ "/"+@item.FileName+"")" alt="@item.FileName" /></a>
+                    }
             <div class="modal-body">
                 <div class="form-group">
                     <label asp-for="Username" class="control-label"></label>
