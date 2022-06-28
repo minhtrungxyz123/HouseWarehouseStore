@@ -19,4 +19,4 @@ sqlserver:
 
       //
       port: 103.79.141.93:8808
-      tài khoản remote: Administrator/MT8Frm5DZTFcUCNv
+      tài khoản remote: Administrator/123456a@
