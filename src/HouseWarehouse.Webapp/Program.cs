@@ -1,8 +1,17 @@
+using HouseWarehouse.Webapp.ApiClient;
+
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddHttpClient();
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+#region Add DI
+
+builder.Services.AddScoped<IBannerApiClient, BannerApiClient>();
+
+#endregion Add DI
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -14,6 +23,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();

@@ -27,4 +27,8 @@
     <None Include="wwwroot\lib\slick\slick.scss" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HouseWarehouseStore.Models\HouseWarehouseStore.Models.csproj" />
+  </ItemGroup>
+
 </Project>

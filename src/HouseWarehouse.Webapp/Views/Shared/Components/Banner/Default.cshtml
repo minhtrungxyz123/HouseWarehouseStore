@@ -1,0 +1,17 @@
+﻿@model HouseWarehouse.Webapp.Models.BannerViewModel
+
+<div class="col-md-6">
+    <div class="header-slider normal-slider">
+        <div class="header-slider-item">
+            @for (int index = 0; index < Model.BannerModels.Count; index++)
+            {
+                var slide = Model.BannerModels[index];
+                <img src="@slide.CoverImage" alt="Slider Image" />
+                <div class="header-slider-caption">
+                    <p>Some text goes here that describes the image</p>
+                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -2,6 +2,12 @@
 {
     public class SystemConstants
     {
+        public class AppSettings
+        {
+            public const string ApiFiles = "ApiFiles";
+            public const string BaseAddress = "BaseAddress";
+        }
+
         public class CollectionSettings
         {
             public const int NumberOfCollection = 1;
