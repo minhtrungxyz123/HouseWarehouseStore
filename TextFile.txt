@@ -20,3 +20,6 @@ sqlserver:
       //
       port: 103.79.141.93:8808
       tài khoản remote: Administrator/123456a@
+
+      //template
+      https://www.free-css.com/assets/files/free-css-templates/preview/page260/e-store/
