@@ -1,9 +1,10 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
+using Master.Api.SignalRHubs;
 using Master.Service;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Master.Api.Controllers
 {
@@ -14,10 +15,12 @@ namespace Master.Api.Controllers
         #region Fields
 
         private readonly IAdminService _adminService;
+        private readonly IHubContext<ConnectRealTimeHub> _hubContext;
 
-        public AdminController(IAdminService adminService)
+        public AdminController(IAdminService adminService, IHubContext<ConnectRealTimeHub> hubContext)
         {
             _adminService = adminService;
+            _hubContext = hubContext;
         }
 
         #endregion Fields
@@ -68,7 +71,7 @@ namespace Master.Api.Controllers
 
         [Route("check-active")]
         [HttpGet]
-        public async Task<IActionResult> GetCheckActive(string name ,bool showHidden = true)
+        public async Task<IActionResult> GetCheckActive(string name, bool showHidden = true)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -110,6 +113,7 @@ namespace Master.Api.Controllers
 
             if (result.Result > 0)
             {
+                await _hubContext.Clients.All.SendAsync("MasterCreateToCLient", model);
                 return RedirectToAction(nameof(Get), new { id = result.Id });
             }
             else
@@ -130,6 +134,7 @@ namespace Master.Api.Controllers
 
             if (result.Result > 0)
             {
+                await _hubContext.Clients.All.SendAsync("MasterEditToCLient", model, id);
                 return Ok();
             }
             else
@@ -143,6 +148,7 @@ namespace Master.Api.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _adminService.Delete(id);
+            await _hubContext.Clients.All.SendAsync("MasterDeleteToCLient", id);
             return Ok(result);
         }
 

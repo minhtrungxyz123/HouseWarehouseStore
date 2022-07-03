@@ -1,5 +1,6 @@
 using HouseWarehouseStore.Data.Dapper;
 using HouseWarehouseStore.Data.EF;
+using Master.Api.SignalRHubs;
 using Master.Service;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,6 +49,8 @@ builder.Services.AddCors(o => o.AddPolicy("AllowAll", builder =>
            .WithExposedHeaders("Grpc-Status", "Grpc-Message", "Grpc-Encoding", "Grpc-Accept-Encoding");
 }));
 
+builder.Services.AddSignalR();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -62,5 +65,7 @@ app.UseCors("AllowAll");
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapHub<ConnectRealTimeHub>("/signalr");
 
 app.Run();
