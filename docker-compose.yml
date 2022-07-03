@@ -30,3 +30,10 @@ services:
       - "5433:1433"
     volumes:
       - ./storage/sqlserver:/var/opt/mssql/data
+
+  notification.api:
+    image: ${DOCKER_REGISTRY-}notificationapi
+    build:
+      context: .
+      dockerfile: src/Notification.Api/Dockerfile
+

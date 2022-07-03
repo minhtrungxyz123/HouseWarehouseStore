@@ -55,6 +55,7 @@ namespace HouseWarehouseStore.Data.EF
             modelBuilder.ApplyConfiguration(new FilesConfiguration());
             modelBuilder.ApplyConfiguration(new TagProductConfiguration());
             modelBuilder.ApplyConfiguration(new UploadConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
         }
 
         private readonly IMediator _mediator;
@@ -108,5 +109,6 @@ namespace HouseWarehouseStore.Data.EF
         public virtual DbSet<Voucher> Vouchers { get; set; }
         public virtual DbSet<Entities.TagProduct> TagProducts { get; set; }
         public virtual DbSet<Entities.File> Files { get; set; }
+        public  virtual DbSet<Notification> Notifications { get; set; }
     }
 }
