@@ -2,6 +2,8 @@
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
 
 namespace Master.Webapp.Controllers
 {
@@ -131,6 +133,68 @@ namespace Master.Webapp.Controllers
                 return ViewComponent("DetailSize", updateRequest);
             }
             return RedirectToAction("Error", "Home");
+        }
+
+        #endregion
+
+        #region export
+
+        public async Task<ActionResult> ExportOrder()
+        {
+            var fileName = "danh-sach-size.xlsx";
+            var res = await _sizeApiClient.GetActive();
+            var orders = res;
+            ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
+            using var pck = new ExcelPackage();
+            //Create the worksheet
+            var ws = pck.Workbook.Worksheets.Add("Danh sách size");
+            ws.DefaultColWidth = 20;
+            ws.Cells.Style.WrapText = true;
+            ws.Cells.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+            ws.Cells.Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+            ws.Column(1).Width = 10;
+            ws.Column(2).Width = 15;
+            ws.Column(3).Width = 25;
+            ws.Column(8).Width = 15;
+            ws.Column(1).Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+            ws.Cells[2, 1].Value = "STT";
+            ws.Cells[2, 3].Value = "Tên size";
+            var i = 3;
+            if (orders != null)
+                foreach (var order in orders)
+                {
+                    ws.Cells[i, 1].Value = i - 2;
+                    ws.Cells[i, 2].Value = order.SizeProduct;
+                    i++;
+                }
+
+            // set style title
+
+            using (var rng = ws.Cells["D1"])
+            {
+                rng.Value = "Danh sách size";
+                rng.Merge = true;
+                rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                rng.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                rng.Style.Font.Bold = true;
+                rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                rng.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.White);  //Set color to dark blue
+                rng.Style.Font.Color.SetColor(System.Drawing.Color.Black);
+            }
+
+            // set style name column
+            using (var rng = ws.Cells["A2:B2"])
+            {
+                rng.Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                rng.Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                rng.Style.Font.Bold = true;
+                rng.Style.Fill.PatternType = ExcelFillStyle.Solid;
+                rng.Style.Fill.BackgroundColor.SetColor(System.Drawing.Color.FromArgb(79, 129, 189));  //Set color to dark blue
+                rng.Style.Font.Color.SetColor(System.Drawing.Color.White);
+            }
+
+            return File(pck.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
         #endregion

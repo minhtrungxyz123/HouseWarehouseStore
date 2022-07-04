@@ -72,6 +72,20 @@ namespace Master.Api.Controllers
 
         #region Method
 
+        //[HttpPost("create")]
+        //public async Task<IActionResult> Post()
+        //{
+        //    var create = new SizeModel();
+        //    for (int i = 0; i < 100000; i++)
+        //    {
+        //        create.SizeId = Guid.NewGuid().ToString();
+        //        create.SizeProduct = "Kho tạm " + i;
+        //        await _sizeService.Create(create);
+        //    }
+
+        //    return Ok(create);
+        //}
+
         [HttpPost("create")]
         public async Task<IActionResult> Post([FromBody] SizeModel model)
         {
