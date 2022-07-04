@@ -16,7 +16,7 @@
         <div class="card-header">
             <div class="row">
                 <div class="col-md-6 col-xs-12">
-                    <a class="btn btn-success" onclick="Create()"><i class="fa-solid fa-plus"></i> Tạo mới</a>
+                    <a class="btn btn-success" id="them" onclick="Create()"><i class="fa-solid fa-plus"></i> Tạo mới</a>
                 </div>
                 <div class="col-md-6 col-xs-12">
                     <form asp-action="Index" method="get">
@@ -36,6 +36,15 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
+                    <div id="msgReload" class="alert alert-success d-none" role="alert">
+                        Thêm dữ liệu thành công
+                    </div>
+                    <div id="msgEdit" class="alert alert-success d-none" role="alert">
+                        Sửa dữ liệu thành công
+                    </div>
+                    <div id="msgDelete" class="alert alert-success d-none" role="alert">
+                        Xóa dữ liệu thành công
+                    </div>
                     @if (ViewBag.SuccessMsg != null)
                     {
                         <div id="msgAlert" class="alert alert-success" role="alert">
@@ -62,9 +71,9 @@
                                     @Html.DisplayFor(modelItem => item.SizeProduct)
                                 </td>
                                 <td>
-                                    <button onclick="Edit('@item.SizeId')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
+                                    <button id="sua" onclick="Edit('@item.SizeId')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>
                                     <button onclick="Detail('@item.SizeId')" class="btn" style="background: yellow;"><i class="fa-solid fa-eye"></i> Chi tiết</button>
-                                    <button onclick="Delete('@item.SizeId')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
+                                    <button id="xoa" onclick="Delete('@item.SizeId')" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i> Xóa</button>
                                 </td>
                             </tr>
                         }
@@ -80,12 +89,12 @@
 
 @section Scripts{
     <script>
-        setTimeout(function () {
+        setTimeout(function() {
             $('#msgAlert').fadeOut('slow');
         }, 2000);
 
         function Create() {
-            $.get("/Size/Create", function (data) {
+            $.get("/Size/Create", function(data) {
                 $("#contactDetails").html(data);
                 $("#contactDetails").dialog("open");
                 $(".k-overlay").removeClass("d-none");
@@ -93,30 +102,30 @@
         }
 
         function Edit(id) {
-                $.get("/Size/Edit", { id: id }, function (data) {
-                    $("#contactDetails").html(data);
-                    $("#contactDetails").dialog("open");
-                });
+            $.get("/Size/Edit", { id: id }, function(data) {
+                $("#contactDetails").html(data);
+                $("#contactDetails").dialog("open");
+            });
         }
 
         function Detail(id) {
-                $.get("/Size/Detail", { id: id }, function (data) {
-                    $("#contactDetails").html(data);
-                    $("#contactDetails").dialog("open");
-                });
+            $.get("/Size/Detail", { id: id }, function(data) {
+                $("#contactDetails").html(data);
+                $("#contactDetails").dialog("open");
+            });
         }
 
-        function Delete(id) {         
-            if (confirm("Bạn có chắc chắn xóa không?")) {                  
-                $.post("/Size/DeleteConfirmed", { id: id }, function (data) {              
-                    if (data) {                
-                        if (confirm("Xóa thành công"))                         
-                        window.location.assign('/Size/Index')                     
-                    } else {                            
-                        alert("Quá trình thực hiện không thành công. Hãy thử lại");                      
-                    }                      
-                });                       
-            }                    
+        function Delete(id) {
+            if (confirm("Bạn có chắc chắn xóa không?")) {
+                $.post("/Size/DeleteConfirmed", { id: id }, function(data) {
+                    if (data) {
+                        if (confirm("Xóa thành công"))
+                            window.location.assign('/Size/Index')
+                    } else {
+                        alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                    }
+                });
+            }
         }
 
         $(function() {
@@ -135,6 +144,87 @@
             });
         });
 
-</script>
+        //signalR
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("http://localhost:5000/signalr")
+            .configureLogging(signalR.LogLevel.Information)
+            .build();
+
+        async function start() {
+            try {
+                await connection.start();
+                console.log("SignalR Connected.");
+            } catch (err) {
+                console.log(err);
+                setTimeout(start, 5000);
+            }
+        };
+
+        connection.onclose(async () => {
+            await start();
+        });
+
+        // Start the connection.
+        start();
+
+        //Create
+        connection.on("MasterCreateToCLient", (user, message) => {
+
+            if (user) {
+                $('#msgReload').removeClass("d-none");
+                setInterval(function() {
+                    location.reload();
+                }, 3000)
+            }
+            $("#msgAlert").text(user.data)
+        });
+
+        $("#them").click(async function() {
+            try {
+                await connection.invoke("MasterCreate" / $("#msgAlert").val());
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+
+        //Edit
+        connection.on("MasterEditToCLient", (user, message) => {
+            if (user) {
+                $('#msgEdit').removeClass("d-none");
+                setInterval(function() {
+                    location.reload();
+                }, 3000)
+            }
+            $("#msgAlert").text(user.data)
+        });
+
+        $("#sua").click(async function() {
+            try {
+                await connection.invoke("MasterEdit", $("#msgAlert").val());
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+        //Delete
+        connection.on("MasterDeleteToCLient", (user, message) => {
+            if (user)
+                $('#msgDelete').removeClass("d-none");
+            setInterval(function() {
+                location.reload();
+            }, 3000)
+            $("#msgAlert").text(user.data)
+        });
+
+        $("#xoa").click(async function() {
+            try {
+                await connection.invoke("MasterDelete", $("#msgAlert").val());
+            } catch (err) {
+                console.error(err);
+            }
+        });
+
+    </script>
 }
 

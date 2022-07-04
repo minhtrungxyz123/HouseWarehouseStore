@@ -1,7 +1,9 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
+using Master.Api.SignalRHubs;
 using Master.Service;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Master.Api.Controllers
 {
@@ -12,10 +14,12 @@ namespace Master.Api.Controllers
         #region Fields
 
         private readonly ISizeService _sizeService;
+        private readonly IHubContext<ConnectRealTimeHub> _hubContext;
 
-        public SizeController(ISizeService sizeService)
+        public SizeController(ISizeService sizeService, IHubContext<ConnectRealTimeHub> hubContext)
         {
             _sizeService = sizeService;
+            _hubContext = hubContext;
         }
 
         #endregion Fields
@@ -75,6 +79,7 @@ namespace Master.Api.Controllers
 
             if (result.Result > 0)
             {
+                await _hubContext.Clients.All.SendAsync("MasterCreateToCLient", model);
                 return RedirectToAction(nameof(Get), new { id = result.Id });
             }
             else
@@ -94,6 +99,7 @@ namespace Master.Api.Controllers
 
             if (result.Result > 0)
             {
+                await _hubContext.Clients.All.SendAsync("MasterEditToCLient", model, id);
                 return Ok();
             }
             else
@@ -107,6 +113,7 @@ namespace Master.Api.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             var result = await _sizeService.Delete(id);
+            await _hubContext.Clients.All.SendAsync("MasterDeleteToCLient", id);
             return Ok(result);
         }
 
