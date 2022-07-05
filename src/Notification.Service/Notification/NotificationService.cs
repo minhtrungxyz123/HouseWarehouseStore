@@ -48,6 +48,14 @@ namespace Notification.Service
             };
         }
 
+        public async Task<IEnumerable<HouseWarehouseStore.Data.Entities.Notification>> GetAll()
+        {
+            var entities = await _context.Notifications
+                            .OrderByDescending(p => p.Url)
+                            .ToListAsync();
+            return entities;
+        }
+
         public async Task<HouseWarehouseStore.Data.Entities.Notification> GetById(string id)
         {
             if (id is null)

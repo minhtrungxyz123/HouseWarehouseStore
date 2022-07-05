@@ -37,6 +37,18 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<List<NotificationModel>> GetNoti()
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiNotification"]);
+            var response = await client.GetAsync($"/notification/get-all");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<List<NotificationModel>>(body);
+
+            return JsonConvert.DeserializeObject<List<NotificationModel>>(body);
+        }
+
         #endregion Method
     }
 }

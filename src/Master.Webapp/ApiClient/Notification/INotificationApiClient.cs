@@ -5,5 +5,7 @@ namespace Master.Webapp.ApiClient
     public interface INotificationApiClient
     {
         public Task<bool> Create(NotificationModel request);
+
+        Task<List<NotificationModel>> GetNoti();
     }
 }

@@ -22,6 +22,12 @@ namespace Notification.Api.Controllers
 
         #region Method
 
+        [HttpGet("get-all")]
+        public async Task<ActionResult> GetAll()
+        {
+            return Ok(await _notificationService.GetAll());
+        }
+
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(string id)
         {
