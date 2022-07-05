@@ -13,10 +13,13 @@ namespace Master.Webapp.Controllers
         #region Fields
 
         private readonly ISizeApiClient _sizeApiClient;
+        private readonly INotificationApiClient _notificationApiClient;
 
-        public SizeController(ISizeApiClient sizeApiClient)
+        public SizeController(ISizeApiClient sizeApiClient, 
+            INotificationApiClient notificationApiClient)
         {
             _sizeApiClient = sizeApiClient;
+            _notificationApiClient = notificationApiClient;
         }
 
         #endregion Fields
@@ -57,9 +60,20 @@ namespace Master.Webapp.Controllers
                 return View(request);
 
             var result = await _sizeApiClient.Create(request);
+            var noti = new NotificationModel();
+            noti.CreatedDate = DateTime.Now;
+            noti.NotiBody = request.SizeProduct;
+            noti.Url = "http://localhost:5100/Size";
+            noti.NotiHeader = request.SizeProduct;
+            noti.IsRead = true;
+
+            var claims = HttpContext.User.Claims;
+            var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;
+            noti.UserId = userId;
 
             if (result)
             {
+                await _notificationApiClient.Create(noti);
                 TempData["result"] = "Thêm mới thành công";
                 return RedirectToAction("Index");
             }

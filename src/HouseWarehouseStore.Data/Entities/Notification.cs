@@ -1,7 +1,10 @@
-﻿namespace HouseWarehouseStore.Data.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HouseWarehouseStore.Data.Entities
 {
     public class Notification
     {
+        [Key]
         public string NotiId { get; set; }
         public string? UserId { get; set; }
         public string? NotiHeader { get; set; }
