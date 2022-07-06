@@ -1,45 +1,21 @@
-﻿@model HouseWarehouse.Webapp.Models.BannerViewModel
+﻿@model  IEnumerable<HouseWarehouseStore.Models.BannerModel>
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
-@*<div class="col-md-6">
+
+<div class="col-md-6">
     <div class="header-slider normal-slider">
-        <div class="header-slider-item">
-            @for (int index = 0; index < Model.BannerModels.Count; index++)
-            {
-                var slide = Model.BannerModels[index];
-                <img src="@(Configuration["ApiFiles"]+"/files-banner/image/"+ @slide.CoverImage)" alt="Slider Image" />
+        @foreach (var item in Model)
+        {
+            <div class="header-slider-item">
+                <img asp-append-version="true" width="@item.Width" height="@item.Height" src="@(Configuration["ApiFiles"]+"/files-banner/image/"+ @item.CoverImage)" alt="Slider Image" />
                 <div class="header-slider-caption">
                     <p>Some text goes here that describes the image</p>
                     <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                 </div>
-            }
-        </div>
-    </div>
-</div>*@
-<div class="col-md-6">
-    <div class="header-slider normal-slider">
-        <div class="header-slider-item">
-            <img src="img/slider-1.jpg" alt="Slider Image" />
-            <div class="header-slider-caption">
-                <p>Some text goes here that describes the image</p>
-                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
             </div>
-        </div>
-        <div class="header-slider-item">
-            <img src="img/slider-2.jpg" alt="Slider Image" />
-            <div class="header-slider-caption">
-                <p>Some text goes here that describes the image</p>
-                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
-            </div>
-        </div>
-        <div class="header-slider-item">
-            <img src="img/slider-3.jpg" alt="Slider Image" />
-            <div class="header-slider-caption">
-                <p>Some text goes here that describes the image</p>
-                <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
-            </div>
-        </div>
+        }
     </div>
 </div>
+
 <div class="col-md-3">
     <div class="header-img">
         <div class="img-item">
