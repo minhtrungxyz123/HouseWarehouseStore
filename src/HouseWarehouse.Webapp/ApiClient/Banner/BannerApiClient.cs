@@ -19,9 +19,9 @@ namespace HouseWarehouse.Webapp.ApiClient
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<BannerModel>> GetAll()
+        public async Task<List<BannerModel>> GetAll(int Width, int Height)
         {
-            return await GetListAsync<BannerModel>("/banner");
+            return await GetListAsync<BannerModel>($"/banner?Width={Width}&Height={Height}");
         }
 
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

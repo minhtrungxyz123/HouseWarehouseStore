@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseWarehouse.Webapp.Controllers.Components
 {
-    public class BannerViewComponent : ViewComponent
+    public class BannerHeaderViewComponent : ViewComponent
     {
         private readonly IBannerApiClient _bannerApiClient;
 
-        public BannerViewComponent(IBannerApiClient bannerApiClient)
+        public BannerHeaderViewComponent(IBannerApiClient bannerApiClient)
         {
             _bannerApiClient = bannerApiClient;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(int Width = 600, int Height = 400)
+        public async Task<IViewComponentResult> InvokeAsync(int Width = 400, int Height = 300)
         {
             var banner = await _bannerApiClient.GetAll(Width, Height);
 

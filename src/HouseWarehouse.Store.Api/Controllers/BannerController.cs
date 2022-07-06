@@ -15,9 +15,9 @@ namespace HouseWarehouse.Store.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(int Width, int Height)
         {
-            var benner = await _bannerService.GetAll();
+            var benner = await _bannerService.GetAll(Width, Height);
             return Ok(benner);
         }
     }

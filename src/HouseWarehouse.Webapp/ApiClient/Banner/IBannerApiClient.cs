@@ -4,6 +4,6 @@ namespace HouseWarehouse.Webapp.ApiClient
 {
     public interface IBannerApiClient
     {
-        Task<List<BannerModel>> GetAll();
+        Task<List<BannerModel>> GetAll(int Width, int Height);
     }
 }
