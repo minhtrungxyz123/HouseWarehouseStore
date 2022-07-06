@@ -10,5 +10,7 @@ namespace Notification.Service
         Task<RepositoryResponse> Create(NotificationModel model);
 
         Task<IEnumerable<HouseWarehouseStore.Data.Entities.Notification>> GetAll();
+
+        Task<int> Delete(string id);
     }
 }

@@ -37,6 +37,18 @@ namespace Master.Webapp.ApiClient
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<bool> Delete(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiNotification"]);
+            var response = await client.DeleteAsync($"/notification/delete?id={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<bool>(body);
+
+            return JsonConvert.DeserializeObject<bool>(body);
+        }
+
         public async Task<List<NotificationModel>> GetNoti()
         {
             var client = _httpClientFactory.CreateClient();

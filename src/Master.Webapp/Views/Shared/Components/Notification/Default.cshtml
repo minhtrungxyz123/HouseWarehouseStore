@@ -1,8 +1,24 @@
 ﻿@model IEnumerable<HouseWarehouseStore.Models.NotificationModel>
 
+<script>
+
+    function Delete(notiId) {
+        if (confirm("Bạn có chắc chắn xóa không?")) {
+            $.post("/Home/Delete", { notiId: notiId }, function(data) {
+                if (data) {
+                    if (confirm("Xóa thành công"))
+                        window.location.assign('/Home/Index')
+                } else {
+                    alert("Quá trình thực hiện không thành công. Hãy thử lại");
+                }
+            });
+        }
+    }
+
+</script>
+
 <li class="nav-item dropdown no-arrow mx-1">
-    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bell fa-fw"></i>
         <!-- Counter - Alerts -->
         <span class="badge badge-danger badge-counter">3+</span>
@@ -24,6 +40,9 @@
                 <div>
                     <div class="small text-gray-500">@Html.DisplayFor(modelItem => item.CreatedDate)</div>
                     <span class="font-weight-bold">@Html.DisplayFor(modelItem => item.UserId)</span>
+                </div>
+                <div class="mr-3">
+                    <div style="margin-left: 65%;" onclick="Delete('@item.NotiId')"><i class="fa-solid fa-trash-can"></i></div>
                 </div>
             </a>
         }

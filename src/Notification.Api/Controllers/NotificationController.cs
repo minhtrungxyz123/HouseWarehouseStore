@@ -22,6 +22,14 @@ namespace Notification.Api.Controllers
 
         #region Method
 
+        [Route("delete")]
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var result = await _notificationService.Delete(id);
+            return Ok(result);
+        }
+
         [HttpGet("get-all")]
         public async Task<ActionResult> GetAll()
         {

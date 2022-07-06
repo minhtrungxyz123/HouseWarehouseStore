@@ -16,7 +16,7 @@ namespace Master.Webapp.Controllers.Components
             _notificationApiClient = notificationApiClient;
         }
 
-        public async Task<IViewComponentResult> InvokeAsync(NotificationModel model)
+        public async Task<IViewComponentResult> InvokeAsync()
         {
             _logger.LogInformation("Get SetCookie ");
             var noti = await _notificationApiClient.GetNoti();
@@ -32,7 +32,8 @@ namespace Master.Webapp.Controllers.Components
                     {
                         CreatedDate = m.CreatedDate,
                         UserId = m.UserId,
-                        Url = m.Url
+                        Url = m.Url,
+                        NotiId = m.NotiId
                     };
                     categories.Add(item);
                 }

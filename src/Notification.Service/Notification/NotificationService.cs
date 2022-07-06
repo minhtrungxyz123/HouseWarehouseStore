@@ -20,6 +20,20 @@ namespace Notification.Service
 
         #region Method
 
+        public async Task<int> Delete(string id)
+        {
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var item = await _context.Notifications.FindAsync(id);
+
+            _context.Notifications.Remove(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result;
+        }
         public async Task<RepositoryResponse> Create(NotificationModel model)
         {
             if (model is null)

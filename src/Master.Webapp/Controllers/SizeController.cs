@@ -15,7 +15,7 @@ namespace Master.Webapp.Controllers
         private readonly ISizeApiClient _sizeApiClient;
         private readonly INotificationApiClient _notificationApiClient;
 
-        public SizeController(ISizeApiClient sizeApiClient, 
+        public SizeController(ISizeApiClient sizeApiClient,
             INotificationApiClient notificationApiClient)
         {
             _sizeApiClient = sizeApiClient;
@@ -68,8 +68,8 @@ namespace Master.Webapp.Controllers
             noti.IsRead = true;
 
             var claims = HttpContext.User.Claims;
-            var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;
-            noti.UserId = userId;
+            var userId = claims.FirstOrDefault(c => c.Type == "Username").Value;
+            noti.UserId = "Tài khoản " + userId + " đã thêm 1 bản ghi";
 
             if (result)
             {
