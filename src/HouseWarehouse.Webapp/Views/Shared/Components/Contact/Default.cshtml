@@ -1,0 +1,15 @@
+﻿@model IEnumerable<HouseWarehouseStore.Models.ContactModel>
+
+<div class="col-lg-3 col-md-6">
+    @foreach (var item in Model)
+    {
+        <div class="footer-widget">
+            <h2>Liên Hệ</h2>
+            <div class="contact-info">
+                <p><i class="fa fa-map-marker"></i>@item.Address</p>
+                <p><i class="fa fa-envelope"></i>@item.Email</p>
+                <p><i class="fa fa-phone"></i>+@item.Mobile</p>
+            </div>
+        </div>
+    }
+</div>
