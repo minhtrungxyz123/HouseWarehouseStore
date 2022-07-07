@@ -16,7 +16,7 @@ namespace HouseWarehouseStore.Models
         public decimal? Size { get; set; }
 
         public string? CollectionId { get; set; }
-
+        public  string? CommentId { get; set; }
         public IFormFile? filesadd { get; set; }
         public IFormFile? Coverfilesadd { get; set; }
         public string? ArticlesId { get; set; }

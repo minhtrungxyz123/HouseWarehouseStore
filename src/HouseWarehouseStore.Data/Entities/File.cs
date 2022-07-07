@@ -15,5 +15,6 @@
         public  string? ProductCategoryId { get; set; }
         public string? ProductId { get; set; }
         public string? AdminId { get; set; }
+        public  string? CommentId { get; set; }
     }
 }

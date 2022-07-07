@@ -2,7 +2,7 @@
 
 namespace HouseWarehouseStore.Models
 {
-    internal class CommentSearchModel : PagingRequestBase
+    public class CommentSearchModel : PagingRequestBase
     {
         public string? Keyword { get; set; }
     }

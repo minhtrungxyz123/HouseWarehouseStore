@@ -16,6 +16,7 @@ builder.Services.AddDbContext<HouseWarehouseStoreDbContext>(options => options.U
 #region Add Service
 
 builder.Services.AddScoped<IBannerService, BannerService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 #endregion Add Service
 

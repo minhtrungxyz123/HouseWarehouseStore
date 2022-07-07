@@ -35,6 +35,7 @@ builder.Services.AddScoped<IProductSizeColorService, ProductSizeColorService>();
 builder.Services.AddScoped<IProductCategoryService, ProductCategoryService>();
 builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITagProductService, TagProductService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 #endregion Add Service
 

@@ -19,7 +19,7 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.Property(e => e.Profession).HasMaxLength(500);
 
-            entity.Property(e => e.Star).HasMaxLength(500);
+            entity.Property(e => e.Star).IsRequired();
 
             entity.Property(e => e.Image).HasMaxLength(500);
 

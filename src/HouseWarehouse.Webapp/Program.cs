@@ -10,6 +10,7 @@ builder.Services.AddControllersWithViews();
 #region Add DI
 
 builder.Services.AddScoped<IBannerApiClient, BannerApiClient>();
+builder.Services.AddScoped<ICommentApiClient, CommentApiClient>();
 
 #endregion Add DI
 var app = builder.Build();

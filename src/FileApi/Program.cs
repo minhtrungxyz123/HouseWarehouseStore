@@ -22,6 +22,7 @@ builder.Services.AddScoped<IFilesBannerService, FilesBannerService>();
 builder.Services.AddScoped<IFilesProductCategoryService, FilesProductCategoryService>();
 builder.Services.AddScoped<IFilesProductService, FilesProductService>();
 builder.Services.AddScoped<IFilesAdminService, FilesAdminService>();
+builder.Services.AddScoped<IFilesCommentService, FilesCommentService>();
 
 #endregion Add Service
 

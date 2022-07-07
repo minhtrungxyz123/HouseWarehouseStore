@@ -38,6 +38,10 @@ namespace HouseWarehouseStore.Data.Configuration
                 .HasMaxLength(36)
                 .IsUnicode(false);
 
+            entity.Property(e => e.CommentId)
+            .HasMaxLength(36)
+            .IsUnicode(false);
+
             entity.Property(e => e.BannerId)
                 .HasMaxLength(36)
                 .IsUnicode(false);
