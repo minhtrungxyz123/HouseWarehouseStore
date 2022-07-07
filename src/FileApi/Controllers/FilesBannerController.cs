@@ -71,7 +71,7 @@ namespace FileApi.Controllers
 
         [Route("create-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string bannerId, int width = 100, int height = 100)
+        public async Task<IActionResult> CreateImage([FromForm] List<IFormFile> filesadd, string bannerId, int width = 600, int height = 400)
         {
             if (filesadd == null || filesadd.Count == 0)
 
@@ -135,7 +135,7 @@ namespace FileApi.Controllers
 
         [Route("update-image")]
         [HttpPost, DisableRequestSizeLimit]
-        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string bannerId, int width = 100, int height = 100)
+        public async Task<IActionResult> UpdateImage([FromForm] List<IFormFile> filesadd, string bannerId, int width = 600, int height = 400)
         {
             if (filesadd == null || filesadd.Count == 0)
 

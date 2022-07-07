@@ -7,8 +7,8 @@
         {
             <div class="img-item">
             <img asp-append-version="true" width="@item.Width" height="@item.Height" src="@(Configuration["ApiFiles"]+"/files-banner/image/"+ @item.CoverImage)" />
-            <a class="img-text" href="">
-                <p>Some text goes here that describes the image</p>
+            <a class="img-text" href="@item.Url">
+                <p>@item.BannerName</p>
             </a>
         </div>
         }   

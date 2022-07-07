@@ -56,8 +56,8 @@
                         <label asp-for="GroupId" class="control-label"></label>
                         <br />
                         <select asp-for="GroupId">
-                            <option value="1">Slide on Top 1440 x 632</option>
-                            <option value="2">Banner Slide 465 x 330(áp dụng với slide có 3 banner)</option>
+                            <option value="1">Slide on Top 600 x 400</option>
+                            <option value="2">Banner Slide 400 x 300(áp dụng với slide có 2 banner)</option>
                             <option value="3">Banner To Home 700 x 497</option>
                             <option value="4">Banner Nhỏ Home auto x 243</option>
                         </select>
@@ -118,12 +118,12 @@
             var id = parseInt($("#GroupId").val());
             switch (id) {
                 case 1:
-                    $("#Height").val(632);
-                    $("#Width").val(1440);
+                    $("#Height").val(400);
+                    $("#Width").val(600);
                     break;
                 case 2:
-                    $("#Height").val(330);
-                    $("#Width").val(465);
+                    $("#Height").val(300);
+                    $("#Width").val(400);
                     break;
                 case 3:
                     $("#Height").val(497);
