@@ -57,6 +57,7 @@ namespace HouseWarehouseStore.Data.EF
             modelBuilder.ApplyConfiguration(new UploadConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
             modelBuilder.ApplyConfiguration(new CommentConfiguration());
+            modelBuilder.ApplyConfiguration(new FollowConfiguration());
         }
 
         private readonly IMediator _mediator;
@@ -112,5 +113,6 @@ namespace HouseWarehouseStore.Data.EF
         public virtual DbSet<Entities.File> Files { get; set; }
         public virtual DbSet<Notification> Notifications { get; set; }
         public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<Follow> Follows { get; set; }
     }
 }
