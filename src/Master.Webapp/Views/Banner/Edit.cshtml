@@ -68,8 +68,12 @@
                         <select asp-for="GroupId">
                             <option value="1">Slide on Top 600 x 400</option>
                             <option value="2">Banner Slide 400 x 300 (áp dụng với slide có 2 banner)</option>
-                            <option value="3">Banner To Home 700 x 497</option>
-                            <option value="4">Banner Nhỏ Home auto x 243</option>
+                            <option value="3">Banner To Home 1 304 x 400</option>
+                            <option value="4">Banner Nhỏ Home 1 450 x 400</option>
+                            <option value="5">Banner Nhỏ Home 2 304 x 150</option>
+                            <option value="6">Banner Nhỏ Home 3 304 x 150</option>
+                            <option value="7">Banner Nhỏ Home 4 304 x 250</option>
+                            <option value="8">Banner Nhỏ Home 5 304 x 400</option>
                         </select>
 
                         <span asp-validation-for="GroupId" class="text-danger"></span>
@@ -138,12 +142,28 @@
                     $("#Width").val(400);
                     break;
                 case 3:
-                    $("#Height").val(497);
-                    $("#Width").val(700);
+                    $("#Height").val(400);
+                    $("#Width").val(304);
                     break;
                 case 4:
-                    $("#Height").val(243);
-                    $("#Width").val(335);
+                    $("#Height").val(400);
+                    $("#Width").val(450);
+                    break;
+                case 5:
+                    $("#Height").val(150);
+                    $("#Width").val(304);
+                    break;
+                case 6:
+                    $("#Height").val(150);
+                    $("#Width").val(304);
+                    break;
+                case 7:
+                    $("#Height").val(250);
+                    $("#Width").val(304);
+                    break;
+                case 8:
+                    $("#Height").val(400);
+                    $("#Width").val(304);
                     break;
             }
         });

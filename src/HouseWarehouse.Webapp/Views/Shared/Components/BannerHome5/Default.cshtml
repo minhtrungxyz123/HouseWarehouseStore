@@ -1,0 +1,12 @@
+﻿@model IEnumerable<HouseWarehouseStore.Models.BannerModel>
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration;
+
+@foreach (var item in Model)
+{
+<div class="category-item ch-250">
+    <img asp-append-version="true" width="@item.Width" height="@item.Height" src="@(Configuration["ApiFiles"]+"/files-banner/image/"+ @item.CoverImage)" />
+    <a class="category-name" href="@item.Url">
+        <p>@item.BannerName</p>
+    </a>
+</div>
+}
