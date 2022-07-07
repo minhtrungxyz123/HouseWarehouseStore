@@ -50,6 +50,7 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Files banner"), Required(ErrorMessage = "Hãy lưu files")]
         public IFormFile? filesadd { get; set; }
+        public  string? Icon { get; set; }
 
         public List<FilesModel>? FilesModels { get; set; }
 

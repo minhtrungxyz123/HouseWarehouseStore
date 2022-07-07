@@ -46,7 +46,8 @@ namespace Master.Service
                 ParentId = item.ParentId,
                 CoverImage = item.CoverImage,
                 DescriptionMeta = item.DescriptionMeta,
-                Soft = item.Soft
+                Soft = item.Soft,
+                Icon = item.Icon
             };
             return new ApiSuccessResult<ProductCategory>(model);
         }
@@ -88,7 +89,8 @@ namespace Master.Service
                     CoverImage = u.pr.CoverImage,
                     ParentId = u.tp.Name,
                     Url = u.pr.Url,
-                    ProductCategorieId = u.pr.ProductCategorieId
+                    ProductCategorieId = u.pr.ProductCategorieId,
+                    Icon = u.pr.Icon
                 })
                 .ToListAsync();
 
@@ -164,7 +166,8 @@ namespace Master.Service
                 Url = model.Url,
                 CoverImage = model.CoverImage,
                 DescriptionMeta = model.DescriptionMeta,
-                Soft = model.Soft
+                Soft = model.Soft,
+                Icon = model.Icon
             };
 
             await _context.ProductCategories.AddAsync(item);
@@ -201,6 +204,7 @@ namespace Master.Service
             item.CoverImage = model.CoverImage;
             item.DescriptionMeta = model.DescriptionMeta;
             item.Soft = model.Soft;
+            item.Icon = model.Icon;
 
             _context.ProductCategories.Update(item);
 

@@ -21,6 +21,8 @@ namespace HouseWarehouseStore.Data.Configuration
 
             entity.Property(e => e.Image).HasMaxLength(500);
 
+            entity.Property(e => e.Icon).HasMaxLength(500);
+
             entity.Property(e => e.Name).HasMaxLength(50);
 
             entity.Property(e => e.ParentId)
