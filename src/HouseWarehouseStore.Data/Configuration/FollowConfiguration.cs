@@ -15,15 +15,7 @@ namespace HouseWarehouseStore.Data.Configuration
                     .IsUnicode(false)
                     .HasColumnName("FollowId");
 
-            entity.Property(e => e.Twitter).HasMaxLength(500);
-
-            entity.Property(e => e.Facebook).HasMaxLength(500);
-
-            entity.Property(e => e.Linkedin).HasMaxLength(100);
-
-            entity.Property(e => e.Instagram).HasMaxLength(100);
-
-            entity.Property(e => e.Youtube).HasMaxLength(100);
+            entity.Property(e => e.FollowLink).HasMaxLength(500);
 
             entity.Property(e => e.Icon).HasMaxLength(100);
         }

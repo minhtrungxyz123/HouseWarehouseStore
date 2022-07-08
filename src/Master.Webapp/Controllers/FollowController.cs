@@ -73,13 +73,9 @@ namespace Master.Webapp.Controllers
                 var model = result.ResultObj;
                 var updateRequest = new FollowModel()
                 {
-                    Facebook = model.Facebook,
+                    FollowLink = model.FollowLink,
                     FollowId = id,
-                    Icon = model.Icon,
-                    Instagram = model.Instagram,
-                    Linkedin = model.Linkedin,
-                    Twitter = model.Twitter,
-                    Youtube = model.Youtube
+                    Icon = model.Icon
                 };
                 return ViewComponent("EditFollow", updateRequest);
             }
@@ -128,13 +124,9 @@ namespace Master.Webapp.Controllers
                 var model = result.ResultObj;
                 var updateRequest = new FollowModel()
                 {
-                    Facebook = model.Facebook,
+                    FollowLink = model.FollowLink,
                     FollowId = id,
-                    Icon = model.Icon,
-                    Instagram = model.Instagram,
-                    Linkedin = model.Linkedin,
-                    Twitter = model.Twitter,
-                    Youtube = model.Youtube
+                    Icon = model.Icon
                 };
                 return ViewComponent("DetailFollow", updateRequest);
             }

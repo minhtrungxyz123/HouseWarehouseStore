@@ -27,12 +27,8 @@ namespace HouseWarehouse.Webapp.Controllers.Components
                     var item = new FollowModel
                     {
                         FollowId = m.FollowId,
-                        Youtube = m.Youtube,
-                        Facebook = m.Facebook,
-                        Icon = m.Icon,
-                        Instagram = m.Instagram,
-                        Linkedin = m.Linkedin,
-                        Twitter = m.Twitter
+                        FollowLink = m.FollowLink,
+                        Icon = m.Icon
                     };
                     categories.Add(item);
                 }

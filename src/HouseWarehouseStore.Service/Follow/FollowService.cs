@@ -16,7 +16,7 @@ namespace HouseWarehouseStore.Service
         public async Task<List<Follow>> GetAll()
         {
             return await _context.Follows
-                             .OrderByDescending(p => p.Youtube)
+                             .OrderByDescending(p => p.FollowLink)
                              .ToListAsync();
         }
     }

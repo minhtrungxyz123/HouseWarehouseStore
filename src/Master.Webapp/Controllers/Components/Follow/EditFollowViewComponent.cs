@@ -13,12 +13,8 @@ namespace Master.Webapp.Controllers.Components.Follow
         {
             var model = new FollowModel();
             model.FollowId = view.FollowId;
-            model.Twitter = view.Twitter;
-            model.Linkedin = view.Linkedin;
-            model.Youtube = view.Youtube;
-            model.Facebook = view.Facebook;
+            model.FollowLink = view.FollowLink;
             model.Icon = view.Icon;
-            model.Instagram = view.Instagram;
             return View(model);
         }
     }

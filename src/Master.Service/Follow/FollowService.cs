@@ -29,19 +29,15 @@ namespace Master.Service
             }
 
             var item = await _context.Follows
-                            .OrderByDescending(p => p.Youtube)
+                            .OrderByDescending(p => p.FollowLink)
                             .DefaultIfEmpty()
                             .FirstOrDefaultAsync(p => p.FollowId == id);
 
             var model = new Follow()
             {
                 FollowId = item.FollowId,
-                Youtube = item.Youtube,
-                Icon = item.Icon,
-                Facebook = item.Facebook,
-                Instagram = item.Instagram,
-                Linkedin = item.Linkedin,
-                Twitter = item.Twitter
+                FollowLink = item.FollowLink,
+                Icon = item.Icon
             };
             return new ApiSuccessResult<Follow>(model);
         }
@@ -51,7 +47,7 @@ namespace Master.Service
             var query = _context.Follows.AsQueryable();
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Youtube.Contains(ctx.Keyword));
+                query = query.Where(x => x.FollowLink.Contains(ctx.Keyword));
             }
 
             int totalRow = await query.CountAsync();
@@ -61,11 +57,7 @@ namespace Master.Service
                 .Select(x => new Follow()
                 {
                     FollowId = x.FollowId,
-                    Youtube = x.Youtube,
-                    Twitter = x.Twitter,
-                    Linkedin = x.Linkedin,
-                    Instagram = x.Instagram,
-                    Facebook = x.Facebook,
+                    FollowLink = x.FollowLink,
                     Icon = x.Icon
                 }).ToListAsync();
 
@@ -87,7 +79,7 @@ namespace Master.Service
             }
 
             var item = await _context.Follows
-                            .OrderByDescending(p => p.Youtube)
+                            .OrderByDescending(p => p.FollowLink)
                             .DefaultIfEmpty()
                             .FirstOrDefaultAsync(p => p.FollowId == id);
 
@@ -107,13 +99,9 @@ namespace Master.Service
 
             Follow item = new Follow()
             {
-                Youtube = model.Youtube,
+                FollowLink = model.FollowLink,
                 FollowId = Guid.NewGuid().ToString(),
-                Icon = model.Icon,
-                Facebook = model.Facebook,
-                Instagram = model.Facebook,
-                Linkedin = model.Linkedin,
-                Twitter = model.Twitter
+                Icon = model.Icon
             };
 
             await _context.Follows.AddAsync(item);
@@ -139,12 +127,8 @@ namespace Master.Service
             }
 
             var item = await _context.Follows.FindAsync(id);
-            item.Youtube = model.Youtube;
+            item.FollowLink = model.FollowLink;
             item.Icon = model.Icon;
-            item.Linkedin = model.Linkedin;
-            item.Twitter = model.Twitter;
-            model.Facebook = model.Facebook;
-            model.Instagram = model.Instagram;
 
             _context.Follows.Update(item);
 
