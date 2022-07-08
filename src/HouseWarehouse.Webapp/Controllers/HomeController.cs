@@ -18,11 +18,6 @@ namespace HouseWarehouse.Webapp.Controllers
             return View();
         }
 
-        public IActionResult Search()
-        {
-            return View();
-        }
-
         public IActionResult Privacy()
         {
             return View();
