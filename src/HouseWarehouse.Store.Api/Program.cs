@@ -20,6 +20,7 @@ builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFollowService, FollowService>();
+builder.Services.AddScoped<IProductService, ProductService>();
 
 #endregion Add Service
 
