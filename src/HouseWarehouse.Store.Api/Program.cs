@@ -19,6 +19,7 @@ builder.Services.AddScoped<IBannerService, BannerService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFollowService, FollowService>();
 
 #endregion Add Service
 

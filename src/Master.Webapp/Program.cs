@@ -60,6 +60,7 @@ builder.Services.AddScoped<IProductSizeColorApiClient, ProductSizeColorApiClient
 builder.Services.AddScoped<IFilesApiClient, FilesApiClient>();
 builder.Services.AddScoped<INotificationApiClient, NotificationApiClient>();
 builder.Services.AddScoped<ICommentApiClient, CommentApiClient>();
+builder.Services.AddScoped<IFollowApiClient, FollowApiClient>();
 
 #endregion Add DI
 
@@ -98,7 +99,6 @@ builder.Services.Configure<PasswordHasherOptions>(option =>
     option.CompatibilityMode = PasswordHasherCompatibilityMode.IdentityV3;
     option.IterationCount = 12000;
 });
-
 
 var app = builder.Build();
 
