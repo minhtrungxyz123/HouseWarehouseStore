@@ -102,5 +102,7 @@ namespace HouseWarehouseStore.Models
         public IList<SelectListItem>? AvailableProductCategory { get; set; }
 
         public IList<SelectListItem>? AvailableCollection { get; set; }
+
+        public List<CommentModel>? CommentModels { get; set; }
     }
 }

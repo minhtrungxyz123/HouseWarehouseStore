@@ -21,5 +21,13 @@ namespace HouseWarehouse.Store.Api.Controllers
 
             return Ok(comments);
         }
+
+        [Route("get-by-id")]
+        [HttpGet]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var user = await _commentService.GetByIdAsyn(id);
+            return Ok(user);
+        }
     }
 }

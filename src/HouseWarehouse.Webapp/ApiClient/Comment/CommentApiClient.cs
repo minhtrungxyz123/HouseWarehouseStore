@@ -24,6 +24,11 @@ namespace HouseWarehouse.Webapp.ApiClient
             return await GetListAsync<CommentModel>($"/comment/get-all");
         }
 
+        public async Task<List<CommentModel>> GetById(string id)
+        {
+            return await GetListAsync<CommentModel>($"/comment/get-by-id?id={id}");
+        }
+
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {
             var client = _httpClientFactory.CreateClient();

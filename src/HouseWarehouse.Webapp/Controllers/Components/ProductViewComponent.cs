@@ -7,10 +7,13 @@ namespace HouseWarehouse.Webapp.Controllers.Components
     public class ProductViewComponent : ViewComponent
     {
         private readonly IProductApiClient _productApiClient;
+        private readonly ICommentApiClient _commentApiClient;
 
-        public ProductViewComponent(IProductApiClient productApiClient)
+        public ProductViewComponent(IProductApiClient productApiClient,
+            ICommentApiClient commentApiClient)
         {
             _productApiClient = productApiClient;
+            _commentApiClient = commentApiClient;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
@@ -49,7 +52,8 @@ namespace HouseWarehouse.Webapp.Controllers.Components
                         SaleOff = m.SaleOff,
                         Sort = m.Sort,
                         StatusProduct = m.StatusProduct,
-                        TitleMeta = m.TitleMeta
+                        TitleMeta = m.TitleMeta,
+                        CommentModels = await _commentApiClient.GetById(m.ProductId),
                     };
                     categories.Add(item);
                 }

@@ -5,5 +5,7 @@ namespace HouseWarehouse.Webapp.ApiClient
     public interface ICommentApiClient
     {
         Task<List<CommentModel>> GetAll();
+
+        Task<List<CommentModel>> GetById(string id);
     }
 }
