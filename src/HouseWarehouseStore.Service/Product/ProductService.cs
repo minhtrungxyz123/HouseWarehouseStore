@@ -29,7 +29,9 @@ namespace HouseWarehouseStore.Service
                         from tp in pt.DefaultIfEmpty()
                         join w in _context.Collections on pr.CollectionId equals w.CollectionId into wt
                         from tw in wt.DefaultIfEmpty()
-                        select new { pr, tp, tw };
+                        join m in _context.Comments on pr.ProductId equals m.ProductId into mt
+                        from tm in mt.DefaultIfEmpty()
+                        select new { pr, tp, tw, tm };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -66,7 +68,8 @@ namespace HouseWarehouseStore.Service
                     GiftInfo = u.pr.GiftInfo,
                     ProductCategorieId = u.tp.Name,
                     ProductId = u.pr.ProductId,
-                    DescriptionMeta = u.pr.DescriptionMeta
+                    DescriptionMeta = u.pr.DescriptionMeta,
+                    star = u.tm.Star
                 })
                 .ToListAsync();
 

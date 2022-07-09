@@ -104,5 +104,7 @@ namespace HouseWarehouseStore.Models
         public IList<SelectListItem>? AvailableCollection { get; set; }
 
         public List<CommentModel>? CommentModels { get; set; }
+
+        public int? star { get; set; }
     }
 }

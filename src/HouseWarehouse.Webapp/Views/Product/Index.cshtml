@@ -76,11 +76,11 @@
                                 <div class="product-title">
                                     <a href="@item.ProductId">@item.Name</a>
                                     <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+
+                                        @for (int i = 0; i < @item.star; i++)
+                                        {
+                                            <i class="fa fa-star"></i>
+                                        }
                                     </div>
                                 </div>
                                 <div class="product-image">
