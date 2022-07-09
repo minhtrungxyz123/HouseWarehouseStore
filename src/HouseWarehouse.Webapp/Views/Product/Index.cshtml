@@ -74,7 +74,7 @@
                         <div class="col-md-4">
                             <div class="product-item">
                                 <div class="product-title">
-                                    <a href="@item.ProductId">@item.Name</a>
+                                    <a asp-action="Detail" asp-route-id="@item.ProductId">@item.Name</a>
                                     <div class="ratting">
 
                                         @for (int i = 0; i < @item.star; i++)

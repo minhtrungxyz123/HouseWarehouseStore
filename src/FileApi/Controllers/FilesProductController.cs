@@ -227,6 +227,13 @@ namespace FileApi.Controllers
             return Ok(files);
         }
 
+        [HttpGet("product/{take}/{id}")]
+        public async Task<IActionResult> GetProductDetail(int take, string id)
+        {
+            var files = await _filesProductService.GetFilesProductDetail(take, id);
+            return Ok(files);
+        }
+
         #endregion List
 
         #region Utilities

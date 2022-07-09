@@ -28,5 +28,13 @@ namespace HouseWarehouse.Store.Api.Controllers
             var products = await _productService.GetAllPaging(ctx);
             return Ok(products);
         }
+
+        [Route("get-product-detail")]
+        [HttpGet]
+        public async Task<IActionResult> GetProductDetail(string id)
+        {
+            var user = await _productService.GetProductDetail(id);
+            return Ok(user);
+        }
     }
 }

@@ -14,6 +14,8 @@ namespace Files.Service
 
         Task<List<FilesModel>> GetFilesProduct(int take);
 
+        Task<List<FilesModel>> GetFilesProductDetail(int take, string id);
+
         Task<HouseWarehouseStore.Data.Entities.File> GetByNameAsync(string name);
     }
 }

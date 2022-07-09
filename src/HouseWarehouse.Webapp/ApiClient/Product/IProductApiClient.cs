@@ -7,5 +7,7 @@ namespace HouseWarehouse.Webapp.ApiClient
     {
         Task<List<ProductModel>> GetAll();
         Task<ApiResult<Pagination<ProductModel>>> Get(ProductSearchModel request);
+        Task<ApiResult<ProductModel>> GetProductDetail(string id);
+        Task<List<FilesModel>> GetFilesProduct(int take, string id);
     }
 }

@@ -8,5 +8,6 @@ namespace HouseWarehouseStore.Service
     {
         Task<List<Product>> GetAll(bool showHidden = true);
         Task<ApiResult<Pagination<ProductModel>>> GetAllPaging(ProductSearchContext ctx);
+        Task<ApiResult<Product>> GetProductDetail(string id);
     }
 }

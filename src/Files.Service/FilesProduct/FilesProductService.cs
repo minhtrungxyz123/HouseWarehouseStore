@@ -146,6 +146,27 @@ namespace Files.Service
             return query.FirstOrDefaultAsync();
         }
 
+        public async Task<List<FilesModel>> GetFilesProductDetail(int take, string id)
+        {
+            var query = from p in _context.Files
+                        where p.ProductId == id
+                        select new { p };
+
+            var data = await query.OrderByDescending(x => x.p.FileName).Take(take)
+                .Select(x => new FilesModel()
+                {
+                    Id = x.p.Id,
+                    FileName = x.p.FileName,
+                    ProductId = x.p.ProductId,
+                    Size = x.p.Size,
+                    Extension = x.p.Extension,
+                    MimeType = x.p.MimeType,
+                    Path = x.p.Path
+                }).ToListAsync();
+
+            return data;
+        }
+
         #endregion List
     }
 }

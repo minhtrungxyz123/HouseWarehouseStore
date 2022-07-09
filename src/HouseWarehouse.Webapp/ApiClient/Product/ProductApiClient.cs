@@ -39,6 +39,27 @@ namespace HouseWarehouse.Webapp.ApiClient
             return await GetListAsync<ProductModel>($"/product/get-all");
         }
 
+        public async Task<List<FilesModel>> GetFilesProduct(int take, string id)
+        {
+            var data = await GetListFiles<FilesModel>($"/files-product/product/{take}/{id}");
+            return data;
+        }
+
+        public async Task<List<T>> GetListFiles<T>(string url, bool requiredLogin = false)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["ApiFiles"]);
+
+            var response = await client.GetAsync(url);
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+            {
+                var data = (List<T>)JsonConvert.DeserializeObject(body, typeof(List<T>));
+                return data;
+            }
+            throw new Exception(body);
+        }
+
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)
         {
             var client = _httpClientFactory.CreateClient();
@@ -52,6 +73,18 @@ namespace HouseWarehouse.Webapp.ApiClient
                 return data;
             }
             throw new Exception(body);
+        }
+
+        public async Task<ApiResult<ProductModel>> GetProductDetail(string id)
+        {
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.GetAsync($"/product/get-product-detail?id={id}");
+            var body = await response.Content.ReadAsStringAsync();
+            if (response.IsSuccessStatusCode)
+                return JsonConvert.DeserializeObject<ApiSuccessResult<ProductModel>>(body);
+
+            return JsonConvert.DeserializeObject<ApiErrorResult<ProductModel>>(body);
         }
     }
 }

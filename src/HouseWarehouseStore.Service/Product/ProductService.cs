@@ -83,5 +83,47 @@ namespace HouseWarehouseStore.Service
 
             return new ApiSuccessResult<Pagination<ProductModel>>(pagination);
         }
+
+        public async Task<ApiResult<Product>> GetProductDetail(string id)
+        {
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            var item = await _context.Products
+                            .OrderByDescending(p => p.Name)
+                            .DefaultIfEmpty()
+                            .FirstOrDefaultAsync(p => p.ProductId == id);
+
+            var model = new Product()
+            {
+                CollectionId = item.CollectionId,
+                Active = item.Active,
+                ProductId = item.ProductId,
+                Name = item.Name,
+                TitleMeta = item.TitleMeta,
+                BarCode = item.BarCode,
+                Body = item.Body,
+                Content = item.Content,
+                CreateBy = item.CreateBy,
+                CreateDate = item.CreateDate,
+                Description = item.Description,
+                DescriptionMeta = item.Description,
+                Factory = item.Factory,
+                GiftInfo = item.GiftInfo,
+                Home = item.Home,
+                Hot = item.Hot,
+                Image = item.Image,
+                Price = item.Price,
+                ProductCategorieId = item.ProductCategorieId,
+                Quantity = item.Quantity,
+                QuyCach = item.QuyCach,
+                SaleOff = item.SaleOff,
+                Sort = item.Sort,
+                StatusProduct = item.StatusProduct
+            };
+            return new ApiSuccessResult<Product>(model);
+        }
     }
 }

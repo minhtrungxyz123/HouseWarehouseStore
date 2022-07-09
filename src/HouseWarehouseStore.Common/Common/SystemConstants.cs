@@ -17,6 +17,11 @@
             public const int NumberOfAdmin = 1;
         }
 
+        public class ProductDetailSettings
+        {
+            public const int NumberOfProductDetail = 6;
+        }
+
         public class ArticleSettings
         {
             public const int NumberOfArticle = 1;
