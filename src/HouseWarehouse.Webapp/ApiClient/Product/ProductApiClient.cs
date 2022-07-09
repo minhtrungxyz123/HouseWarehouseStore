@@ -1,6 +1,7 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace HouseWarehouse.Webapp.ApiClient
 {
@@ -17,6 +18,20 @@ namespace HouseWarehouse.Webapp.ApiClient
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<ApiResult<Pagination<ProductModel>>> Get(ProductSearchModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/product/get?keyword={request.Keyword}&pageIndex=" +
+                $"{request.PageIndex}&pageSize={request.PageSize}");
+            var body = await response.Content.ReadAsStringAsync();
+            var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ProductModel>>>(body);
+            return model;
         }
 
         public async Task<List<ProductModel>> GetAll()
