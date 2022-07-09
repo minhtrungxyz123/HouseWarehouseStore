@@ -15,9 +15,9 @@ namespace HouseWarehouse.Store.Api.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(bool showHidden = true)
         {
-            var comments = await _productService.GetAll();
+            var comments = await _productService.GetAll(showHidden);
 
             return Ok(comments);
         }
