@@ -119,19 +119,22 @@
                                 </ul>
                             </div>
                             <div id="reviews" class="container tab-pane fade">
-                                <div class="reviews-submitted">
-                                    <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
-                                    <div class="ratting">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
+                                @foreach (var item in Model.CommentModels)
+                                {
+                                    <div class="reviews-submitted">
+                                        <div class="reviewer">@item.CustomerName - <span>01 Jan 2020</span></div>
+                                        <div class="ratting">
+                                            @for (var i = 0; i < @item.Star; i++)
+                                            {
+                                                <i class="fa fa-star"></i>
+                                            }
+                                        </div>
+                                        <p>
+                                            @item.Contents
+                                        </p>
                                     </div>
-                                    <p>
-                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
-                                    </p>
-                                </div>
+                                }
+
                                 <div class="reviews-submit">
                                     <h4>Give your Review:</h4>
                                     <div class="ratting">
