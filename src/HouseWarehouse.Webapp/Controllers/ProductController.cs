@@ -66,6 +66,7 @@ namespace HouseWarehouse.Webapp.Controllers
                     Sort = model.Sort,
                     StatusProduct = model.StatusProduct,
                     TitleMeta = model.TitleMeta,
+                    CommentModels = await _commentApiClient.GetById(id),
                     FilesModels = await _productApiClient.GetFilesProduct(SystemConstants.ProductDetailSettings.NumberOfProductDetail, id)
                 };
                 return View(updateRequest);
