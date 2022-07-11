@@ -8,9 +8,9 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<Member> entity)
         {
-            entity.ToTable("Member");
+            entity.ToTable("Members");
 
-            entity.Property(e => e.MemberId)
+            entity.Property(e => e.Id)
                     .HasMaxLength(36)
                     .IsUnicode(false);
 

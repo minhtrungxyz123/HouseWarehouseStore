@@ -1,0 +1,25 @@
+﻿@model HouseWarehouseStore.Models.MemberModel
+
+<div class="navbar-nav ml-auto">
+    <div class="nav-item dropdown">
+        @if (@Model.Email != null)
+        {
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">@Model.Email</a>
+        }
+        else
+        {
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tài Khoản Người Dùng</a>
+        }
+        <div class="dropdown-menu">
+            @if (@Model.Email == "Tài Khoản Người Dùng")
+            {
+                <a href="http://localhost:6100/Login/Index?ReturnUrl=%2F" class="dropdown-item">Đăng Nhập</a>
+                <a href="#" class="dropdown-item">Đăng Ký</a>
+            }
+            else
+            {
+                <a href="#" class="dropdown-item">Thông Tin Tài Khoản</a>
+            }
+        </div>
+    </div>
+</div>

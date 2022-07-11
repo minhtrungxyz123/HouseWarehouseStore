@@ -32,13 +32,13 @@ namespace Master.Service
             var item = await _context.Members
                             .OrderByDescending(p => p.Fullname)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.MemberId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             var model = new Member()
             {
                 Address = item.Address,
                 Active = item.Active,
-                MemberId = item.MemberId,
+                Id = item.Id,
                 Password = item.Password,
                 Role = item.Role,
                 Fullname = item.Fullname,
@@ -80,7 +80,7 @@ namespace Master.Service
                 {
                     Fullname = x.Fullname,
                     Password = x.Password,
-                    MemberId = x.MemberId,
+                    Id = x.Id,
                     Role = x.Role,
                     Active = x.Active,
                     Mobile = x.Mobile,
@@ -113,7 +113,7 @@ namespace Master.Service
             var item = await _context.Members
                             .OrderByDescending(p => p.Fullname)
                             .DefaultIfEmpty()
-                            .FirstOrDefaultAsync(p => p.MemberId == id);
+                            .FirstOrDefaultAsync(p => p.Id == id);
 
             return item;
         }
@@ -154,7 +154,7 @@ namespace Master.Service
                 Email = model.Email,
                 HomePage = model.HomePage,
                 LockAccount = model.LockAccount,
-                MemberId = Guid.NewGuid().ToString(),
+                Id = Guid.NewGuid().ToString(),
             };
 
             await _context.Members.AddAsync(item);
@@ -163,7 +163,7 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.MemberId.ToString(),
+                Id = item.Id,
             };
         }
 

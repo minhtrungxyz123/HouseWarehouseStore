@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using HouseWarehouseStore.Data.Repositories;
 
 namespace HouseWarehouseStore.Data.Entities
 {
-    public partial class Member
+    public partial class Member : BaseEntity
     {
-        public string MemberId { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string Password { get; set; } = null!;
         public string Fullname { get; set; } = null!;

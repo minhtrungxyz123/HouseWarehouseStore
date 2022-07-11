@@ -1,10 +1,12 @@
 ﻿using HouseWarehouse.Webapp.ApiClient;
 using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HouseWarehouse.Webapp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
@@ -17,6 +19,7 @@ namespace HouseWarehouse.Webapp.Controllers
             _commentApiClient = commentApiClient;
         }
 
+        [AllowAnonymous]
         public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 9)
         {
             var request = new ProductSearchModel()
