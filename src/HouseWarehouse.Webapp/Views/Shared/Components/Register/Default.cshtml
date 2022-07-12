@@ -1,0 +1,33 @@
+﻿@model HouseWarehouseStore.Models.MemberModel
+
+<div class="col-lg-6">
+    <div class="register-form">
+        <form asp-controller="Register" asp-action="Create" enctype="multipart/form-data" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Tên đầy đủ</label>
+                    <input asp-for="Fullname" class="form-control" type="text" placeholder="Tên đầy đủ">
+                </div>
+                <div class="col-md-6">
+                    <label>E-mail</label>
+                    <input asp-for="Email" class="form-control" type="text" placeholder="E-mail">
+                </div>
+                <div class="col-md-6">
+                    <label>Số điện thoại</label>
+                    <input asp-for="Mobile" class="form-control" type="text" placeholder="Số điện thoại">
+                </div>
+                <div class="col-md-6">
+                    <label>Địa chỉ</label>
+                    <input asp-for="Address" class="form-control" type="text" placeholder="Địa chỉ">
+                </div>
+                <div class="col-md-6">
+                    <label>Mật khẩu</label>
+                    <input asp-for="Password" class="form-control" type="password" placeholder="Password">
+                </div>
+                <div class="col-md-12">
+                    <input type="submit" class="btn" value="Gửi" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

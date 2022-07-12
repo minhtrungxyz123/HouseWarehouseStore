@@ -1,5 +1,6 @@
 ﻿using HouseWarehouseStore.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace HouseWarehouse.Webapp.ApiClient
 {
@@ -24,6 +25,18 @@ namespace HouseWarehouse.Webapp.ApiClient
 
         #region Method
 
+        public async Task<bool> Create(MemberModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync("/member/create", httpContent);
+
+            return response.IsSuccessStatusCode;
+        }
+
         public async Task<MemberModel> GetCheckActive(string id, bool showHidden = true)
         {
             var client = _httpClientFactory.CreateClient();
@@ -36,6 +49,6 @@ namespace HouseWarehouse.Webapp.ApiClient
             return JsonConvert.DeserializeObject<MemberModel>(body);
         }
 
-        #endregion
+        #endregion Method
     }
 }

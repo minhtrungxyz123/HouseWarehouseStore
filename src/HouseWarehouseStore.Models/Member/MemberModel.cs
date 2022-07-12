@@ -34,15 +34,15 @@ namespace HouseWarehouseStore.Models
         public DateTime CreateDate { get; set; }
 
         [MaxLength(200)]
-        public string HomePage { get; set; }
+        public string? HomePage { get; set; }
 
         [Display(Name = "Trạng thái")]
         public bool Active { get; set; }
 
         [Required(ErrorMessage = "Chưa nhập thông tin")]
-        public string Role { get; set; }
+        public string? Role { get; set; }
         public bool ConfirmEmail { get; set; }
-        public string Token { get; set; }
+        public string? Token { get; set; }
         public bool LockAccount { get; set; }
     }
 }
