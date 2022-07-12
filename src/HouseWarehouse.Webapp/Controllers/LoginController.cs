@@ -29,6 +29,12 @@ namespace HouseWarehouse.Webapp.Controllers
 
         #region Method
 
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Remove("Token");
+            return RedirectToAction("Index", "Login");
+        }
         public IActionResult Index()
         {
             return View();

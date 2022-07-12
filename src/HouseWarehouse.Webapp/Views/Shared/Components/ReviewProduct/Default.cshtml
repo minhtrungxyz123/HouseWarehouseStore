@@ -1,0 +1,23 @@
+﻿@model HouseWarehouseStore.Models.CommentModel
+
+<form asp-controller="ReviewProduct" asp-action="Create" enctype="multipart/form-data" method="post">
+    <input type="hidden" asp-for="ProductId" />
+    <div class="reviews-submit">
+        <h4>Đưa ra đánh giá của bạn:</h4>
+        <div class="ratting">
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+        </div>
+        <div class="row form">
+            <div class="col-sm-12">
+                <input asp-for="Contents" placeholder="Nội dung" />
+            </div>
+            <div class="col-sm-12">
+                <button type="submit">Gửi</button>
+            </div>
+        </div>
+    </div>
+</form>

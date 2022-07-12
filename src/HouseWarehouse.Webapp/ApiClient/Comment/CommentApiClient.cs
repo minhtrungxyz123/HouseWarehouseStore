@@ -1,6 +1,7 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace HouseWarehouse.Webapp.ApiClient
 {
@@ -17,6 +18,18 @@ namespace HouseWarehouse.Webapp.ApiClient
             _httpClientFactory = httpClientFactory;
             _configuration = configuration;
             _httpContextAccessor = httpContextAccessor;
+        }
+
+        public async Task<bool> Create(CommentModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync("/comment/create", httpContent);
+
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<List<CommentModel>> GetAll()
