@@ -15,7 +15,7 @@ namespace HouseWarehouseStore.Models
         [Required(ErrorMessage = "Chưa nhập thông tin")]
         [Display(Name = "Mật khẩu")]
         [DataType(DataType.Password)]
-        public string Password { get; set; }
+        public string? Password { get; set; }
 
         [Required(ErrorMessage = "Chưa nhập thông tin")]
         [Display(Name = "Tên đầy đủ")]
@@ -41,8 +41,8 @@ namespace HouseWarehouseStore.Models
 
         [Required(ErrorMessage = "Chưa nhập thông tin")]
         public string Role { get; set; }
-        public bool? ConfirmEmail { get; set; }
+        public bool ConfirmEmail { get; set; }
         public string Token { get; set; }
-        public bool? LockAccount { get; set; }
+        public bool LockAccount { get; set; }
     }
 }

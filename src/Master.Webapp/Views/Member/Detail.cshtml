@@ -1,0 +1,124 @@
+﻿@model HouseWarehouseStore.Models.MemberModel
+
+@{
+    ViewData["Title"] = "Chi tiết tài khoản người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tài khoản người dùng</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Chi tiết tài khoản người dùng</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Member"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Detail">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group bg-white">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Fullname" class="control-label"></label>
+                        <input asp-for="Fullname" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Mobile" class="control-label"></label>
+                        <input asp-for="Mobile" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="CreateDate" class="control-label"></label>
+                        <input asp-for="CreateDate" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="CreateDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="HomePage" class="control-label"></label>
+                        <input asp-for="HomePage" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="HomePage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Kích hoạt Email
+                        <div class="col-md-9">
+                            @Html.DisplayFor(m => m.ConfirmEmail)
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Khóa tài khoản
+                        <div class="col-md-9">
+                            @Html.DisplayFor(m => m.LockAccount)
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Trạng thái
+                        <div class="col-md-9">
+                            @Html.DisplayFor(m => m.Active)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Role" class="control-label"></label>
+                        <select asp-for="Role">
+                            <option value="User">Nhân Viên</option>
+                            <option value="Member">Khách Hàng</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    <div class="form-groupbg-white">
+                        <label asp-for="Token" class="control-label"></label>
+                        <input asp-for="Token" class="form-control" readonly="@(true)" />
+                        <span asp-validation-for="Token" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $('#Body').summernote({
+            placeholder: 'Mời bạn soạn thảo',
+            tabsize: 2,
+            height: 500,              // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,
+            toolbar: [
+                ['style', ['style']],
+                ['font', ['bold', 'underline', 'clear']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']],
+                ['insert', ['link', 'picture', 'video']],
+                ['view', ['fullscreen', 'codeview', 'help']]
+            ]
+        });
+
+        $('#Body').on('summernote.change', function(we, contents, $editable) {
+            var markupStr = $('#Body').summernote('code');
+            console.log(markupStr)
+            $("input#Body").val(markupStr);
+        });
+
+        $(document).ready(function() {
+            $('#Body').summernote('code', $("input#Body").val());
+        })
+    </script>
+}
+
+

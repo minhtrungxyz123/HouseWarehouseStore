@@ -210,16 +210,16 @@ namespace Master.Service
 
             var item = await _context.ArticleCategories.FindAsync(id);
             item.CategoryName = model.CategoryName;
-            model.CategoryActive = model.CategoryActive;
-            model.CategorySort = model.CategorySort;
-            model.DescriptionMeta = model.DescriptionMeta;
-            model.Hot = model.Hot;
-            model.ParentId = model.ParentId;
-            model.ShowHome = model.ShowHome;
-            model.ShowMenu = model.ShowMenu;
-            model.Slug = model.Slug;
-            model.TitleMeta = model.TitleMeta;
-            model.Url = model.Url;
+            item.CategoryActive = model.CategoryActive;
+            item.CategorySort = model.CategorySort;
+            item.DescriptionMeta = model.DescriptionMeta;
+            item.Hot = model.Hot;
+            item.ParentId = model.ParentId;
+            item.ShowHome = model.ShowHome;
+            item.ShowMenu = model.ShowMenu;
+            item.Slug = model.Slug;
+            item.TitleMeta = model.TitleMeta;
+            item.Url = model.Url;
 
             _context.ArticleCategories.Update(item);
 

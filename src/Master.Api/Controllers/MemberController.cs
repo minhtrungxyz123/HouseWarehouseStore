@@ -56,11 +56,11 @@ namespace Master.Api.Controllers
             return Ok(item);
         }
 
-        [Route("get-available")]
+        [Route("get-active")]
         [HttpGet]
-        public async Task<IActionResult> GetAvailableList(bool showHidden = true)
+        public async Task<IActionResult> GetActive(bool showHidden = true)
         {
-            var user = _memberService.GetMvcListItems(showHidden);
+            var user = _memberService.GetActive(showHidden);
             return Ok(user);
         }
 
@@ -79,7 +79,7 @@ namespace Master.Api.Controllers
             }
             else
             {
-                return BadRequest(new ApiBadRequestResponse("Create member failed"));
+                return BadRequest(new ApiBadRequestResponse("Create Member failed"));
             }
         }
 
@@ -98,7 +98,7 @@ namespace Master.Api.Controllers
             }
             else
             {
-                return BadRequest(new ApiBadRequestResponse("Update member failed"));
+                return BadRequest(new ApiBadRequestResponse("Update Member failed"));
             }
         }
 

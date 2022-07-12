@@ -10,16 +10,16 @@ namespace Master.Service
 
         Task<ApiResult<Pagination<Member>>> GetAllPaging(MemberSearchContext ctx);
 
-        Task<Member> GetById(string? id);
+        Task<Member> GetById(string id);
 
         Task<RepositoryResponse> Create(MemberModel model);
 
-        Task<RepositoryResponse> Update(string? id, MemberModel model);
+        Task<RepositoryResponse> Update(string id, MemberModel model);
 
-        Task<int> Delete(string? id);
+        Task<int> Delete(string id);
 
-        Task<ApiResult<Member>> GetByIdAsyn(string? id);
+        Task<ApiResult<Member>> GetByIdAsyn(string id);
 
-        IList<Member> GetMvcListItems(bool showHidden = true);
+        IList<Member> GetActive(bool showHidden = true);
     }
 }

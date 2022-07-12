@@ -1,0 +1,105 @@
+﻿@model HouseWarehouseStore.Models.MemberModel
+
+@{
+    ViewData["Title"] = "Sửa tài khoản người dùng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tài khoản người dùng</h1>
+
+    <div class="card mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Sửa tài khoản người dùng</h6>
+        </div>
+        <div class="card-header">
+            <a class="btn btn-danger" asp-action="Index" asp-controller="Member"><i class="fa-solid fa-arrow-left"></i> Về danh sách</a>
+        </div>
+
+        <div class="card-body">
+            <div class="col-md-8">
+                <form asp-action="Edit">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
+                    <div class="form-group bg-white">
+                        <label asp-for="Email" class="control-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Password" class="control-label"></label>
+                        <input type="password" asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Fullname" class="control-label"></label>
+                        <input asp-for="Fullname" class="form-control" />
+                        <span asp-validation-for="Fullname" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Address" class="control-label"></label>
+                        <input asp-for="Address" class="form-control" />
+                        <span asp-validation-for="Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="Mobile" class="control-label"></label>
+                        <input asp-for="Mobile" class="form-control" />
+                        <span asp-validation-for="Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="CreateDate" class="control-label"></label>
+                        <input asp-for="CreateDate" class="form-control" />
+                        <span asp-validation-for="CreateDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group bg-white">
+                        <label asp-for="HomePage" class="control-label"></label>
+                        <input asp-for="HomePage" class="form-control" />
+                        <span asp-validation-for="HomePage" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Kích hoạt Email
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.ConfirmEmail)
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Khóa tài khoản
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.LockAccount)
+                        </div>
+                    </div>
+                    <div class="form-group form-group-sm">
+                        Trạng thái
+                        <div class="col-md-9">
+                            @Html.EditorFor(m => m.Active)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Role" class="control-label"></label>
+                        <select asp-for="Role">
+                            <option value="User">Nhân Viên</option>
+                            <option value="Member">Khách Hàng</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+                    <div class="form-groupbg-white">
+                        <label asp-for="Token" class="control-label"></label>
+                        <input asp-for="Token" class="form-control" />
+                        <span asp-validation-for="Token" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Lưu" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+    </script>
+}
+
+

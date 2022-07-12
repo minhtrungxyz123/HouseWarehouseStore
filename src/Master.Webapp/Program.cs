@@ -61,6 +61,7 @@ builder.Services.AddScoped<IFilesApiClient, FilesApiClient>();
 builder.Services.AddScoped<INotificationApiClient, NotificationApiClient>();
 builder.Services.AddScoped<ICommentApiClient, CommentApiClient>();
 builder.Services.AddScoped<IFollowApiClient, FollowApiClient>();
+builder.Services.AddScoped<IMemberApiClient, MemberApiClient>();
 
 #endregion Add DI
 

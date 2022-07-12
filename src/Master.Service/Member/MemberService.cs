@@ -3,7 +3,6 @@ using HouseWarehouseStore.Data.EF;
 using HouseWarehouseStore.Data.Entities;
 using HouseWarehouseStore.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Linq;
 
 namespace Master.Service
 {
@@ -22,7 +21,7 @@ namespace Master.Service
 
         #region List
 
-        public async Task<ApiResult<Member>> GetByIdAsyn(string? id)
+        public async Task<ApiResult<Member>> GetByIdAsyn(string id)
         {
             if (id is null)
             {
@@ -30,24 +29,24 @@ namespace Master.Service
             }
 
             var item = await _context.Members
-                            .OrderByDescending(p => p.Fullname)
+                            .OrderByDescending(p => p.Email)
                             .DefaultIfEmpty()
                             .FirstOrDefaultAsync(p => p.Id == id);
 
             var model = new Member()
             {
-                Address = item.Address,
-                Active = item.Active,
                 Id = item.Id,
-                Password = item.Password,
-                Role = item.Role,
-                Fullname = item.Fullname,
+                Email = item.Email,
+                Active = item.Active,
+                Address = item.Address,
                 ConfirmEmail = item.ConfirmEmail,
                 CreateDate = item.CreateDate,
-                Email = item.Email,
+                Fullname = item.Fullname,
                 HomePage = item.HomePage,
                 LockAccount = item.LockAccount,
                 Mobile = item.Mobile,
+                Password = item.Password,
+                Role = item.Role,
                 Token = item.Token
             };
             return new ApiSuccessResult<Member>(model);
@@ -56,7 +55,7 @@ namespace Master.Service
         public async Task<IEnumerable<Member>> GetAll()
         {
             var getAll = await _context.Members
-                            .OrderByDescending(p => p.Fullname)
+                            .OrderByDescending(p => p.Email)
                             .ToListAsync();
             return getAll;
         }
@@ -66,10 +65,9 @@ namespace Master.Service
             var query = _context.Members.AsQueryable();
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.Fullname.Contains(ctx.Keyword)
-                || x.Address.Contains(ctx.Keyword)
-                || x.Email.Contains(ctx.Keyword)
-                || x.Mobile.Contains(ctx.Keyword));
+                query = query.Where(x => x.Email.Contains(ctx.Keyword)
+                || x.Fullname.Contains(ctx.Keyword)
+                || x.Address.Contains(ctx.Keyword));
             }
 
             int totalRow = await query.CountAsync();
@@ -78,19 +76,19 @@ namespace Master.Service
                 .Take(ctx.PageSize)
                 .Select(x => new Member()
                 {
-                    Fullname = x.Fullname,
-                    Password = x.Password,
                     Id = x.Id,
-                    Role = x.Role,
-                    Active = x.Active,
-                    Mobile = x.Mobile,
-                    Email = x.Email,
                     Address = x.Address,
-                    ConfirmEmail = x.ConfirmEmail,
+                    Email = x.Email,
+                    Role = x.Role,
+                    Password = x.Password,
+                    Fullname = x.Fullname,
                     Token = x.Token,
-                    LockAccount = x.LockAccount,
+                    Mobile = x.Mobile,
+                    Active = x.Active,
+                    ConfirmEmail = x.ConfirmEmail,
                     CreateDate = x.CreateDate,
                     HomePage = x.HomePage,
+                    LockAccount = x.LockAccount
                 }).ToListAsync();
 
             var pagedResult = new Pagination<Member>()
@@ -103,7 +101,7 @@ namespace Master.Service
             return new ApiSuccessResult<Pagination<Member>>(pagedResult);
         }
 
-        public async Task<Member?> GetById(string? id)
+        public async Task<Member?> GetById(string id)
         {
             if (id is null)
             {
@@ -111,21 +109,21 @@ namespace Master.Service
             }
 
             var item = await _context.Members
-                            .OrderByDescending(p => p.Fullname)
+                            .OrderByDescending(p => p.Email)
                             .DefaultIfEmpty()
                             .FirstOrDefaultAsync(p => p.Id == id);
 
             return item;
         }
 
-        public IList<Member> GetMvcListItems(bool showHidden = true)
+        public IList<Member> GetActive(bool showHidden = true)
         {
             var query = from p in _context.Members.AsQueryable() select p;
             if (showHidden)
             {
                 query = from p in query where p.Active select p;
             }
-            query = from p in query orderby p.Fullname select p;
+            query = from p in query orderby p.Email select p;
             return query.ToList();
         }
 
@@ -142,19 +140,19 @@ namespace Master.Service
 
             Member item = new Member()
             {
-                Fullname = model.Fullname,
+                Email = model.Email,
+                Id = Guid.NewGuid().ToString(),
                 Active = model.Active,
+                LockAccount = model.LockAccount,
+                HomePage = model.HomePage,
+                CreateDate = model.CreateDate,
+                ConfirmEmail = model.ConfirmEmail,
+                Mobile = model.Mobile,
+                Address = model.Address,
+                Fullname = model.Fullname,
                 Password = model.Password,
                 Role = model.Role,
-                Mobile = model.Mobile,
-                Token = model.Token,
-                Address = model.Address,
-                ConfirmEmail = model.ConfirmEmail,
-                CreateDate = model.CreateDate,
-                Email = model.Email,
-                HomePage = model.HomePage,
-                LockAccount = model.LockAccount,
-                Id = Guid.NewGuid().ToString(),
+                Token = model.Token
             };
 
             await _context.Members.AddAsync(item);
@@ -163,11 +161,11 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = item.Id,
+                Id = item.Id
             };
         }
 
-        public async Task<RepositoryResponse> Update(string? id, MemberModel model)
+        public async Task<RepositoryResponse> Update(string id, MemberModel model)
         {
             if (id is null)
             {
@@ -180,18 +178,18 @@ namespace Master.Service
             }
 
             var item = await _context.Members.FindAsync(id);
-            item.Fullname = model.Fullname;
+            item.Email = model.Email;
             item.Active = model.Active;
+            item.LockAccount = model.LockAccount;
+            item.HomePage = model.HomePage;
+            item.CreateDate = model.CreateDate;
+            item.ConfirmEmail = model.ConfirmEmail;
+            item.Mobile = model.Mobile;
+            item.Address = model.Address;
+            item.Fullname = model.Fullname;
             item.Password = model.Password;
             item.Role = model.Role;
-            item.Mobile = model.Mobile;
             item.Token = model.Token;
-            item.Address = model.Address;
-            item.ConfirmEmail = model.ConfirmEmail;
-            item.CreateDate = model.CreateDate;
-            item.Email = model.Email;
-            item.HomePage = model.HomePage;
-            item.LockAccount = model.LockAccount;
 
             _context.Members.Update(item);
 
@@ -200,11 +198,11 @@ namespace Master.Service
             return new RepositoryResponse()
             {
                 Result = result,
-                Id = id.ToString(),
+                Id = id,
             };
         }
 
-        public async Task<int> Delete(string? id)
+        public async Task<int> Delete(string id)
         {
             if (id is null)
             {

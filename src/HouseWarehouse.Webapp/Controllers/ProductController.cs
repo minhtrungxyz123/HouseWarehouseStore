@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HouseWarehouse.Webapp.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin, Member, User")]
     public class ProductController : Controller
     {
         private readonly IProductApiClient _productApiClient;
