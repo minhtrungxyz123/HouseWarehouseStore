@@ -22,7 +22,7 @@ namespace HouseWarehouse.Webapp.ApiClient
 
         public async Task<List<ProductLikeModel>> GetAll(string idProd, string idMember)
         {
-            return await GetListAsync<ProductLikeModel>($"/banner?idProd={idProd}&idMember={idMember}");
+            return await GetListAsync<ProductLikeModel>($"/product-like?idProd={idProd}&idMember={idMember}");
         }
 
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

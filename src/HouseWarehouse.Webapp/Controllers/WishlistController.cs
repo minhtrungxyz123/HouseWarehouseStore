@@ -15,14 +15,17 @@ namespace HouseWarehouse.Webapp.Controllers
             _wishlistApiClient = wishlistApiClient;
         }
 
-        public async Task<IActionResult> Index(string? idMember, string keyword, int pageIndex = 1, int pageSize = 10)
+        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 10)
         {
+            var claims = HttpContext.User.Claims;
+            var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;
+
             var request = new ProductLikeSearchModel()
             {
                 Keyword = keyword,
                 PageIndex = pageIndex,
                 PageSize = pageSize,
-                IdMember = idMember
+                IdMember = userId
             };
             var data = await _wishlistApiClient.Get(request);
             ViewBag.Keyword = keyword;
