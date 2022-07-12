@@ -1,6 +1,7 @@
 ﻿using HouseWarehouseStore.Common;
 using HouseWarehouseStore.Models;
 using Newtonsoft.Json;
+using System.Text;
 
 namespace HouseWarehouse.Webapp.ApiClient
 {
@@ -37,6 +38,20 @@ namespace HouseWarehouse.Webapp.ApiClient
                 return data;
             }
             throw new Exception(body);
+        }
+
+        public async Task<ApiResult<Pagination<ProductLikeModel>>> Get(ProductLikeSearchModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+
+            var response = await client.GetAsync($"/product-like/get?keyword={request.Keyword}&pageIndex=" +
+                $"{request.PageIndex}&pageSize={request.PageSize}&IdMember={request.IdMember}");
+            var body = await response.Content.ReadAsStringAsync();
+            var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ProductLikeModel>>>(body);
+            return model;
         }
     }
 }

@@ -23,6 +23,7 @@ builder.Services.AddScoped<ICategoryApiClient, CategoryApiClient>();
 builder.Services.AddScoped<IFollowApiClient, FollowApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 builder.Services.AddScoped<IMemberApiClient, MemberApiClient>();
+builder.Services.AddScoped<IWishlistApiClient, WishlistApiClient>();
 
 #endregion Add DI
 
