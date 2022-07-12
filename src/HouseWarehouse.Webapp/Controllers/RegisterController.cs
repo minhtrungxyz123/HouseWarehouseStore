@@ -14,6 +14,11 @@ namespace HouseWarehouse.Webapp.Controllers
             _memberApiClient = memberApiClient;
         }
 
+        public async Task<IActionResult> SuccessMsg()
+        {
+            return View();
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -36,8 +41,8 @@ namespace HouseWarehouse.Webapp.Controllers
 
             if (result)
             {
-                TempData["result"] = "Thêm mới thành công";
-                return RedirectToAction("Index");
+                TempData["result"] = "Đăng ký tài khoản thành công";
+                return RedirectToAction("SuccessMsg");
             }
 
             ModelState.AddModelError("", "Thêm mới thất bại");
