@@ -8,7 +8,7 @@ namespace HouseWarehouseStore.Data.Configuration
     {
         public void Configure(EntityTypeBuilder<ProductLike> entity)
         {
-            entity.ToTable("ProductLike");
+            entity.ToTable("ProductLikes");
 
             entity.HasIndex(e => e.MemberId, "IX_ProductLikes_MemberId");
 

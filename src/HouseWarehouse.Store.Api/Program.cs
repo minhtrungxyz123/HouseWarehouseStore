@@ -22,6 +22,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFollowService, FollowService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
+builder.Services.AddScoped<IProductLikeService, ProductLikeService>();
 
 #endregion Add Service
 
