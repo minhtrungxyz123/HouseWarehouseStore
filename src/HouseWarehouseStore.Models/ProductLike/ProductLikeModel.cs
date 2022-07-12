@@ -7,6 +7,6 @@
         public string MemberId { get; set; }
         public string? ProductsProductId { get; set; }
         public string? ProductName { get; set; }
-        public int? Quantity { get; set; }
+        public decimal? Quantity { get; set; }
     }
 }

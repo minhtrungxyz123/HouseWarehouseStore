@@ -32,8 +32,10 @@ namespace HouseWarehouseStore.Service
         public async Task<ApiResult<Pagination<ProductLikeModel>>> GetAllPaging(ProductLikeSearchContext ctx)
         {
             var query = from pr in _context.ProductLikes
+                        join c in _context.Products on pr.ProductId equals c.ProductId into pt
+                        from tp in pt.DefaultIfEmpty()
                         where pr.MemberId == ctx.IdMember
-                        select new { pr };
+                        select new { pr, tp };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -50,7 +52,9 @@ namespace HouseWarehouseStore.Service
                     ProductId = u.pr.ProductId,
                     MemberId = u.pr.MemberId,
                     ProductLikeId = u.pr.ProductId,
-                    ProductsProductId = u.pr.ProductsProductId
+                    ProductsProductId = u.pr.ProductsProductId,
+                    ProductName = u.tp.Name,
+                    Quantity = u.tp.SaleOff
                 })
                 .ToListAsync();
 
