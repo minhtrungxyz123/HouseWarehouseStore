@@ -24,9 +24,9 @@ namespace HouseWarehouse.Store.Api.Controllers
 
         [Route("get-by-id")]
         [HttpGet]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(string id, int take = 1)
         {
-            var user = await _commentService.GetByIdAsyn(id);
+            var user = await _commentService.GetByIdAsyn(id, take);
             return Ok(user);
         }
     }

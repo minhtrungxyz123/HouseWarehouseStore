@@ -21,9 +21,9 @@ namespace HouseWarehouseStore.Service
                              .ToListAsync();
         }
 
-        public async Task<List<CommentModel>> GetByIdAsyn(string id)
+        public async Task<List<CommentModel>> GetByIdAsyn(string id, int take)
         {
-            var banner = from x in _context.Comments
+            var banner = from x in _context.Comments.Take(take)
                          where x.ProductId == id
                          select new CommentModel()
                          {

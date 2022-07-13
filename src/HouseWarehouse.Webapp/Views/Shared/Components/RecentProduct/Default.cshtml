@@ -9,9 +9,9 @@
                 <div class="product-title">
                     <a asp-controller="Product" asp-action="Detail" asp-route-id="@item.ProductId">@item.Name</a>
                     <div class="ratting">
-                        @foreach (var item1 in @item.CommentModels)
+                        @foreach (var item1 in item.CommentModels)
                         {
-                            @for (int i = 0; i < @item1.Star; i++)
+                            @for (var i = 0; i < @item1.Star; i++)
                             {
                                 <i class="fa fa-star"></i>
                             }
@@ -29,8 +29,8 @@
                     </div>
                 </div>
                 <div class="product-price">
-                    <h3>@item.Price<span>VNĐ</span></h3>
-                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Mua Ngay</a>
+                    <h3>@item.SaleOff <span>VNĐ</span></h3>
+                    <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
                 </div>
             </div>
         </div>

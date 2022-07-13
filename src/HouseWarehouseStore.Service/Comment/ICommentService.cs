@@ -7,6 +7,6 @@ namespace HouseWarehouseStore.Service
     {
         Task<List<Comment>> GetAll();
 
-        Task<List<CommentModel>> GetByIdAsyn(string id);
+        Task<List<CommentModel>> GetByIdAsyn(string id, int take);
     }
 }
