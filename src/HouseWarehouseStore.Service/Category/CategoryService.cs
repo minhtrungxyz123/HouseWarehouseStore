@@ -13,10 +13,10 @@ namespace HouseWarehouseStore.Service
             _context = context;
         }
 
-        public async Task<List<ProductCategory>> GetAll()
+        public async Task<List<ProductCategory>> GetAll(bool showHidden = true)
         {
             return await _context.ProductCategories
-                             .OrderByDescending(p => p.Name)
+                             .OrderByDescending(p => p.Name).Where(p => p.Active == showHidden)
                              .ToListAsync();
         }
     }

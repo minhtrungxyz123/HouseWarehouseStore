@@ -19,9 +19,9 @@ namespace HouseWarehouse.Webapp.ApiClient
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<ProductCategoryModel>> GetAll()
+        public async Task<List<ProductCategoryModel>> GetAll(bool showHidden = true)
         {
-            return await GetListAsync<ProductCategoryModel>($"/product-category/get-all");
+            return await GetListAsync<ProductCategoryModel>($"/product-category/get-all?showHidden={showHidden}");
         }
 
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

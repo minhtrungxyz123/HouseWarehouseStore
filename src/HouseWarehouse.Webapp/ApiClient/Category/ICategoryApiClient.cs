@@ -4,6 +4,6 @@ namespace HouseWarehouse.Webapp.ApiClient
 {
     public interface ICategoryApiClient
     {
-        Task<List<ProductCategoryModel>> GetAll();
+        Task<List<ProductCategoryModel>> GetAll(bool showHidden = true);
     }
 }

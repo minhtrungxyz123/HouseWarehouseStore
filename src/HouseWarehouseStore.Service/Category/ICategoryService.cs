@@ -4,6 +4,6 @@ namespace HouseWarehouseStore.Service
 {
     public interface ICategoryService
     {
-        Task<List<ProductCategory>> GetAll();
+        Task<List<ProductCategory>> GetAll(bool showHidden = true);
     }
 }
