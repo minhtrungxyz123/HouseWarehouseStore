@@ -8,5 +8,7 @@ namespace HouseWarehouse.Webapp.ApiClient
         Task<List<ProductLikeModel>> GetAll(string idProd, string idMember);
 
         Task<ApiResult<Pagination<ProductLikeModel>>> Get(ProductLikeSearchModel request);
+
+        public Task<bool> Create(ProductLikeModel request);
     }
 }

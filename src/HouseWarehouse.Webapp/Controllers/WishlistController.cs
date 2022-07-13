@@ -35,5 +35,28 @@ namespace HouseWarehouse.Webapp.Controllers
             }
             return View(data.ResultObj);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(string idProd)
+        {
+            var request = new ProductLikeModel();
+            request.ProductId = idProd;
+
+            if (!ModelState.IsValid)
+                return View(request);
+            var claims = HttpContext.User.Claims;
+            var userId = claims.FirstOrDefault(c => c.Type == "Id").Value;
+            request.MemberId = userId;
+
+            var result = await _wishlistApiClient.Create(request);
+
+            if (result)
+            {
+                TempData["result"] = "Đã thích sản phẩm";
+            }
+
+            ModelState.AddModelError("", "Thêm mới thất bại");
+            return View(request);
+        }
     }
 }

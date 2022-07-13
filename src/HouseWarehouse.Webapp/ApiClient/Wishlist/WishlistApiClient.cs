@@ -53,5 +53,17 @@ namespace HouseWarehouse.Webapp.ApiClient
             var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ProductLikeModel>>>(body);
             return model;
         }
+
+        public async Task<bool> Create(ProductLikeModel request)
+        {
+            var json = JsonConvert.SerializeObject(request);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var client = _httpClientFactory.CreateClient();
+            client.BaseAddress = new Uri(_configuration["BaseAddress"]);
+            var response = await client.PostAsync("/product-like/create", httpContent);
+
+            return response.IsSuccessStatusCode;
+        }
     }
 }
