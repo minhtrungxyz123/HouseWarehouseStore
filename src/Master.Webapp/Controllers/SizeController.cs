@@ -69,7 +69,7 @@ namespace Master.Webapp.Controllers
 
             var claims = HttpContext.User.Claims;
             var userId = claims.FirstOrDefault(c => c.Type == "Username").Value;
-            noti.UserId = "Tài khoản " + userId + " đã thêm 1 bản ghi";
+            noti.UserId = $"Tai khoan [{userId}] da them 1 ban ghi !";
 
             if (result)
             {
