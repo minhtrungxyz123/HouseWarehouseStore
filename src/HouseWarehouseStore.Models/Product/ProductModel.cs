@@ -106,5 +106,7 @@ namespace HouseWarehouseStore.Models
         public List<CommentModel>? CommentModels { get; set; }
 
         public int? star { get; set; }
+
+        public List<SizeModel>? SizeModels { get; set; }
     }
 }

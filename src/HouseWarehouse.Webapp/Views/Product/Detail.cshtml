@@ -64,10 +64,14 @@
                                 <div class="p-size">
                                     <h4>Kích Cỡ:</h4>
                                     <div class="btn-group btn-group-sm">
-                                        <button type="button" class="btn">S</button>
+                                        @foreach (var item in Model.SizeModels)
+                                        {
+                                            <button type="button" class="btn">@item.SizeProduct</button>
+                                        }
+                                        @*<button type="button" class="btn">S</button>
                                         <button type="button" class="btn">M</button>
                                         <button type="button" class="btn">L</button>
-                                        <button type="button" class="btn">XL</button>
+                                        <button type="button" class="btn">XL</button>*@
                                     </div>
                                 </div>
                                 <div class="p-color">
