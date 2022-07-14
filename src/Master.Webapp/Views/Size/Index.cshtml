@@ -63,6 +63,9 @@
                             <th>
                                 Size
                             </th>
+                            <th>
+                                Sản phẩm
+                            </th>
                             <th>Chức năng</th>
                         </tr>
                     </thead>
@@ -72,6 +75,9 @@
                             <tr>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.SizeProduct)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ProductId)
                                 </td>
                                 <td>
                                     <button id="sua" onclick="Edit('@item.SizeId')" class="btn btn-primary"><i class="fa-solid fa-pen"></i> Sửa</button>

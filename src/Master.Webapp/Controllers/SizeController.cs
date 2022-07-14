@@ -2,6 +2,7 @@
 using Master.Webapp.ApiClient;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 
@@ -12,14 +13,17 @@ namespace Master.Webapp.Controllers
     {
         #region Fields
 
+        private readonly IProductApiClient _productApiCient;
         private readonly ISizeApiClient _sizeApiClient;
         private readonly INotificationApiClient _notificationApiClient;
 
         public SizeController(ISizeApiClient sizeApiClient,
-            INotificationApiClient notificationApiClient)
+            INotificationApiClient notificationApiClient,
+            IProductApiClient productApiCient)
         {
             _sizeApiClient = sizeApiClient;
             _notificationApiClient = notificationApiClient;
+            _productApiCient = productApiCient;
         }
 
         #endregion Fields
@@ -89,11 +93,24 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+                await GetDropDownList(model);
                 var updateRequest = new SizeModel()
                 {
                     SizeProduct = model.SizeProduct,
                     SizeId = id,
+                    AvailableProduct = model.AvailableProduct
                 };
+                if (model.AvailableProduct.Count > 0 &&
+                !string.IsNullOrEmpty(model.ProductId))
+                {
+                    var item = model.AvailableProduct
+                        .FirstOrDefault(x => x.Value.Equals(model.ProductId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
                 return ViewComponent("EditSize", updateRequest);
             }
             return RedirectToAction("Error", "Home");
@@ -139,17 +156,30 @@ namespace Master.Webapp.Controllers
             if (result.IsSuccessed)
             {
                 var model = result.ResultObj;
+                await GetDropDownList(model);
                 var updateRequest = new SizeModel()
                 {
                     SizeProduct = model.SizeProduct,
                     SizeId = id,
+                    AvailableProduct = model.AvailableProduct,
                 };
+                if (model.AvailableProduct.Count > 0 &&
+                !string.IsNullOrEmpty(model.ProductId))
+                {
+                    var item = model.AvailableProduct
+                        .FirstOrDefault(x => x.Value.Equals(model.ProductId));
+
+                    if (item != null)
+                    {
+                        item.Selected = true;
+                    }
+                }
                 return ViewComponent("DetailSize", updateRequest);
             }
             return RedirectToAction("Error", "Home");
         }
 
-        #endregion
+        #endregion Method
 
         #region export
 
@@ -211,6 +241,38 @@ namespace Master.Webapp.Controllers
             return File(pck.GetAsByteArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
-        #endregion
+        #endregion export
+
+        #region Utilities
+
+        private async Task GetDropDownList(SizeModel model)
+        {
+            var availableProd = await _productApiCient.GetActive();
+
+            var categories = new List<SelectListItem>();
+            var data = availableProd;
+
+            if (data?.Count > 0)
+            {
+                foreach (var m in data)
+                {
+                    var item = new SelectListItem
+                    {
+                        Text = m.Name,
+                        Value = m.ProductId,
+                    };
+                    categories.Add(item);
+                }
+            }
+            categories.OrderBy(e => e.Text);
+            if (categories == null || categories.Count == 0)
+            {
+                categories = new List<SelectListItem>();
+            }
+
+            model.AvailableProduct = new List<SelectListItem>(categories);
+        }
+
+        #endregion Utilities
     }
 }

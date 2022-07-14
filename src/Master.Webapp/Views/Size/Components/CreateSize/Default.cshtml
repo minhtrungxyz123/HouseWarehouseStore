@@ -12,6 +12,13 @@
                     <span asp-validation-for="SizeProduct" class="text-danger"></span>
                 </div>
             </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label asp-for="ProductId" class="control-label"></label>
+                    @Html.DropDownListFor(m => m.ProductId, Model.AvailableProduct, "Sản phẩm", new { @class = "form-control", style = "width: 100%" })
+                    <span asp-validation-for="ProductId" class="text-danger"></span>
+                </div>
+            </div>
             <div class="modal-footer form-actions">
                 <button type="submit" class="btn btn-success btn-sm">
                     Lưu

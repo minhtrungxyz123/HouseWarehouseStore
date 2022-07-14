@@ -7,5 +7,6 @@ namespace HouseWarehouseStore.Data.Entities
     {
         public string SizeId { get; set; } = null!;
         public string? SizeProduct { get; set; }
+        public  string? ProductId { get; set; }
     }
 }

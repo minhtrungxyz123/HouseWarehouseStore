@@ -37,6 +37,7 @@ namespace Master.Service
             {
                 SizeId = item.SizeId,
                 SizeProduct = item.SizeProduct,
+                ProductId = item.ProductId,
             };
             return new ApiSuccessResult<Size>(model);
         }
@@ -48,32 +49,39 @@ namespace Master.Service
                             .ToListAsync();
         }
 
-        public async Task<ApiResult<Pagination<Size>>> GetAllPaging(SizeSearchContext ctx)
+        public async Task<ApiResult<Pagination<SizeModel>>> GetAllPaging(SizeSearchContext ctx)
         {
-            var query = _context.Sizes.AsQueryable();
+            var query = from pr in _context.Sizes
+                        join c in _context.Products on pr.ProductId equals c.ProductId into pt
+                        from tp in pt.DefaultIfEmpty()
+                        select new { pr, tp };
+
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
-                query = query.Where(x => x.SizeProduct.Contains(ctx.Keyword));
+                query = query.Where(x => x.pr.SizeProduct.Contains(ctx.Keyword));
             }
 
-            int totalRow = await query.CountAsync();
+            var totalRecords = await query.CountAsync();
 
-            var data = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
+            var items = await query.Skip((ctx.PageIndex - 1) * ctx.PageSize)
                 .Take(ctx.PageSize)
-                .Select(x => new Size()
+                .Select(u => new SizeModel()
                 {
-                    SizeProduct = x.SizeProduct,
-                    SizeId = x.SizeId,
-                }).ToListAsync();
+                    ProductId = u.tp.Name,
+                    SizeId = u.pr.SizeId,
+                    SizeProduct = u.pr.SizeProduct
+                })
+                .ToListAsync();
 
-            var pagedResult = new Pagination<Size>()
+            var pagination = new Pagination<SizeModel>
             {
-                TotalRecords = totalRow,
+                Items = items,
+                TotalRecords = totalRecords,
                 PageIndex = ctx.PageIndex,
                 PageSize = ctx.PageSize,
-                Items = data
             };
-            return new ApiSuccessResult<Pagination<Size>>(pagedResult);
+
+            return new ApiSuccessResult<Pagination<SizeModel>>(pagination);
         }
 
         public async Task<Size?> GetById(string? id)
@@ -104,60 +112,62 @@ namespace Master.Service
 
             Size item = new Size()
             {
+                ProductId = model.ProductId,
                 SizeProduct = model.SizeProduct,
                 SizeId = Guid.NewGuid().ToString(),
-        };
+            };
 
-        await _context.Sizes.AddAsync(item);
-        var result = await _context.SaveChangesAsync();
+            await _context.Sizes.AddAsync(item);
+            var result = await _context.SaveChangesAsync();
 
             return new RepositoryResponse()
-        {
-            Result = result,
+            {
+                Result = result,
                 Id = item.SizeId
             };
-    }
-
-    public async Task<RepositoryResponse> Update(string? id, SizeModel model)
-    {
-        if (id is null)
-        {
-            throw new ArgumentNullException(nameof(id));
         }
 
-        if (model is null)
+        public async Task<RepositoryResponse> Update(string? id, SizeModel model)
         {
-            throw new ArgumentNullException(nameof(model));
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
+
+            if (model is null)
+            {
+                throw new ArgumentNullException(nameof(model));
+            }
+
+            var item = await _context.Sizes.FindAsync(id);
+            item.SizeProduct = model.SizeProduct;
+            item.ProductId = model.ProductId;
+
+            _context.Sizes.Update(item);
+
+            var result = await _context.SaveChangesAsync();
+
+            return new RepositoryResponse()
+            {
+                Result = result,
+                Id = id
+            };
         }
 
-        var item = await _context.Sizes.FindAsync(id);
-        item.SizeProduct = model.SizeProduct;
-
-        _context.Sizes.Update(item);
-
-        var result = await _context.SaveChangesAsync();
-
-        return new RepositoryResponse()
+        public async Task<int> Delete(string? id)
         {
-            Result = result,
-            Id = id
-        };
-    }
+            if (id is null)
+            {
+                throw new ArgumentNullException(nameof(id));
+            }
 
-    public async Task<int> Delete(string? id)
-    {
-        if (id is null)
-        {
-            throw new ArgumentNullException(nameof(id));
+            var item = await _context.Sizes.FindAsync(id);
+
+            _context.Sizes.Remove(item);
+            var result = await _context.SaveChangesAsync();
+
+            return result;
         }
-
-        var item = await _context.Sizes.FindAsync(id);
-
-        _context.Sizes.Remove(item);
-        var result = await _context.SaveChangesAsync();
-
-        return result;
-    }
 
         public IList<Size> GetActive()
         {
