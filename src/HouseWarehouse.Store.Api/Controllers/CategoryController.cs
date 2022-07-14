@@ -21,5 +21,12 @@ namespace HouseWarehouse.Store.Api.Controllers
 
             return Ok(comments);
         }
+
+        [HttpGet("get")]
+        public async Task<IActionResult> GetAllPaging([FromQuery] CategorySearchContext ctx)
+        {
+            var products = await _categoryService.GetAllPaging(ctx);
+            return Ok(products);
+        }
     }
 }
