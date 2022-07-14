@@ -58,6 +58,7 @@ namespace Master.Webapp.Controllers.Components.ProductSizeColor
             model.AvailableProduct = new List<SelectListItem>(categories);
 
             //
+            var categories1 = new List<SelectListItem>();
             var data1 = availableColor;
 
             if (data1?.Count > 0)
@@ -69,18 +70,19 @@ namespace Master.Webapp.Controllers.Components.ProductSizeColor
                         Text = m.NameColor,
                         Value = m.ColorId,
                     };
-                    categories.Add(item);
+                    categories1.Add(item);
                 }
             }
-            categories.OrderBy(e => e.Text);
-            if (categories == null || categories.Count == 0)
+            categories1.OrderBy(e => e.Text);
+            if (categories1 == null || categories1.Count == 0)
             {
-                categories = new List<SelectListItem>();
+                categories1 = new List<SelectListItem>();
             }
 
-            model.AvailableColor = new List<SelectListItem>(categories);
+            model.AvailableColor = new List<SelectListItem>(categories1);
 
             //
+            var categories2 = new List<SelectListItem>();
             var data2 = availableSize;
 
             if (data2?.Count > 0)
@@ -92,16 +94,16 @@ namespace Master.Webapp.Controllers.Components.ProductSizeColor
                         Text = m.SizeProduct,
                         Value = m.SizeId,
                     };
-                    categories.Add(item);
+                    categories2.Add(item);
                 }
             }
-            categories.OrderBy(e => e.Text);
-            if (categories == null || categories.Count == 0)
+            categories2.OrderBy(e => e.Text);
+            if (categories2 == null || categories2.Count == 0)
             {
-                categories = new List<SelectListItem>();
+                categories2 = new List<SelectListItem>();
             }
 
-            model.AvailableSize = new List<SelectListItem>(categories);
+            model.AvailableSize = new List<SelectListItem>(categories2);
         }
 
         #endregion Utilities

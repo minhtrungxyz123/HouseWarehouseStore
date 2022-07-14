@@ -36,8 +36,7 @@ namespace Master.Service
             var model = new Size()
             {
                 SizeId = item.SizeId,
-                SizeProduct = item.SizeProduct,
-                ProductId = item.ProductId,
+                SizeProduct = item.SizeProduct
             };
             return new ApiSuccessResult<Size>(model);
         }
@@ -52,9 +51,7 @@ namespace Master.Service
         public async Task<ApiResult<Pagination<SizeModel>>> GetAllPaging(SizeSearchContext ctx)
         {
             var query = from pr in _context.Sizes
-                        join c in _context.Products on pr.ProductId equals c.ProductId into pt
-                        from tp in pt.DefaultIfEmpty()
-                        select new { pr, tp };
+                        select new { pr };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -67,7 +64,6 @@ namespace Master.Service
                 .Take(ctx.PageSize)
                 .Select(u => new SizeModel()
                 {
-                    ProductId = u.tp.Name,
                     SizeId = u.pr.SizeId,
                     SizeProduct = u.pr.SizeProduct
                 })
@@ -112,7 +108,6 @@ namespace Master.Service
 
             Size item = new Size()
             {
-                ProductId = model.ProductId,
                 SizeProduct = model.SizeProduct,
                 SizeId = Guid.NewGuid().ToString(),
             };
@@ -141,7 +136,6 @@ namespace Master.Service
 
             var item = await _context.Sizes.FindAsync(id);
             item.SizeProduct = model.SizeProduct;
-            item.ProductId = model.ProductId;
 
             _context.Sizes.Update(item);
 

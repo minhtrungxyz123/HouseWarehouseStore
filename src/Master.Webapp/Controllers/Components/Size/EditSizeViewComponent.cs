@@ -14,7 +14,6 @@ namespace Master.Webapp.Controllers.Components.Size
             var model = new SizeModel();
             model.SizeId = view.SizeId;
             model.SizeProduct = view.SizeProduct;
-            model.AvailableProduct = view.AvailableProduct;
             return View(model);
         }
     }

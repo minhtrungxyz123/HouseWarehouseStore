@@ -16,10 +16,6 @@ namespace HouseWarehouseStore.Data.Configuration
                     .HasColumnName("SizeID");
 
             entity.Property(e => e.SizeProduct).HasMaxLength(50);
-
-            entity.Property(e => e.ProductId)
-                .HasMaxLength(36)
-                .IsUnicode(false);
         }
     }
 }

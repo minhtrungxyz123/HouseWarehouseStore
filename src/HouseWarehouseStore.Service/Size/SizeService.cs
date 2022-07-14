@@ -15,12 +15,11 @@ namespace HouseWarehouseStore.Service
         public async Task<List<SizeModel>> GetAll(string id)
         {
             var banner = from x in _context.Sizes
-                         where x.ProductId == id
+                         where x.SizeId == id
                          select new SizeModel()
                          {
                              SizeId = x.SizeId,
                              SizeProduct = x.SizeProduct,
-                             ProductId = x.ProductId
                          };
 
             return banner.ToList();
