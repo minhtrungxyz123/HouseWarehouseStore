@@ -27,8 +27,10 @@ namespace HouseWarehouseStore.Service
             var query = from pr in _context.ProductCategories
                         join c in _context.Products on pr.ProductCategorieId equals c.ProductCategorieId into pt
                         from tp in pt.DefaultIfEmpty()
+                        join m in _context.Comments on tp.ProductId equals m.ProductId into mt
+                        from tm in mt.DefaultIfEmpty()
                         where pr.ProductCategorieId == ctx.CategoryId
-                        select new { pr, tp };
+                        select new { pr, tp, tm };
 
             if (!string.IsNullOrEmpty(ctx.Keyword))
             {
@@ -57,7 +59,8 @@ namespace HouseWarehouseStore.Service
                     TitleMeta = u.pr.TitleMeta,
                     ProductId = u.tp.ProductId,
                     ProductName = u.tp.Name,
-                    SaleOff = u.tp.SaleOff
+                    SaleOff = u.tp.SaleOff,
+                    Star = u.tm.Star
                 })
                 .ToListAsync();
 

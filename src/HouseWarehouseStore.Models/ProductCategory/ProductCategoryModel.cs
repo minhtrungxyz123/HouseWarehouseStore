@@ -59,10 +59,11 @@ namespace HouseWarehouseStore.Models
         public IFormFile? Coverfilesadd { get; set; }
 
         public List<FilesModel>? CoverFilesModels { get; set; }
-
+        public List<CommentModel>? CommentModels { get; set; }
         public IList<SelectListItem>? AvailablePath { get; set; }
         public string? ProductName { get; set; }
         public string? ProductId { get; set; }
         public decimal? SaleOff { get; set; }
+        public int? Star { get; set; }
     }
 }

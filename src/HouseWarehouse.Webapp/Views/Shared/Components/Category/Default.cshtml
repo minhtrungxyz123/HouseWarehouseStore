@@ -7,7 +7,7 @@
     @foreach (var item in Model)
     {
         <li class="nav-item">
-            <a class="nav-link" href="@item.Url"><i class="@item.Icon"></i>@item.Name</a>
+            <a class="nav-link" asp-controller="Category" onclick="Category('@item.ProductCategorieId')" asp-route-id="@item.ProductCategorieId"><i class="@item.Icon"></i>@item.Name</a>
         </li>
     }
 
@@ -33,3 +33,13 @@
     <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
     </li>*@
 </ul>
+
+@section Scripts{
+    <script>
+
+        function Category(id) {
+            $.get("/Category/Index", { id: id }, function(data) {
+            }
+
+    </script>
+}
