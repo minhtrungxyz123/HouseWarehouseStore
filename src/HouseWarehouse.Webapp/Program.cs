@@ -24,7 +24,7 @@ builder.Services.AddScoped<IFollowApiClient, FollowApiClient>();
 builder.Services.AddScoped<IProductApiClient, ProductApiClient>();
 builder.Services.AddScoped<IMemberApiClient, MemberApiClient>();
 builder.Services.AddScoped<IWishlistApiClient, WishlistApiClient>();
-builder.Services.AddScoped<ISizeApiClient, SizeApiClient>();
+builder.Services.AddScoped<IProductSizeColorApiClient, ProductSizeColorApiClient>();
 
 #endregion Add DI
 

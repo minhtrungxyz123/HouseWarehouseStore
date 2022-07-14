@@ -23,7 +23,7 @@ builder.Services.AddScoped<IFollowService, FollowService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProductLikeService, ProductLikeService>();
-builder.Services.AddScoped<ISizeService, SizeService>();
+builder.Services.AddScoped<IProductSizeColorService, ProductSizeColorService>();
 
 #endregion Add Service
 

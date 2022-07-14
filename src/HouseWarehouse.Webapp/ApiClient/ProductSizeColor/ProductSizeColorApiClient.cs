@@ -4,13 +4,13 @@ using Newtonsoft.Json;
 
 namespace HouseWarehouse.Webapp.ApiClient
 {
-    public class SizeApiClient : ISizeApiClient
+    public class ProductSizeColorApiClient : IProductSizeColorApiClient
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly IConfiguration _configuration;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public SizeApiClient(IHttpClientFactory httpClientFactory,
+        public ProductSizeColorApiClient(IHttpClientFactory httpClientFactory,
                    IHttpContextAccessor httpContextAccessor,
                     IConfiguration configuration)
         {
@@ -19,9 +19,9 @@ namespace HouseWarehouse.Webapp.ApiClient
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<List<SizeModel>> GetAll(string id)
+        public async Task<List<ProductSizeColorModel>> GetAll(string id)
         {
-            return await GetListAsync<SizeModel>($"/size?id={id}");
+            return await GetListAsync<ProductSizeColorModel>($"/product-size-color?id={id}");
         }
 
         public async Task<List<T>> GetListAsync<T>(string url, bool requiredLogin = false)

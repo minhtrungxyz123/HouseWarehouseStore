@@ -107,6 +107,6 @@ namespace HouseWarehouseStore.Models
 
         public int? star { get; set; }
 
-        public List<SizeModel>? SizeModels { get; set; }
+        public List<ProductSizeColorModel>? ProductSizeColorModels { get; set; }
     }
 }

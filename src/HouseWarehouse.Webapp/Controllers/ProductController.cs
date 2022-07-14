@@ -11,15 +11,15 @@ namespace HouseWarehouse.Webapp.Controllers
     {
         private readonly IProductApiClient _productApiClient;
         private readonly ICommentApiClient _commentApiClient;
-        private readonly ISizeApiClient _sizeApiClient;
+        private readonly IProductSizeColorApiClient _productSizeColorApiClient;
 
         public ProductController(IProductApiClient productApiClient,
             ICommentApiClient commentApiClient,
-            ISizeApiClient sizeApiClient)
+            IProductSizeColorApiClient productSizeColorApiClient)
         {
             _productApiClient = productApiClient;
             _commentApiClient = commentApiClient;
-            _sizeApiClient = sizeApiClient;
+            _productSizeColorApiClient = productSizeColorApiClient;
         }
 
         [AllowAnonymous]
@@ -74,7 +74,7 @@ namespace HouseWarehouse.Webapp.Controllers
                     TitleMeta = model.TitleMeta,
                     CommentModels = await _commentApiClient.GetById(id),
                     FilesModels = await _productApiClient.GetFilesProduct(SystemConstants.ProductDetailSettings.NumberOfProductDetail, id),
-                    SizeModels = await _sizeApiClient.GetAll(id)
+                    ProductSizeColorModels = await _productSizeColorApiClient.GetAll(id)
                 };
                 return View(updateRequest);
             }
