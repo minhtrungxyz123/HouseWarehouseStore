@@ -37,6 +37,7 @@ builder.Services.AddScoped<ITagService, TagService>();
 builder.Services.AddScoped<ITagProductService, TagProductService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
 builder.Services.AddScoped<IFollowService, FollowService>();
+builder.Services.AddScoped<IProductLikeService, ProductLikeService>();
 
 #endregion Add Service
 
