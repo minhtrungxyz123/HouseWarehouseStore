@@ -28,7 +28,7 @@ namespace HouseWarehouse.Webapp.ApiClient
             client.BaseAddress = new Uri(_configuration["BaseAddress"]);
 
             var response = await client.GetAsync($"/product/get?keyword={request.Keyword}&pageIndex=" +
-                $"{request.PageIndex}&pageSize={request.PageSize}");
+                $"{request.PageIndex}&pageSize={request.PageSize}&Price={request.Price}");
             var body = await response.Content.ReadAsStringAsync();
             var model = JsonConvert.DeserializeObject<ApiSuccessResult<Pagination<ProductModel>>>(body);
             return model;

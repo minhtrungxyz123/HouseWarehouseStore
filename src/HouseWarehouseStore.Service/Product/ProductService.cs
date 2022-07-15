@@ -38,6 +38,10 @@ namespace HouseWarehouseStore.Service
                 query = query.Where(x => x.pr.Name.Contains(ctx.Keyword)
                 || x.pr.TitleMeta.Contains(ctx.Keyword));
             }
+            if (!string.IsNullOrEmpty(ctx.Price.ToString()))
+            {
+                query = query.Where(x => x.pr.SaleOff >= ctx.Price);
+            }
 
             var totalRecords = await query.CountAsync();
 

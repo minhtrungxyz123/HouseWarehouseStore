@@ -23,13 +23,14 @@ namespace HouseWarehouse.Webapp.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Index(string keyword, int pageIndex = 1, int pageSize = 9)
+        public async Task<IActionResult> Index(string keyword, string dropdown1, int pageIndex = 1, int pageSize = 9)
         {
             var request = new ProductSearchModel()
             {
                 Keyword = keyword,
                 PageIndex = pageIndex,
-                PageSize = pageSize
+                PageSize = pageSize,
+                Price = dropdown1
             };
             var data = await _productApiClient.Get(request);
             ViewBag.Keyword = keyword;
