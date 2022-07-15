@@ -24,6 +24,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IMemberService, MemberService>();
 builder.Services.AddScoped<IProductLikeService, ProductLikeService>();
 builder.Services.AddScoped<IProductSizeColorService, ProductSizeColorService>();
+builder.Services.AddScoped<ICartService, CartService>();
 
 #endregion Add Service
 
