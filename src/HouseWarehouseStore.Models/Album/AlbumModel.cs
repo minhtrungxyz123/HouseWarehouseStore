@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace HouseWarehouseStore.Models
 {
@@ -34,6 +35,10 @@ namespace HouseWarehouseStore.Models
 
         [Display(Name = "Trạng thái")]
         public bool Active { get; set; }
+
         public DateTime CreateDate { get; set; }
+
+        public IFormFile? filesadd { get; set; }
+        public List<HouseWarehouseStore.Models.FilesModel> FilesModels { get; set; }
     }
 }

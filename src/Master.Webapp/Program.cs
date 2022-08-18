@@ -63,6 +63,7 @@ builder.Services.AddScoped<ICommentApiClient, CommentApiClient>();
 builder.Services.AddScoped<IFollowApiClient, FollowApiClient>();
 builder.Services.AddScoped<IMemberApiClient, MemberApiClient>();
 builder.Services.AddScoped<IProductLikeApiClient, ProductLikeApiClient>();
+builder.Services.AddScoped<IAlbumApiClient, AlbumApiClient>();
 
 #endregion Add DI
 
